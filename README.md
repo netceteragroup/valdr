@@ -1,4 +1,16 @@
-angular-model-validation
-========================
+# angular-model-validation
 
-model validation for AngularJS
+> Validate your AngularJS models
+
+
+## Install
+
+TODO
+
+## Use
+
+TODO
+
+## License
+
+[MIT](http://opensource.org/licenses/MIT) © Netcetera AG
