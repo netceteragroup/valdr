@@ -1,0 +1,15 @@
+{
+  "author": "Netcetera AG",
+  "name": "angular-model-validation",
+  "description": "Validate AngularJS models",
+  "version": "0.0.1",
+  "homepage": "https://github.com/netceteragroup/angular-model-validation",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/netceteragroup/angular-model-validation"
+  },
+  "devDependencies": {
+    "angular": "~1.2.14",
+    "angular-mocks": "~1.2.14"
+  }
+}
