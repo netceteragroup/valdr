@@ -1,5 +1,3 @@
-// Karma configuration
-
 module.exports = function (config) {
   config.set({
 
@@ -10,7 +8,7 @@ module.exports = function (config) {
     files: [
       'bower_components/angular/angular.js',
       'bower_components/angular-mocks/angular-mocks.js',
-      'src/model-validation-module.js',
+      'src/model-validation.js',
       'src/**/*.js',
       'src/**/*.spec.js'
     ],

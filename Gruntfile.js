@@ -12,10 +12,10 @@ module.exports = function (grunt) {
 
     meta: {
       banner: '/**\n * <%= pkg.title || pkg.name %> - v<%= pkg.version %> - ' +
-        '<%= grunt.template.today("yyyy-mm-dd") %>\n' +
-        ' * <%= pkg.homepage %>\n' +
-        ' * Copyright (c) <%= grunt.template.today("yyyy") %> <%= pkg.author.name %>\n' +
-        ' * License: <%= pkg.license %>\n */\n'
+      '<%= grunt.template.today("yyyy-mm-dd") %>\n' +
+      ' * <%= pkg.homepage %>\n' +
+      ' * Copyright (c) <%= grunt.template.today("yyyy") %> <%= pkg.author.name %>\n' +
+      ' * License: <%= pkg.license %>\n */\n'
     },
 
     build_dir: 'dist',
@@ -23,8 +23,8 @@ module.exports = function (grunt) {
     files: {
 
       core: [
-        'src/model-validation-module.js',
-        'src/core/controller-demo.js'
+        'src/model-validation.js',
+        'src/core/demo-controller.js'
       ],
 
       test: ['src/**/*.spec.js']
@@ -62,7 +62,7 @@ module.exports = function (grunt) {
       },
 
       core: {
-        src: ['src/model-validation.prefix', '<%= files.core %>', 'src/model-validation.suffix'],
+        src: ['js.prefix', '<%= files.core %>', 'js.suffix'],
         dest: '<%= build_dir %>/angular-model-validation.js'
       }
 
@@ -94,6 +94,38 @@ module.exports = function (grunt) {
         singleRun: true,
         browsers: ['Firefox']
       }
+    },
+
+    copy: {
+
+      demo: {
+        files: [{
+          src: '*.js',
+          dest: 'demo/js/',
+          cwd: 'dist/',
+          expand: true
+        }]
+      }
+    },
+
+    watch: {
+      livereload: {
+        options: {
+          livereload: true
+        },
+        files: ['src/**/*.js'],
+        tasks: ['concat:core', 'concat:banner', 'uglify:core', 'copy:demo']
+      }
+    },
+
+    express: {
+      server: {
+        options: {
+          port: 3005,
+          bases: '.',
+          server: __dirname + '/server.js'
+        }
+      }
     }
   });
 
@@ -114,6 +146,13 @@ module.exports = function (grunt) {
   ]);
 
   // For development purpose.
-  grunt.registerTask('dev', ['jshint', 'karma:unit',  'concat', 'watch:livereload']);
-  grunt.registerTask('server', ['express', 'express-keepalive']);
+  grunt.registerTask('dev', [
+    'build',
+    'copy:demo',
+    'watch:livereload'
+  ]);
+  grunt.registerTask('server', [
+    'express',
+    'express-keepalive'
+  ]);
 };

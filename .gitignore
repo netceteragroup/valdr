@@ -2,6 +2,7 @@
 node_modules
 bower_components
 dist
+demo/js
 npm-debug.log
 *.iml
 .idea
