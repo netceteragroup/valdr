@@ -1,5 +1,3 @@
-'use strict';
-
 describe('dummy', function () {
 
   it('should work', function () {
