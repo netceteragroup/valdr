@@ -1,4 +1,4 @@
-angular.module('nca.model-validation', ['ng'])
+angular.module('ncaModelValidation', ['ng'])
 
   .run(function () {
     console.log('starting validation module');
