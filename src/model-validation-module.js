@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('nca.validation', ['ng'])
+angular.module('nca.model-validation', ['ng'])
   .run(function () {
     console.log('starting validation module');
   });

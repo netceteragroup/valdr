@@ -23,10 +23,11 @@ module.exports = function (grunt) {
     files: {
 
       core: [
-        'src/model-validation.js'
+        'src/model-validation-module.js',
+        'src/core/controller-demo.js'
       ],
 
-      test: ['test/**/*.js']
+      test: ['src/**/*.spec.js']
     },
 
     jshint: {
@@ -92,11 +93,6 @@ module.exports = function (grunt) {
         configFile: 'karma.conf.js',
         singleRun: true,
         browsers: ['Firefox']
-      },
-
-      'debug-unit': {
-        configFile: 'karma.conf.js',
-        singleRun: false
       }
     }
   });

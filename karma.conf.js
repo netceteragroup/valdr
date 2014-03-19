@@ -10,8 +10,9 @@ module.exports = function (config) {
     files: [
       'bower_components/angular/angular.js',
       'bower_components/angular-mocks/angular-mocks.js',
+      'src/model-validation-module.js',
       'src/**/*.js',
-      'test/**/*.spec.js'
+      'src/**/*.spec.js'
     ],
 
     exclude: [],
