@@ -1,19 +1,17 @@
-'use strict';
-
-describe('orcaInput directive', function () {
+describe('nca input directive', function () {
 
   var $scope, element, $compile, ngModelController,
     validationMessages = ['validationMessagesArray'];
 
   beforeEach(function () {
-    module('orca.common.validation');
+    module('ncaModelValidation');
 
     /**
-     * Mock the orcaValidator to always return 'true' when the value equals the string 'valid'.
+     * Mock the ncaValidator to always return 'true' when the value equals the string 'valid'.
      */
     module(function ($provide) {
-      $provide.value('orcaValidator', {
-        validate: function (className, fieldName, value) {
+      $provide.value('ncaValidator', {
+        validate: function (typeName, fieldName, value) {
           return {
             valid: value === 'valid',
             messages: validationMessages
@@ -25,7 +23,7 @@ describe('orcaInput directive', function () {
 
   var compileTemplate = function () {
     var element = $compile(angular.element(
-      '<form name="demoForm"><div orca-form-class="com.netcetera.TestClass">' +
+      '<form name="demoForm"><div nca-form-type="TestClass">' +
         '<input type="text" name="fieldName" ng-model="myObject.field" no-message>' +
       '</div></form>'))($scope);
     $scope.$digest();
@@ -48,7 +46,7 @@ describe('orcaInput directive', function () {
 
     // then
     expect(ngModelController.$valid).toBe(false);
-    expect(ngModelController.orcaValidationMessages).toBe(validationMessages);
+    expect(ngModelController.ncaValidationMessages).toBe(validationMessages);
   });
 
   it('should set the validity to true on ngModelController if validation is ok', function () {
@@ -59,20 +57,20 @@ describe('orcaInput directive', function () {
 
     // then
     expect(ngModelController.$valid).toBe(true);
-    expect(ngModelController.orcaValidationMessages).toBe(validationMessages);
+    expect(ngModelController.ncaValidationMessages).toBe(validationMessages);
   });
 
   it('should throw error if no field name is provided on the input', function () {
     // given
     var invalidInput =
-      '<form name="demoForm"><div orca-form-class="com.netcetera.TestClass">' +
+      '<form name="demoForm"><div nca-form-type="TestClass">' +
         '<input type="text" ng-model="myObject.field" no-message>' +
       '</div></form>';
 
     // when / then
     expect(function () {
       $compile(angular.element(invalidInput))($scope);
-    }).toThrow(new Error('orcaFormField is not bound to a field name'));
+    }).toThrow(new Error('input is not bound to a field name'));
   });
 
 });

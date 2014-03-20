@@ -3,7 +3,7 @@ describe('ncaFormType directive', function () {
   var $scope, $compile, element, FormTypeController;
 
   var compileTemplate = function () {
-    var element = $compile(angular.element('<div nca-form-type="com.netcetera.TestClass"></div>'))($scope);
+    var element = $compile(angular.element('<div nca-form-type="TestClass"></div>'))($scope);
     $scope.$digest();
     return element;
   };
@@ -18,14 +18,14 @@ describe('ncaFormType directive', function () {
   }));
 
   it('should read the type from the attribute', function () {
-    expect(FormTypeController.getType()).toBe('com.netcetera.TestClass');
+    expect(FormTypeController.getType()).toBe('TestClass');
   });
 
   it('should allow to nest the directive', function () {
     // given
     var element = $compile(angular.element(
-      '<div nca-form-type"com.netcetera.TestClass">' +
-        '<span nca-form-type="com.netcetera.NestedClass"></span>' +
+      '<div nca-form-type="TestClass">' +
+        '<span nca-form-type="NestedClass"></span>' +
       '</div>'))($scope);
 
     // when
@@ -33,8 +33,8 @@ describe('ncaFormType directive', function () {
     var nestedController = element.find('span').controller('ncaFormType');
 
     // then
-    expect(rootController.getClassName()).toBe('com.netcetera.TestClass');
-    expect(nestedController.getClassName()).toBe('com.netcetera.NestedClass');
+    expect(rootController.getType()).toBe('TestClass');
+    expect(nestedController.getType()).toBe('NestedClass');
   });
 
 });

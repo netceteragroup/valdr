@@ -1,17 +1,15 @@
-'use strict';
+xdescribe('ncaValidator', function () {
 
-describe('orcaValidator', function () {
+  var ncaValidator;
 
-  var orcaValidator;
+  beforeEach(module('ncaModelValidation'));
 
-  beforeEach(module('orca.common.validation'));
-
-  beforeEach(inject(function (_orcaValidator_) {
-    orcaValidator = _orcaValidator_;
+  beforeEach(inject(function (_ncaValidator_) {
+    ncaValidator = _ncaValidator_;
   }));
 
   it('should validate', function () {
-
+      // TODO: write some tests
   });
 
 });

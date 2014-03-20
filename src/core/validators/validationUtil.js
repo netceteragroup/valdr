@@ -1,6 +1,6 @@
 angular.module('ncaModelValidation')
 
-  .factory('validationUtil', function (_) {
+  .factory('validationUtil', function (lodash) {
     return {
 
       /**
@@ -8,7 +8,7 @@ angular.module('ncaModelValidation')
        * @returns (boolean) true if the given value is not null, not undefined and not NaN
        */
       notNull: function (value) {
-        return angular.isDefined(value) && value !== '' && value !== null && !_.isNaN(value);
+        return angular.isDefined(value) && value !== '' && value !== null && !lodash.isNaN(value);
       },
 
       /**

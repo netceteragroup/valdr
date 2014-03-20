@@ -1,13 +1,12 @@
-'use strict';
+angular.module('ncaModelValidation')
 
-angular.module('orca.common.validation')
-  .factory('orcaValidator', function ($log, _, VALIDATIONS, notNullValidator, sizeValidator) {
+  .factory('ncaValidator', function ($log, lodash, VALIDATIONS, notNullValidator, sizeValidator) {
 
-    var getClassValidationRules = function (className) {
-      if (!_.has(VALIDATIONS, className)) {
-        throw new Error('No validation rules for class ' + className + ' available.');
+    var getValidationRulesForType = function (typeName) {
+      if (!lodash.has(VALIDATIONS, typeName)) {
+        throw new Error('No validation rules for type ' + typeName + ' available.');
       }
-      return VALIDATIONS[className];
+      return VALIDATIONS[typeName];
     };
 
     // init validator map
@@ -18,27 +17,27 @@ angular.module('orca.common.validation')
     return {
 
       /**
-       * Validates the value of the given class with the validation rules for the given field name.
-       * @param className the class name
+       * Validates the value of the given type with the validation rules for the given field name.
+       * @param typeName the type name
        * @param fieldName the field name
        * @param value the value to validate
        * @returns {*}
        */
-      validate: function (className, fieldName, value) {
+      validate: function (typeName, fieldName, value) {
 
-        $log.debug('validating class: ' + className +
+        $log.debug('validating type: ' + typeName +
           ' field: ' +  fieldName +
           ' value: ' + value);
 
-        var classValidationRules = getClassValidationRules(className);
+        var validationRules = getValidationRulesForType(typeName);
 
-        if (_.has(classValidationRules, fieldName)) {
-          var fieldValidationRules = classValidationRules[fieldName];
+        if (lodash.has(validationRules, fieldName)) {
+          var fieldValidationRules = validationRules[fieldName];
 
           var isValid = true;
           var validationMessages = [];
 
-          _.forOwn(fieldValidationRules, function (validationRules, validatorName) {
+          lodash.forOwn(fieldValidationRules, function (validationRules, validatorName) {
             $log.debug('validating with:' + validatorName + ' rules: ' + JSON.stringify(validationRules));
             var validationResult = validators[validatorName].validate(validationRules, value);
             if (!validationResult.valid) {

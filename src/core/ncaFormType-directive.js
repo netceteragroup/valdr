@@ -5,8 +5,8 @@ angular.module('ncaModelValidation')
       controller: function() {
         var type;
 
-        this.setType = function (type) {
-          type = newClassName;
+        this.setType = function (newType) {
+          type = newType;
         };
 
         this.getType = function () {

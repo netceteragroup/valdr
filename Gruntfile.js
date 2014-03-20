@@ -24,7 +24,13 @@ module.exports = function (grunt) {
 
       core: [
         'src/model-validation.js',
-        'src/core/demo-controller.js'
+        'src/core/lodash-service.js',
+        'src/core/validators/validationUtil.js',
+        'src/core/validators/notNullValidator.js',
+        'src/core/validators/sizeValidator.js',
+        'src/core/ncaValidator-service.js',
+        'src/core/ncaFormType-directive.js',
+        'src/core/ncaInput-directive.js'
       ],
 
       test: ['src/**/*.spec.js']
