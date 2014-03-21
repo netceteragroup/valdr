@@ -1,8 +1,8 @@
 angular.module('ncaModelValidation')
 
-  .factory('notNullValidator', function (validationUtil) {
+  .factory('requiredValidator', function (validationUtil) {
     return {
-      name: 'NotNull',
+      name: 'Required',
 
       /**
        * @param config no config is required for this validator

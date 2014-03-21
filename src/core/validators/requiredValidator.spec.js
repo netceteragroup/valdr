@@ -1,6 +1,6 @@
-describe('notNullValidator', function () {
+describe('requiredValidator', function () {
 
-  var notNullValidator,
+  var requiredValidator,
     validationUtil,
     config = {
       message: 'messageKey'
@@ -8,8 +8,8 @@ describe('notNullValidator', function () {
 
   beforeEach(module('ncaModelValidation'));
 
-  beforeEach(inject(function (_notNullValidator_, _validationUtil_) {
-    notNullValidator = _notNullValidator_;
+  beforeEach(inject(function (_requiredValidator_, _validationUtil_) {
+    requiredValidator = _requiredValidator_;
     validationUtil = _validationUtil_;
   }));
 
@@ -19,7 +19,7 @@ describe('notNullValidator', function () {
     var value = 'someValue';
 
     // when
-    notNullValidator.validate(config, value);
+    requiredValidator.validate(config, value);
 
     // then
     expect(validationUtil.notNull).toHaveBeenCalledWith(value);
@@ -30,7 +30,7 @@ describe('notNullValidator', function () {
     var value = 'value';
 
     // when
-    var validationResult = notNullValidator.validate(config, value);
+    var validationResult = requiredValidator.validate(config, value);
 
     // then
     expect(validationResult.messageKey).toBe(config.message);
@@ -38,7 +38,7 @@ describe('notNullValidator', function () {
   });
 
   it('should provide the correct name', function () {
-    expect(notNullValidator.name).toBe('NotNull');
+    expect(requiredValidator.name).toBe('Required');
   });
 
 });

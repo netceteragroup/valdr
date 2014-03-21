@@ -14,9 +14,9 @@ angular.module('ncaModelValidation')
       validationRulesUrl = url;
     };
 
-    this.$get = function($log, $rootScope, $http, ncaModelValidationEvents, lodash, notNullValidator, sizeValidator) {
+    this.$get = function($log, $rootScope, $http, ncaModelValidationEvents, lodash, requiredValidator, sizeValidator) {
 
-      validators[notNullValidator.name] = notNullValidator;
+      validators[requiredValidator.name] = requiredValidator;
       validators[sizeValidator.name] = sizeValidator;
 
       if (validationRulesUrl) {
