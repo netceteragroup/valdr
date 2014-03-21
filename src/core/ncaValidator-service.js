@@ -2,8 +2,7 @@ angular.module('ncaModelValidation')
 
   .provider('ncaValidator', function () {
 
-    var validationRules = {};
-    var validators = {};
+    var validationRules = {}, validators = {}, validationRulesUrl;
 
     var addValidationRules = function (newValidationRules) {
       angular.extend(validationRules, newValidationRules);
@@ -11,14 +10,26 @@ angular.module('ncaModelValidation')
 
     this.addValidationRules = addValidationRules;
 
-    this.$get = function($log, $rootScope, ncaModelValidationEvents, lodash, notNullValidator, sizeValidator) {
+    this.setValidationRulesUrl = function (url) {
+      validationRulesUrl = url;
+    };
+
+    this.$get = function($log, $rootScope, $http, ncaModelValidationEvents, lodash, notNullValidator, sizeValidator) {
 
       validators[notNullValidator.name] = notNullValidator;
       validators[sizeValidator.name] = sizeValidator;
 
+      if (validationRulesUrl) {
+        $http.get(validationRulesUrl).then(function (response) {
+          addValidationRules(response.data);
+          $rootScope.$broadcast(ncaModelValidationEvents.rulesChanged);
+        });
+      }
+
       var getValidationRulesForType = function (typeName) {
         if (!lodash.has(validationRules, typeName)) {
-          throw new Error('No validation rules for type ' + typeName + ' available.');
+          $log.warn('No validation rules for type ' + typeName + ' available.');
+          return {};
         }
         return validationRules[typeName];
       };
@@ -70,6 +81,9 @@ angular.module('ncaModelValidation')
         addValidationRules: function (newValidationRules) {
           addValidationRules(newValidationRules);
           $rootScope.$broadcast(ncaModelValidationEvents.rulesChanged);
+        },
+        getValidationRules: function () {
+          return validationRules;
         }
       };
     };
