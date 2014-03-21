@@ -1,6 +1,6 @@
 angular.module('ncaModelValidation')
 
-  .directive('input', function (ncaValidator) {
+  .directive('input', function (ncaModelValidationEvents, ncaValidator) {
     return  {
       restrict: 'E',
       require: ['?^ncaFormType', '?^ngModel'],
@@ -30,6 +30,10 @@ angular.module('ncaModelValidation')
           setValidityAndMessages(validationResult);
           return validationResult.valid ? value : undefined;
         };
+
+        scope.$on(ncaModelValidationEvents.rulesChanged, function () {
+          validator(ngModelController.$viewValue);
+        });
 
         ngModelController.$parsers.push(validator);
         ngModelController.$formatters.push(validator);

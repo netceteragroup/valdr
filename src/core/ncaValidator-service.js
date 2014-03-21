@@ -5,11 +5,13 @@ angular.module('ncaModelValidation')
     var validationRules = {};
     var validators = {};
 
-    this.addValidationRules = function (newValidationRules) {
+    var addValidationRules = function (newValidationRules) {
       angular.extend(validationRules, newValidationRules);
     };
 
-    this.$get = function($log, lodash, notNullValidator, sizeValidator) {
+    this.addValidationRules = addValidationRules;
+
+    this.$get = function($log, $rootScope, ncaModelValidationEvents, lodash, notNullValidator, sizeValidator) {
 
       validators[notNullValidator.name] = notNullValidator;
       validators[sizeValidator.name] = sizeValidator;
@@ -65,8 +67,9 @@ angular.module('ncaModelValidation')
             return { valid: true };
           }
         },
-        addValidationRules: function(newValidationRules) {
-          angular.extend(validationRules, newValidationRules);
+        addValidationRules: function (newValidationRules) {
+          addValidationRules(newValidationRules);
+          $rootScope.$broadcast(ncaModelValidationEvents.rulesChanged);
         }
       };
     };
