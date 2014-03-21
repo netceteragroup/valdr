@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Demo</title>
+</head>
+<body ng-app="demoApp">
+
+<div ng-controller="TestController">
+
+  <h1>Async Demo</h1>
+
+  <form name="demoForm" novalidate>
+
+    <div nca-form-type="Person">
+
+      <div>
+        <label for="lastName">Nachname</label>
+        <input type="text"
+               id="lastName"
+               name="lastName"
+               ng-model="person.lastName">
+      </div>
+      <pre>$valid {{ demoForm.lastName.$valid }}</pre>
+
+      <div>
+        <label for="firstName">Vorname</label>
+        <input type="text"
+               id="firstName"
+               name="firstName"
+               ng-model="person.firstName">
+      </div>
+      <pre>$valid {{ demoForm.firstName.$valid }}</pre>
+
+      <div>
+        <label for="zipCode">Zip Code</label>
+        <input type="text"
+               id="zipCode"
+               name="zipCode"
+               ng-model="person.zipCode">
+      </div>
+      <pre>$valid {{ demoForm.zipCode.$valid }}</pre>
+    </div>
+
+  </form>
+
+  <pre>demoForm.$valid: {{ demoForm.$valid }}</pre>
+
+  <h3>demoForm</h3>
+  <pre>{{ demoForm | json }}</pre>
+
+  <h3>validation rules</h3>
+  <pre>{{ VALIDATION_RULES | json }}</pre>
+
+</div>
+
+<script src="/bower_components/angular/angular.js"></script>
+<script src="/bower_components/lodash/dist/lodash.js"></script>
+<script src="js/angular-model-validation.js"></script>
+<script src="http://localhost:35729/livereload.js"></script>
+
+<script>
+  var demoApp = angular.module('demoApp', ['ncaModelValidation']);
+
+  demoApp.config(function(ncaValidatorProvider) {
+    ncaValidatorProvider.setValidationRulesUrl('/api/rules');
+  });
+
+  demoApp.controller('TestController', function ($scope, ncaValidator) {
+    $scope.person = {};
+
+    $scope.$watch(ncaValidator.getValidationRules, function (rules) {
+      $scope.VALIDATION_RULES = rules;
+    });
+  });
+</script>
+</body>
+</html>

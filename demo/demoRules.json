@@ -1,0 +1,25 @@
+{
+  "Person": {
+    "lastName": {
+      "Size": {
+        "min": 2,
+        "max": 10,
+        "message": "javax.validation.constraints.Size.message"
+      }
+    },
+    "firstName": {
+      "Size": {
+        "min": 2,
+        "max": 20,
+        "message": "javax.validation.constraints.Size.message"
+      }
+    },
+    "zipCode": {
+      "Size": {
+        "min": 4,
+        "max": 4,
+        "message": "javax.validation.constraints.Size.message"
+      }
+    }
+  }
+}

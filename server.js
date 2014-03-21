@@ -1,6 +1,6 @@
 var express = require('express');
 
-var app = express()
+var app = express();
 var server = require('http').createServer(app);
 
 app.configure(function () {
@@ -10,6 +10,7 @@ app.configure(function () {
     app.use(express.errorHandler());
     app.use(express.static(__dirname));
     app.use(app.router);
+    require('./demo/demo-api')(app, __dirname);
 });
 
 module.exports = server;
