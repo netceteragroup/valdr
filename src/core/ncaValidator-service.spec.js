@@ -24,8 +24,7 @@ describe('ncaValidator', function () {
 
   beforeEach(module('ncaModelValidation'));
 
-  beforeEach(inject(function (
-      _ncaValidator_, _$rootScope_, _ncaModelValidationEvents_, _sizeValidator_, _requiredValidator_) {
+  beforeEach(inject(function (_ncaValidator_, _$rootScope_, _ncaModelValidationEvents_, _sizeValidator_, _requiredValidator_) {
     ncaValidator = _ncaValidator_;
     $rootScope = _$rootScope_;
     ncaModelValidationEvents = _ncaModelValidationEvents_;
@@ -126,6 +125,31 @@ describe('ncaValidator', function () {
       expect(validationResult.messages[1].messageKey).toBe('required');
     });
 
+  });
+});
+
+describe('ncaValidatorProvider', function () {
+
+  var $httpBackend, apiUrl = '/api/validation';
+
+  beforeEach(function () {
+    module('ncaModelValidation');
+    module(function (ncaValidatorProvider) {
+      ncaValidatorProvider.setValidationRulesUrl(apiUrl);
+    });
+    inject(function (_$httpBackend_) {
+      $httpBackend= _$httpBackend_;
+    });
+  });
+
+  it('should load the validation rules via $http', function () {
+
+    $httpBackend.expect('GET', apiUrl).respond(200, {});
+
+    /*jshint unused:false */
+    inject(function (ncaValidator) {
+      $httpBackend.flush();
+    });
   });
 
 });
