@@ -1,6 +1,6 @@
 angular.module('ncaModelValidation')
 
-  .factory('sizeValidator', function (validationUtil) {
+  .factory('sizeValidator', ['validationUtil', function (validationUtil) {
     return {
       name: 'Size',
 
@@ -22,4 +22,4 @@ angular.module('ncaModelValidation')
         return validationUtil.result(valid, config.message, params);
       }
     };
-  });
+  }]);

@@ -1,6 +1,6 @@
 angular.module('ncaModelValidation')
 
-  .factory('validationUtil', function (lodash) {
+  .factory('validationUtil', ['lodash', function (lodash) {
     return {
 
       /**
@@ -25,4 +25,4 @@ angular.module('ncaModelValidation')
         };
       }
     };
-  });
+  }]);
