@@ -31,12 +31,12 @@ angular.module('ncaModelValidation')
           return validationResult.valid ? value : undefined;
         };
 
+        ngModelController.$parsers.push(validator);
+        ngModelController.$formatters.push(validator);
+
         scope.$on(ncaModelValidationEvents.rulesChanged, function () {
           validator(ngModelController.$viewValue);
         });
-
-        ngModelController.$parsers.push(validator);
-        ngModelController.$formatters.push(validator);
       }
     };
   });
