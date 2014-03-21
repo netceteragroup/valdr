@@ -1,6 +1,33 @@
 angular.module('ncaModelValidation')
 
-  .factory('ncaValidator', function ($log, lodash, VALIDATIONS, notNullValidator, sizeValidator) {
+  .factory('ncaValidator', function ($log, lodash, notNullValidator, sizeValidator) {
+
+
+    var VALIDATIONS = {
+      'Person': {
+        'lastName': {
+          'Size': {
+            'min': 2,
+            'max': 10,
+            'message': 'javax.validation.constraints.Size.message'
+          }
+        },
+        'firstName': {
+          'Size': {
+            'min': 2,
+            'max': 20,
+            'message': 'javax.validation.constraints.Size.message'
+          }
+        },
+        'zipCode': {
+          'Digits': {
+            'integer': 4,
+            'fraction': 0,
+            'message': 'javax.validation.constraints.Digits.message'
+          }
+        }
+      }
+    };
 
     var getValidationRulesForType = function (typeName) {
       if (!lodash.has(VALIDATIONS, typeName)) {
@@ -25,9 +52,7 @@ angular.module('ncaModelValidation')
        */
       validate: function (typeName, fieldName, value) {
 
-        $log.debug('validating type: ' + typeName +
-          ' field: ' +  fieldName +
-          ' value: ' + value);
+        $log.debug('validating type: ' + typeName + ' field: ' +  fieldName + ' value: ' + value);
 
         var validationRules = getValidationRulesForType(typeName);
 
@@ -38,7 +63,14 @@ angular.module('ncaModelValidation')
           var validationMessages = [];
 
           lodash.forOwn(fieldValidationRules, function (validationRules, validatorName) {
-            $log.debug('validating with:' + validatorName + ' rules: ' + JSON.stringify(validationRules));
+            $log.debug('Validating with validator: ' + validatorName + ' Rules: ' + JSON.stringify(validationRules));
+
+            var validator = validators[validatorName];
+            if (angular.isUndefined(validator)) {
+              $log.error('No validator defined for \'' + validatorName + '\'. Can not validate field ' + fieldName);
+              return { valid: true };
+            }
+
             var validationResult = validators[validatorName].validate(validationRules, value);
             if (!validationResult.valid) {
               validationMessages.push(validationResult);

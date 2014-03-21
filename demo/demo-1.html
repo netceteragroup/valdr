@@ -2,15 +2,58 @@
 <html>
 <head>
   <title>Demo</title>
-</head>
-<body ng-app="nca.model-validation">
+<body ng-app="demoApp">
 
-  <div ng-controller="TestController">
+<div ng-controller="TestController">
 
-  </div>
+  <h1>Simple Demo</h1>
 
-  <script src="/bower_components/angular/angular.js"></script>
-  <script src="js/angular-model-validation.js"></script>
-  <script src="http://localhost:35729/livereload.js"></script>
+  <form novalidate name="demoForm">
+
+    <div nca-form-type="Person">
+
+      <div>
+        <label for="lastName">Nachname</label>
+        <input type="text"
+               id="lastName"
+               name="lastName"
+               ng-model="person.lastName">
+      </div>
+
+      <div>
+        <label for="firstName">Vorname</label>
+        <input type="text"
+               id="firstName"
+               name="firstName"
+               ng-model="person.firstName">
+      </div>
+
+      <div>
+        <label for="zipCode">Zip Code</label>
+        <input type="text"
+               id="zipCode"
+               name="zipCode"
+               ng-model="person.zipCode">
+      </div>
+    </div>
+
+  </form>
+    <pre>
+      {{ demoForm | json }}
+    </pre>
+</div>
+
+<script src="/bower_components/angular/angular.js"></script>
+<script src="/bower_components/lodash/dist/lodash.js"></script>
+<script src="js/angular-model-validation.js"></script>
+<script src="http://localhost:35729/livereload.js"></script>
+
+<script>
+  var demoApp = angular.module('demoApp', ['ncaModelValidation']);
+
+  demoApp.controller('TestController', function ($scope) {
+    $scope.person = {};
+  });
+</script>
 </body>
 </html>
