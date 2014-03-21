@@ -29,10 +29,12 @@ angular.module('ncaModelValidation')
       var getValidationRulesForType = function (typeName) {
         if (!lodash.has(validationRules, typeName)) {
           $log.warn('No validation rules for type ' + typeName + ' available.');
-          return {};
+          return;
         }
         return validationRules[typeName];
       };
+
+      var valid = { valid: true };
 
       return {
         /**
@@ -59,8 +61,8 @@ angular.module('ncaModelValidation')
 
               var validator = validators[validatorName];
               if (angular.isUndefined(validator)) {
-                $log.error('No validator defined for \'' + validatorName + '\'. Can not validate field ' + fieldName);
-                return { valid: true };
+                $log.warn('No validator defined for \'' + validatorName + '\'. Can not validate field ' + fieldName);
+                return valid;
               }
 
               var validationResult = validators[validatorName].validate(validationRules, value);
@@ -75,7 +77,7 @@ angular.module('ncaModelValidation')
               messages: validationMessages
             };
           } else {
-            return { valid: true };
+            return valid;
           }
         },
         addValidationRules: function (newValidationRules) {

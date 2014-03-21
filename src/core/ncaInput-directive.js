@@ -25,17 +25,17 @@ angular.module('ncaModelValidation')
           ngModelController.ncaValidationMessages = validationResult.messages;
         };
 
-        var validator = function (value) {
+        var validate = function (value) {
           var validationResult = ncaValidator.validate(ncaFormTypeController.getType(), fieldName, value);
           setValidityAndMessages(validationResult);
           return validationResult.valid ? value : undefined;
         };
 
-        ngModelController.$parsers.push(validator);
-        ngModelController.$formatters.push(validator);
+        ngModelController.$parsers.push(validate);
+        ngModelController.$formatters.push(validate);
 
         scope.$on(ncaModelValidationEvents.rulesChanged, function () {
-          validator(ngModelController.$viewValue);
+          validate(ngModelController.$viewValue);
         });
       }
     };
