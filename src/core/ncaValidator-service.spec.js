@@ -1,6 +1,6 @@
 describe('ncaValidator', function () {
 
-  var ncaValidator, $rootScope, ncaModelValidationEvents, sizeValidator,
+  var ncaValidator, $rootScope, ncaModelValidationEvents, sizeValidator, requiredValidator,
     personRules = {
       'Person': {
         'firstName': {
@@ -24,11 +24,13 @@ describe('ncaValidator', function () {
 
   beforeEach(module('ncaModelValidation'));
 
-  beforeEach(inject(function (_ncaValidator_, _$rootScope_, _ncaModelValidationEvents_, _sizeValidator_) {
+  beforeEach(inject(function (
+      _ncaValidator_, _$rootScope_, _ncaModelValidationEvents_, _sizeValidator_, _requiredValidator_) {
     ncaValidator = _ncaValidator_;
     $rootScope = _$rootScope_;
     ncaModelValidationEvents = _ncaModelValidationEvents_;
     sizeValidator = _sizeValidator_;
+    requiredValidator = _requiredValidator_;
   }));
 
   describe('addValidationRules()', function () {
@@ -92,6 +94,36 @@ describe('ncaValidator', function () {
       expect(validationResult.messages[0].messageKey).toBe('size');
       expect(validationResult.messages[0].messageParams.max).toBe(10);
       expect(validationResult.messages[0].messageParams.min).toBe(0);
+    });
+
+    it('should return invalid state and message if multiple validations fail', function () {
+      // given
+      ncaValidator.addValidationRules({
+        'Person': {
+          'firstName': {
+            'Size': {
+              'min': 2,
+              'max': 10,
+              'message': 'size'
+            },
+            'Required': {
+              'message': 'required'
+            }
+          }
+        }
+      });
+      spyOn(sizeValidator, 'validate').andCallThrough();
+      spyOn(requiredValidator, 'validate').andCallThrough();
+
+      // when
+      var validationResult = ncaValidator.validate('Person', 'firstName', undefined);
+
+      // then
+      expect(sizeValidator.validate).toHaveBeenCalled();
+      expect(requiredValidator.validate).toHaveBeenCalled();
+      expect(validationResult.valid).toBe(false);
+      expect(validationResult.messages[0].messageKey).toBe('size');
+      expect(validationResult.messages[1].messageKey).toBe('required');
     });
 
   });
