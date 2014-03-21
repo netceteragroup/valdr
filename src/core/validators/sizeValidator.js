@@ -2,7 +2,7 @@ angular.module('ncaModelValidation')
 
   .factory('sizeValidator', function (validationUtil) {
     return {
-      name: 'javax.validation.constraints.Size',
+      name: 'Size',
 
       /**
        * @param config optional values: min, max

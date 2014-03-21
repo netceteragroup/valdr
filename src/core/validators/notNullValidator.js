@@ -2,7 +2,7 @@ angular.module('ncaModelValidation')
 
   .factory('notNullValidator', function (validationUtil) {
     return {
-      name: 'javax.validation.constraints.NotNull',
+      name: 'NotNull',
 
       /**
        * @param config no config is required for this validator

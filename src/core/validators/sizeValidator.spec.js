@@ -69,7 +69,7 @@ describe('sizeValidator', function () {
   });
 
   it('should provide the correct name', function () {
-    expect(sizeValidator.name).toBe('javax.validation.constraints.Size');
+    expect(sizeValidator.name).toBe('Size');
   });
 
 });

@@ -38,7 +38,7 @@ describe('notNullValidator', function () {
   });
 
   it('should provide the correct name', function () {
-    expect(notNullValidator.name).toBe('javax.validation.constraints.NotNull');
+    expect(notNullValidator.name).toBe('NotNull');
   });
 
 });
