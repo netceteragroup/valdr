@@ -43,7 +43,7 @@
 
   </form>
 
-  <button ng-click="addZipRules()">add valid ZIP rules</button>
+  <button ng-click="addZipRules()">Change ZIP rules</button>
   <pre>demoForm.$valid: {{ demoForm.$valid }}</pre>
 
   <h3>demoForm</h3>
@@ -124,6 +124,7 @@
           }
         }
       });
+      $scope.VALIDATION_RULES = ncaValidator.getValidationRules();
     };
 
   });
