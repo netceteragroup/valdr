@@ -1,6 +1,7 @@
 angular.module('ncaModelValidation')
 
-  .directive('input', function (ncaModelValidationEvents, ncaValidator) {
+  .directive('input',
+    ['ncaModelValidationEvents', 'ncaValidator', function (ncaModelValidationEvents, ncaValidator) {
     return  {
       restrict: 'E',
       require: ['?^ncaFormType', '?^ngModel'],
@@ -39,4 +40,4 @@ angular.module('ncaModelValidation')
         });
       }
     };
-  });
+  }]);

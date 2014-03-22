@@ -1,6 +1,6 @@
 angular.module('ncaModelValidation')
 
-  .factory('requiredValidator', function (validationUtil) {
+  .factory('requiredValidator', ['validationUtil', function (validationUtil) {
     return {
       name: 'Required',
 
@@ -14,4 +14,4 @@ angular.module('ncaModelValidation')
         return validationUtil.result(valid, config.message);
       }
     };
-  });
+  }]);

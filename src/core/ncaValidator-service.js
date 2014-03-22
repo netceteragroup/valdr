@@ -14,7 +14,9 @@ angular.module('ncaModelValidation')
       validationRulesUrl = url;
     };
 
-    this.$get = function($log, $rootScope, $http, ncaModelValidationEvents, lodash, requiredValidator, sizeValidator) {
+    this.$get =
+      ['$log', '$rootScope', '$http', 'ncaModelValidationEvents', 'lodash', 'requiredValidator', 'sizeValidator',
+      function($log, $rootScope, $http, ncaModelValidationEvents, lodash, requiredValidator, sizeValidator) {
 
       validators[requiredValidator.name] = requiredValidator;
       validators[sizeValidator.name] = sizeValidator;
@@ -88,5 +90,5 @@ angular.module('ncaModelValidation')
           return validationRules;
         }
       };
-    };
+    }];
   });
