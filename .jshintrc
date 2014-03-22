@@ -1,5 +1,5 @@
 {
-  "predef": ["describe", "it", "expect", "angular", "beforeEach", "spyOn", "inject", "module", "xdescribe"],
+  "predef": ["describe", "it", "expect", "angular", "beforeEach", "spyOn", "inject", "module", "xdescribe", "ddescribe"],
   "esnext": false,
   "bitwise": true,
   "curly": true,
