@@ -1,7 +1,7 @@
 describe('sizeValidator', function () {
 
   var sizeValidator,
-    validationUtil,
+    valdrUtil,
     config = {
       min: 5,
       max: 20,
@@ -10,9 +10,9 @@ describe('sizeValidator', function () {
 
   beforeEach(module('valdr'));
 
-  beforeEach(inject(function (_sizeValidator_, _validationUtil_) {
+  beforeEach(inject(function (_sizeValidator_, _valdrUtil_) {
     sizeValidator = _sizeValidator_;
-    validationUtil = _validationUtil_;
+    valdrUtil = _valdrUtil_;
   }));
 
 

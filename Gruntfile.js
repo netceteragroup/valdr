@@ -25,7 +25,6 @@ module.exports = function (grunt) {
       core: [
         'src/valdr.js',
         'src/core/valdrUtil-service.js',
-        'src/core/validators/validationUtil.js',
         'src/core/validators/requiredValidator.js',
         'src/core/validators/sizeValidator.js',
         'src/core/valdrValidator-service.js',

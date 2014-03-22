@@ -63,7 +63,7 @@ angular.module('valdr')
                 isValid = true,
                 validationMessages = [];
 
-            valdrUtil.forOwn(fieldValidationRules, function (validatorName, validationRules) {
+            angular.forEach(fieldValidationRules, function (validationRules, validatorName) {
 
               var validator = validators[validatorName];
               if (angular.isUndefined(validator)) {

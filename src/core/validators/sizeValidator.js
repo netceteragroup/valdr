@@ -1,6 +1,6 @@
 angular.module('valdr')
 
-  .factory('sizeValidator', ['validationUtil', function (validationUtil) {
+  .factory('sizeValidator', ['valdrUtil', function (valdrUtil) {
     return {
       name: 'Size',
 
@@ -19,7 +19,7 @@ angular.module('valdr')
           (maxLength === undefined || value.length <= maxLength);
 
         var params = { min: minLength, max: maxLength };
-        return validationUtil.result(valid, config.message, params);
+        return valdrUtil.result(valid, config.message, params);
       }
     };
   }]);

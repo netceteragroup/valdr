@@ -1,28 +1,28 @@
 describe('requiredValidator', function () {
 
   var requiredValidator,
-    validationUtil,
+    valdrUtil,
     config = {
       message: 'messageKey'
     };
 
   beforeEach(module('valdr'));
 
-  beforeEach(inject(function (_requiredValidator_, _validationUtil_) {
+  beforeEach(inject(function (_requiredValidator_, _valdrUtil_) {
     requiredValidator = _requiredValidator_;
-    validationUtil = _validationUtil_;
+    valdrUtil = _valdrUtil_;
   }));
 
-  it('should validate using the validationUtil', function () {
+  it('should validate using the valdrUtil', function () {
     // given
-    spyOn(validationUtil, 'notNull');
+    spyOn(valdrUtil, 'notNull');
     var value = 'someValue';
 
     // when
     requiredValidator.validate(config, value);
 
     // then
-    expect(validationUtil.notNull).toHaveBeenCalledWith(value);
+    expect(valdrUtil.notNull).toHaveBeenCalledWith(value);
   });
 
   it('should return the validation result', function () {

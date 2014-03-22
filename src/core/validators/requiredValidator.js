@@ -1,6 +1,6 @@
 angular.module('valdr')
 
-  .factory('requiredValidator', ['validationUtil', function (validationUtil) {
+  .factory('requiredValidator', ['valdrUtil', function (valdrUtil) {
     return {
       name: 'Required',
 
@@ -10,8 +10,8 @@ angular.module('valdr')
        * @returns (object) validation result
        */
       validate: function (config, value) {
-        var valid = validationUtil.notNull(value);
-        return validationUtil.result(valid, config.message);
+        var valid = valdrUtil.notNull(value);
+        return valdrUtil.result(valid, config.message);
       }
     };
   }]);

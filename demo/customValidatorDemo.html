@@ -9,10 +9,7 @@
 
   <h1>Custom Validator Demo</h1>
 
-  <form name="demoForm" novalidate>
-
-    <div valdr-type="Person">
-
+  <form name="demoForm" novalidate valdr-type="Person">
       <div>
         <label for="lastName">Last Name</label>
         <input type="text"
@@ -30,9 +27,6 @@
                ng-model="person.firstName">
       </div>
       <pre>$valid {{ demoForm.firstName.$valid }}</pre>
-
-    </div>
-
   </form>
 
   <pre>demoForm.$valid: {{ demoForm.$valid }}</pre>
@@ -52,12 +46,12 @@
 <script>
   var demoApp = angular.module('demoApp', ['valdr']);
 
-  demoApp.factory('customValidator', function (validationUtil) {
+  demoApp.factory('customValidator', function (valdrUtil) {
     return {
       name: 'CustomValidator',
       validate: function (config, value) {
         var valid = value === 'Hanueli';
-        return validationUtil.result(valid, config.message);
+        return valdrUtil.result(valid, config.message);
       }
     };
   });
