@@ -2,7 +2,7 @@ angular.module('ncaModelValidation')
 
   .provider('ncaValidator', function () {
 
-    var validationRules = {}, validators = {}, customValidators = [], validationRulesUrl;
+    var validationRules = {}, validators = {}, validatorNames = [], validationRulesUrl;
 
     var addValidationRules = function (newValidationRules) {
       angular.extend(validationRules, newValidationRules);
@@ -15,17 +15,17 @@ angular.module('ncaModelValidation')
     };
 
     this.addValidator = function (validatorName) {
-      customValidators.push(validatorName);
+      validatorNames.push(validatorName);
     };
 
+    this.addValidator('sizeValidator');
+    this.addValidator('requiredValidator');
+
     this.$get =
-      ['$log', '$injector', '$rootScope', '$http', 'ncaModelValidationEvents', 'ncaUtil', 'requiredValidator', 'sizeValidator',
-      function($log, $injector, $rootScope, $http, ncaModelValidationEvents, ncaUtil, requiredValidator, sizeValidator) {
+      ['$log', '$injector', '$rootScope', '$http', 'ncaModelValidationEvents', 'ncaUtil',
+      function($log, $injector, $rootScope, $http, ncaModelValidationEvents, ncaUtil) {
 
-      validators[requiredValidator.name] = requiredValidator;
-      validators[sizeValidator.name] = sizeValidator;
-
-      angular.forEach(customValidators, function(validatorName) {
+      angular.forEach(validatorNames, function(validatorName) {
         var validator = $injector.get(validatorName);
         validators[validator.name] = validator;
       });
