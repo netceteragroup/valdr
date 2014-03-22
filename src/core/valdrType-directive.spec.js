@@ -1,9 +1,9 @@
-describe('ncaFormType directive', function () {
+describe('valdrType directive', function () {
 
   var $scope, $compile, element, FormTypeController;
 
   var compileTemplate = function () {
-    var element = $compile(angular.element('<div nca-form-type="TestClass"></div>'))($scope);
+    var element = $compile(angular.element('<div valdr-type="TestClass"></div>'))($scope);
     $scope.$digest();
     return element;
   };
@@ -14,7 +14,7 @@ describe('ncaFormType directive', function () {
     $compile = _$compile_;
     $scope = $rootScope.$new();
     element = compileTemplate();
-    FormTypeController = element.controller('ncaFormType');
+    FormTypeController = element.controller('valdrType');
   }));
 
   it('should read the type from the attribute', function () {
@@ -24,13 +24,13 @@ describe('ncaFormType directive', function () {
   it('should allow to nest the directive', function () {
     // given
     var element = $compile(angular.element(
-      '<div nca-form-type="TestClass">' +
-        '<span nca-form-type="NestedClass"></span>' +
+      '<div valdr-type="TestClass">' +
+        '<span valdr-type="NestedClass"></span>' +
       '</div>'))($scope);
 
     // when
-    var rootController = element.controller('ncaFormType');
-    var nestedController = element.find('span').controller('ncaFormType');
+    var rootController = element.controller('valdrType');
+    var nestedController = element.find('span').controller('valdrType');
 
     // then
     expect(rootController.getType()).toBe('TestClass');

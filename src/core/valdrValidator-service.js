@@ -1,6 +1,6 @@
 angular.module('valdr')
 
-  .provider('ncaValidator', function () {
+  .provider('valdrValidator', function () {
 
     var validationRules = {}, validators = {}, validatorNames = [], validationRulesUrl;
 
@@ -22,8 +22,8 @@ angular.module('valdr')
     this.addValidator('requiredValidator');
 
     this.$get =
-      ['$log', '$injector', '$rootScope', '$http', 'valdrEvents', 'ncaUtil',
-      function($log, $injector, $rootScope, $http, valdrEvents, ncaUtil) {
+      ['$log', '$injector', '$rootScope', '$http', 'valdrEvents', 'valdrUtil',
+      function($log, $injector, $rootScope, $http, valdrEvents, valdrUtil) {
 
       angular.forEach(validatorNames, function(validatorName) {
         var validator = $injector.get(validatorName);
@@ -38,7 +38,7 @@ angular.module('valdr')
       }
 
       var getValidationRulesForType = function (typeName) {
-        if (!ncaUtil.has(validationRules, typeName)) {
+        if (!valdrUtil.has(validationRules, typeName)) {
           $log.warn('No validation rules for type ' + typeName + ' available.');
           return;
         }
@@ -58,12 +58,12 @@ angular.module('valdr')
         validate: function (typeName, fieldName, value) {
 
           var validationRules = getValidationRulesForType(typeName);
-          if (ncaUtil.has(validationRules, fieldName)) {
+          if (valdrUtil.has(validationRules, fieldName)) {
             var fieldValidationRules = validationRules[fieldName],
                 isValid = true,
                 validationMessages = [];
 
-            ncaUtil.forOwn(fieldValidationRules, function (validatorName, validationRules) {
+            valdrUtil.forOwn(fieldValidationRules, function (validatorName, validationRules) {
 
               var validator = validators[validatorName];
               if (angular.isUndefined(validator)) {

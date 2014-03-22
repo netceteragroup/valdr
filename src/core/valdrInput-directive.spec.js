@@ -1,16 +1,16 @@
 describe('nca input directive', function () {
 
-  var $scope, element, $compile, ngModelController, ncaValidator, valdrEvents,
+  var $scope, element, $compile, ngModelController, valdrValidator, valdrEvents,
     validationMessages = ['validationMessagesArray'];
 
   beforeEach(function () {
     module('valdr');
 
     /**
-     * Mock the ncaValidator to always return 'true' when the value equals the string 'valid'.
+     * Mock the valdrValidator to always return 'true' when the value equals the string 'valid'.
      */
     module(function ($provide) {
-      $provide.value('ncaValidator', {
+      $provide.value('valdrValidator', {
         validate: function (typeName, fieldName, value) {
           return {
             valid: value === 'valid',
@@ -23,20 +23,20 @@ describe('nca input directive', function () {
 
   var compileTemplate = function () {
     var element = $compile(angular.element(
-      '<form name="demoForm"><div nca-form-type="TestClass">' +
+      '<form name="demoForm"><div valdr-type="TestClass">' +
         '<input type="text" name="fieldName" ng-model="myObject.field">' +
       '</div></form>'))($scope);
     $scope.$digest();
     return element;
   };
 
-  beforeEach(inject(function ($rootScope, _$compile_, _ncaValidator_, _valdrEvents_) {
+  beforeEach(inject(function ($rootScope, _$compile_, _valdrValidator_, _valdrEvents_) {
     $compile = _$compile_;
     $scope = $rootScope.$new();
     $scope.myObject = { field: 'fieldValue' };
     element = compileTemplate();
     ngModelController = element.find('input').controller('ngModel');
-    ncaValidator = _ncaValidator_;
+    valdrValidator = _valdrValidator_;
     valdrEvents = _valdrEvents_;
   }));
 
@@ -48,7 +48,7 @@ describe('nca input directive', function () {
 
     // then
     expect(ngModelController.$valid).toBe(false);
-    expect(ngModelController.ncaValidationMessages).toBe(validationMessages);
+    expect(ngModelController.valdrMessages).toBe(validationMessages);
   });
 
   it('should set the validity to true on ngModelController if validation is ok', function () {
@@ -59,13 +59,13 @@ describe('nca input directive', function () {
 
     // then
     expect(ngModelController.$valid).toBe(true);
-    expect(ngModelController.ncaValidationMessages).toBe(validationMessages);
+    expect(ngModelController.valdrMessages).toBe(validationMessages);
   });
 
   it('should throw error if no field name is provided on the input', function () {
     // given
     var invalidInput =
-      '<form name="demoForm"><div nca-form-type="TestClass">' +
+      '<form name="demoForm"><div valdr-type="TestClass">' +
         '<input type="text" ng-model="myObject.field">' +
       '</div></form>';
 
@@ -77,13 +77,13 @@ describe('nca input directive', function () {
 
   it('should handle validation rule changed events', function () {
     // given
-    spyOn(ncaValidator, 'validate').andCallThrough();
+    spyOn(valdrValidator, 'validate').andCallThrough();
 
     // when
     $scope.$broadcast(valdrEvents.rulesChanged);
 
     // then
-    expect(ncaValidator.validate).toHaveBeenCalled();
+    expect(valdrValidator.validate).toHaveBeenCalled();
   });
 
 });

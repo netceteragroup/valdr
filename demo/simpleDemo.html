@@ -11,7 +11,7 @@
 
   <form name="demoForm" novalidate>
 
-    <div nca-form-type="Person">
+    <div valdr-type="Person">
 
       <div>
         <label for="lastName">Last Name</label>
@@ -88,17 +88,17 @@
     }
   };
 
-  demoApp.config(function(ncaValidatorProvider) {
-    ncaValidatorProvider.addValidationRules(VALIDATION_RULES);
+  demoApp.config(function(valdrValidatorProvider) {
+    valdrValidatorProvider.addValidationRules(VALIDATION_RULES);
   });
 
-  demoApp.controller('TestController', function ($scope, ncaValidator) {
+  demoApp.controller('TestController', function ($scope, valdrValidator) {
     $scope.person = {};
     $scope.VALIDATION_RULES = VALIDATION_RULES;
 
     $scope.addZipRules = function () {
 
-      ncaValidator.addValidationRules({
+      valdrValidator.addValidationRules({
         'Person': {
           'lastName': {
             'Size': {
@@ -121,7 +121,7 @@
           }
         }
       });
-      $scope.VALIDATION_RULES = ncaValidator.getValidationRules();
+      $scope.VALIDATION_RULES = valdrValidator.getValidationRules();
     };
 
   });

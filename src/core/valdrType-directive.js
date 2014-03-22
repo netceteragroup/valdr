@@ -1,6 +1,6 @@
 angular.module('valdr')
 
-  .directive('ncaFormType', function () {
+  .directive('valdrType', function () {
     return  {
       controller: function() {
         var type;
@@ -15,7 +15,7 @@ angular.module('valdr')
       },
       priority: 1,
       link: function (scope, element, attrs, controller) {
-        controller.setType(attrs.ncaFormType);
+        controller.setType(attrs.valdrType);
       }
     };
   });

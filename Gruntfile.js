@@ -24,13 +24,13 @@ module.exports = function (grunt) {
 
       core: [
         'src/valdr.js',
-        'src/core/ncaUtil-service.js',
+        'src/core/valdrUtil-service.js',
         'src/core/validators/validationUtil.js',
         'src/core/validators/requiredValidator.js',
         'src/core/validators/sizeValidator.js',
-        'src/core/ncaValidator-service.js',
-        'src/core/ncaFormType-directive.js',
-        'src/core/ncaInput-directive.js'
+        'src/core/valdrValidator-service.js',
+        'src/core/valdrType-directive.js',
+        'src/core/valdrInput-directive.js'
       ],
 
       test: ['src/**/*.spec.js']

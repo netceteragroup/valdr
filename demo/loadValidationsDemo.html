@@ -11,7 +11,7 @@
 
   <form name="demoForm" novalidate>
 
-    <div nca-form-type="Person">
+    <div valdr-type="Person">
 
       <div>
         <label for="lastName">Last Name</label>
@@ -60,14 +60,14 @@
 <script>
   var demoApp = angular.module('demoApp', ['valdr']);
 
-  demoApp.config(function(ncaValidatorProvider) {
-    ncaValidatorProvider.setValidationRulesUrl('/api/rules');
+  demoApp.config(function(valdrValidatorProvider) {
+    valdrValidatorProvider.setValidationRulesUrl('/api/rules');
   });
 
-  demoApp.controller('TestController', function ($scope, ncaValidator) {
+  demoApp.controller('TestController', function ($scope, valdrValidator) {
     $scope.person = {};
 
-    $scope.$watch(ncaValidator.getValidationRules, function (rules) {
+    $scope.$watch(valdrValidator.getValidationRules, function (rules) {
       $scope.VALIDATION_RULES = rules;
     });
   });

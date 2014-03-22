@@ -1,10 +1,10 @@
-describe('ncaUtil', function () {
+describe('valdrUtil', function () {
 
-  var ncaUtil;
+  var valdrUtil;
 
   beforeEach(module('valdr'));
-  beforeEach(inject(function (_ncaUtil_) {
-    ncaUtil = _ncaUtil_;
+  beforeEach(inject(function (_valdrUtil_) {
+    valdrUtil = _valdrUtil_;
   }));
 
   describe('forOwn()', function () {
@@ -15,20 +15,20 @@ describe('ncaUtil', function () {
       };
 
       spyOn(callback, 'func').andCallThrough();
-      ncaUtil.forOwn({property: 'value', prop2: 'val2'}, callback.func);
+      valdrUtil.forOwn({property: 'value', prop2: 'val2'}, callback.func);
       expect(callback.func.calls.length).toEqual(2);
 
     });
     it('should return \'value\' for single property', function () {
-      ncaUtil.forOwn({property: 'value'}, function (property, value) {
+      valdrUtil.forOwn({property: 'value'}, function (property, value) {
         expect(value).toEqual('value');
       });
     });
   });
 
   it('should have a isNaN function',
-    inject(function (ncaUtil) {
-      expect(ncaUtil.isNaN);
+    inject(function (valdrUtil) {
+      expect(valdrUtil.isNaN);
     }));
 
 });

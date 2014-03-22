@@ -1,19 +1,19 @@
 angular.module('valdr')
 
   .directive('input',
-    ['valdrEvents', 'ncaValidator', function (valdrEvents, ncaValidator) {
+    ['valdrEvents', 'valdrValidator', function (valdrEvents, valdrValidator) {
     return  {
       restrict: 'E',
-      require: ['?^ncaFormType', '?^ngModel'],
+      require: ['?^valdrType', '?^ngModel'],
       link: function (scope, element, attrs, controllers) {
 
-        var ncaFormTypeController = controllers[0],
+        var valdrTypeController = controllers[0],
           ngModelController = controllers[1],
           fieldName = attrs.name;
 
-        // Stop right here if this is an <input> that's either not inside of a nca-form-type block
+        // Stop right here if this is an <input> that's either not inside of a valdr-type block
         // or there is no ng-model bound to it.
-        if (!ncaFormTypeController || !ngModelController) {
+        if (!valdrTypeController || !ngModelController) {
           return;
         }
 
@@ -22,12 +22,12 @@ angular.module('valdr')
         }
 
         var setValidityAndMessages = function (validationResult) {
-          ngModelController.$setValidity('ncaValidator', validationResult.valid);
-          ngModelController.ncaValidationMessages = validationResult.messages;
+          ngModelController.$setValidity('valdrValidator', validationResult.valid);
+          ngModelController.valdrMessages = validationResult.messages;
         };
 
         var validate = function (value) {
-          var validationResult = ncaValidator.validate(ncaFormTypeController.getType(), fieldName, value);
+          var validationResult = valdrValidator.validate(valdrTypeController.getType(), fieldName, value);
           setValidityAndMessages(validationResult);
           return validationResult.valid ? value : undefined;
         };

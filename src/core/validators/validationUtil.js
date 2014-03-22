@@ -1,6 +1,6 @@
 angular.module('valdr')
 
-  .factory('validationUtil', ['ncaUtil', function (ncaUtil) {
+  .factory('validationUtil', ['valdrUtil', function (valdrUtil) {
     return {
 
       /**
@@ -8,7 +8,7 @@ angular.module('valdr')
        * @returns (boolean) true if the given value is not null, not undefined and not NaN
        */
       notNull: function (value) {
-        return angular.isDefined(value) && value !== '' && value !== null && !ncaUtil.isNaN(value);
+        return angular.isDefined(value) && value !== '' && value !== null && !valdrUtil.isNaN(value);
       },
 
       /**

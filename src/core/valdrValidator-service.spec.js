@@ -1,6 +1,6 @@
-describe('ncaValidator', function () {
+describe('valdrValidator', function () {
 
-  var ncaValidator, $rootScope, valdrEvents, sizeValidator, requiredValidator,
+  var valdrValidator, $rootScope, valdrEvents, sizeValidator, requiredValidator,
     personRules = {
       'Person': {
         'firstName': {
@@ -24,8 +24,8 @@ describe('ncaValidator', function () {
 
   beforeEach(module('valdr'));
 
-  beforeEach(inject(function (_ncaValidator_, _$rootScope_, _valdrEvents_, _sizeValidator_, _requiredValidator_) {
-    ncaValidator = _ncaValidator_;
+  beforeEach(inject(function (_valdrValidator_, _$rootScope_, _valdrEvents_, _sizeValidator_, _requiredValidator_) {
+    valdrValidator = _valdrValidator_;
     $rootScope = _$rootScope_;
     valdrEvents = _valdrEvents_;
     sizeValidator = _sizeValidator_;
@@ -36,20 +36,20 @@ describe('ncaValidator', function () {
 
     it('should add initial validation rules', function () {
       // when
-      ncaValidator.addValidationRules(personRules);
+      valdrValidator.addValidationRules(personRules);
 
       // then
-      expect(ncaValidator.getValidationRules()).toEqual(personRules);
+      expect(valdrValidator.getValidationRules()).toEqual(personRules);
     });
 
     it('should extend initial validation rules', function () {
       // when
-      ncaValidator.addValidationRules(personRules);
-      ncaValidator.addValidationRules(addressRules);
+      valdrValidator.addValidationRules(personRules);
+      valdrValidator.addValidationRules(addressRules);
 
       // then
-      expect(ncaValidator.getValidationRules().Person).toEqual(personRules.Person);
-      expect(ncaValidator.getValidationRules().Address).toEqual(addressRules.Address);
+      expect(valdrValidator.getValidationRules().Person).toEqual(personRules.Person);
+      expect(valdrValidator.getValidationRules().Address).toEqual(addressRules.Address);
     });
 
     it('should broadcast event when validation rules change', function () {
@@ -57,7 +57,7 @@ describe('ncaValidator', function () {
       spyOn($rootScope, '$broadcast');
 
       // when
-      ncaValidator.addValidationRules(personRules);
+      valdrValidator.addValidationRules(personRules);
 
       // then
       expect($rootScope.$broadcast).toHaveBeenCalledWith(valdrEvents.rulesChanged);
@@ -68,11 +68,11 @@ describe('ncaValidator', function () {
 
     it('should validate with correct validator', function () {
       // given
-      ncaValidator.addValidationRules(personRules);
+      valdrValidator.addValidationRules(personRules);
       spyOn(sizeValidator, 'validate').andCallThrough();
 
       // when
-      var validationResult = ncaValidator.validate('Person', 'firstName', 'Hanueli');
+      var validationResult = valdrValidator.validate('Person', 'firstName', 'Hanueli');
 
       // then
       expect(validationResult.valid).toBe(true);
@@ -81,11 +81,11 @@ describe('ncaValidator', function () {
 
     it('should return invalid state and message if validation fails', function () {
       // given
-      ncaValidator.addValidationRules(personRules);
+      valdrValidator.addValidationRules(personRules);
       spyOn(sizeValidator, 'validate').andCallThrough();
 
       // when
-      var validationResult = ncaValidator.validate('Person', 'firstName', 'Hanueli with a name that is too long');
+      var validationResult = valdrValidator.validate('Person', 'firstName', 'Hanueli with a name that is too long');
 
       // then
       expect(sizeValidator.validate).toHaveBeenCalled();
@@ -97,7 +97,7 @@ describe('ncaValidator', function () {
 
     it('should return invalid state and message if multiple validations fail', function () {
       // given
-      ncaValidator.addValidationRules({
+      valdrValidator.addValidationRules({
         'Person': {
           'firstName': {
             'Size': {
@@ -115,7 +115,7 @@ describe('ncaValidator', function () {
       spyOn(requiredValidator, 'validate').andCallThrough();
 
       // when
-      var validationResult = ncaValidator.validate('Person', 'firstName', undefined);
+      var validationResult = valdrValidator.validate('Person', 'firstName', undefined);
 
       // then
       expect(sizeValidator.validate).toHaveBeenCalled();
@@ -128,14 +128,14 @@ describe('ncaValidator', function () {
   });
 });
 
-describe('ncaValidatorProvider', function () {
+describe('valdrValidatorProvider', function () {
 
   var $httpBackend, apiUrl = '/api/validation';
 
   beforeEach(function () {
     module('valdr');
-    module(function (ncaValidatorProvider) {
-      ncaValidatorProvider.setValidationRulesUrl(apiUrl);
+    module(function (valdrValidatorProvider) {
+      valdrValidatorProvider.setValidationRulesUrl(apiUrl);
     });
     inject(function (_$httpBackend_) {
       $httpBackend= _$httpBackend_;
@@ -147,7 +147,7 @@ describe('ncaValidatorProvider', function () {
     $httpBackend.expect('GET', apiUrl).respond(200, {});
 
     /*jshint unused:false */
-    inject(function (ncaValidator) {
+    inject(function (valdrValidator) {
       $httpBackend.flush();
     });
   });

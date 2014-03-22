@@ -3,7 +3,7 @@ angular.module('valdr')
 /**
  * Exposes util functions for dependency injection.
  */
-  .factory('ncaUtil', function () {
+  .factory('valdrUtil', function () {
     return {
       isNaN: function (value) {
         // `NaN` as a primitive is the only value that is not equal to itself
