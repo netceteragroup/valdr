@@ -7,7 +7,7 @@
 
 <div ng-controller="TestController">
 
-  <h1>Async Demo</h1>
+  <h1>Custom Validator Demo</h1>
 
   <form name="demoForm" novalidate>
 
@@ -31,14 +31,6 @@
       </div>
       <pre>$valid {{ demoForm.firstName.$valid }}</pre>
 
-      <div>
-        <label for="zipCode">Zip Code</label>
-        <input type="text"
-               id="zipCode"
-               name="zipCode"
-               ng-model="person.zipCode">
-      </div>
-      <pre>$valid {{ demoForm.zipCode.$valid }}</pre>
     </div>
 
   </form>
@@ -61,8 +53,35 @@
 <script>
   var demoApp = angular.module('demoApp', ['ncaModelValidation']);
 
+  demoApp.factory('customValidator', function (validationUtil) {
+    return {
+      name: 'CustomValidator',
+      validate: function (config, value) {
+        var valid = value === 'Hanueli';
+        return validationUtil.result(valid, config.message);
+      }
+    };
+  });
+
   demoApp.config(function(ncaValidatorProvider) {
-    ncaValidatorProvider.setValidationRulesUrl('/api/rules');
+
+    ncaValidatorProvider.addValidator('customValidator');
+
+    ncaValidatorProvider.addValidationRules({
+      'Person': {
+        'lastName': {
+          'Required': {
+            'message': 'This field is required.'
+          }
+        },
+        'firstName': {
+          'CustomValidator': {
+            'message': 'First name must be Hanueli.'
+          }
+        }
+      }
+    });
+
   });
 
   demoApp.controller('TestController', function ($scope, ncaValidator) {
