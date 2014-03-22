@@ -1,6 +1,6 @@
 {
   "name": "valdr",
-  "version": "0.0.1",
+  "version": "0.0.1-alpha",
   "description": "Validate AngularJS models",
   "homepage": "https://github.com/netceteragroup/valdr",
   "repository": {
