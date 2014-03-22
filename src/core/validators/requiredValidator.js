@@ -1,4 +1,4 @@
-angular.module('ncaModelValidation')
+angular.module('valdr')
 
   .factory('requiredValidator', ['validationUtil', function (validationUtil) {
     return {

@@ -46,12 +46,11 @@
 </div>
 
 <script src="/bower_components/angular/angular.js"></script>
-<script src="/bower_components/lodash/dist/lodash.js"></script>
-<script src="js/angular-model-validation.js"></script>
+<script src="js/valdr.js"></script>
 <script src="http://localhost:35729/livereload.js"></script>
 
 <script>
-  var demoApp = angular.module('demoApp', ['ncaModelValidation']);
+  var demoApp = angular.module('demoApp', ['valdr']);
 
   demoApp.factory('customValidator', function (validationUtil) {
     return {

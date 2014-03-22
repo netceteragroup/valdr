@@ -1,7 +1,7 @@
-angular.module('ncaModelValidation')
+angular.module('valdr')
 
   .directive('input',
-    ['ncaModelValidationEvents', 'ncaValidator', function (ncaModelValidationEvents, ncaValidator) {
+    ['valdrEvents', 'ncaValidator', function (valdrEvents, ncaValidator) {
     return  {
       restrict: 'E',
       require: ['?^ncaFormType', '?^ngModel'],
@@ -35,7 +35,7 @@ angular.module('ncaModelValidation')
         ngModelController.$parsers.push(validate);
         ngModelController.$formatters.push(validate);
 
-        scope.$on(ncaModelValidationEvents.rulesChanged, function () {
+        scope.$on(valdrEvents.rulesChanged, function () {
           validate(ngModelController.$viewValue);
         });
       }

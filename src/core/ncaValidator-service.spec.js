@@ -1,6 +1,6 @@
 describe('ncaValidator', function () {
 
-  var ncaValidator, $rootScope, ncaModelValidationEvents, sizeValidator, requiredValidator,
+  var ncaValidator, $rootScope, valdrEvents, sizeValidator, requiredValidator,
     personRules = {
       'Person': {
         'firstName': {
@@ -22,12 +22,12 @@ describe('ncaValidator', function () {
       }
     };
 
-  beforeEach(module('ncaModelValidation'));
+  beforeEach(module('valdr'));
 
-  beforeEach(inject(function (_ncaValidator_, _$rootScope_, _ncaModelValidationEvents_, _sizeValidator_, _requiredValidator_) {
+  beforeEach(inject(function (_ncaValidator_, _$rootScope_, _valdrEvents_, _sizeValidator_, _requiredValidator_) {
     ncaValidator = _ncaValidator_;
     $rootScope = _$rootScope_;
-    ncaModelValidationEvents = _ncaModelValidationEvents_;
+    valdrEvents = _valdrEvents_;
     sizeValidator = _sizeValidator_;
     requiredValidator = _requiredValidator_;
   }));
@@ -60,7 +60,7 @@ describe('ncaValidator', function () {
       ncaValidator.addValidationRules(personRules);
 
       // then
-      expect($rootScope.$broadcast).toHaveBeenCalledWith(ncaModelValidationEvents.rulesChanged);
+      expect($rootScope.$broadcast).toHaveBeenCalledWith(valdrEvents.rulesChanged);
     });
   });
 
@@ -133,7 +133,7 @@ describe('ncaValidatorProvider', function () {
   var $httpBackend, apiUrl = '/api/validation';
 
   beforeEach(function () {
-    module('ncaModelValidation');
+    module('valdr');
     module(function (ncaValidatorProvider) {
       ncaValidatorProvider.setValidationRulesUrl(apiUrl);
     });

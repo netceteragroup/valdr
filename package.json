@@ -1,11 +1,11 @@
 {
-  "name": "angular-model-validation",
+  "name": "valdr",
   "version": "0.0.1",
   "description": "Validate AngularJS models",
-  "homepage": "https://github.com/netceteragroup/angular-model-validation",
+  "homepage": "https://github.com/netceteragroup/valdr",
   "repository": {
     "type": "git",
-    "url": "git://github.com/netceteragroup/angular-model-validation"
+    "url": "git://github.com/netceteragroup/valdr"
   },
   "scripts": {
     "postinstall": "bower install",

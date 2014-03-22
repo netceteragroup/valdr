@@ -8,7 +8,7 @@ describe('sizeValidator', function () {
       message: 'messageKey'
     };
 
-  beforeEach(module('ncaModelValidation'));
+  beforeEach(module('valdr'));
 
   beforeEach(inject(function (_sizeValidator_, _validationUtil_) {
     sizeValidator = _sizeValidator_;

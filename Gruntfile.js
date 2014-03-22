@@ -23,7 +23,7 @@ module.exports = function (grunt) {
     files: {
 
       core: [
-        'src/model-validation.js',
+        'src/valdr.js',
         'src/core/ncaUtil-service.js',
         'src/core/validators/validationUtil.js',
         'src/core/validators/requiredValidator.js',
@@ -69,7 +69,7 @@ module.exports = function (grunt) {
 
       core: {
         src: ['js.prefix', '<%= files.core %>', 'js.suffix'],
-        dest: '<%= build_dir %>/angular-model-validation.js'
+        dest: '<%= build_dir %>/valdr.js'
       }
 
     },
@@ -77,7 +77,7 @@ module.exports = function (grunt) {
     uglify: {
       core: {
         files: {
-          '<%= build_dir %>/angular-model-validation.min.js': '<%= concat.core.dest %>'
+          '<%= build_dir %>/valdr.min.js': '<%= concat.core.dest %>'
         }
       }
     },

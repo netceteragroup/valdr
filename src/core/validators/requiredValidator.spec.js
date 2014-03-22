@@ -6,7 +6,7 @@ describe('requiredValidator', function () {
       message: 'messageKey'
     };
 
-  beforeEach(module('ncaModelValidation'));
+  beforeEach(module('valdr'));
 
   beforeEach(inject(function (_requiredValidator_, _validationUtil_) {
     requiredValidator = _requiredValidator_;

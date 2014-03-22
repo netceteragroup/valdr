@@ -1,10 +1,10 @@
 describe('nca input directive', function () {
 
-  var $scope, element, $compile, ngModelController, ncaValidator, ncaModelValidationEvents,
+  var $scope, element, $compile, ngModelController, ncaValidator, valdrEvents,
     validationMessages = ['validationMessagesArray'];
 
   beforeEach(function () {
-    module('ncaModelValidation');
+    module('valdr');
 
     /**
      * Mock the ncaValidator to always return 'true' when the value equals the string 'valid'.
@@ -30,14 +30,14 @@ describe('nca input directive', function () {
     return element;
   };
 
-  beforeEach(inject(function ($rootScope, _$compile_, _ncaValidator_, _ncaModelValidationEvents_) {
+  beforeEach(inject(function ($rootScope, _$compile_, _ncaValidator_, _valdrEvents_) {
     $compile = _$compile_;
     $scope = $rootScope.$new();
     $scope.myObject = { field: 'fieldValue' };
     element = compileTemplate();
     ngModelController = element.find('input').controller('ngModel');
     ncaValidator = _ncaValidator_;
-    ncaModelValidationEvents = _ncaModelValidationEvents_;
+    valdrEvents = _valdrEvents_;
   }));
 
   it('should set the validity to false on ngModelController if validation fails', function () {
@@ -80,7 +80,7 @@ describe('nca input directive', function () {
     spyOn(ncaValidator, 'validate').andCallThrough();
 
     // when
-    $scope.$broadcast(ncaModelValidationEvents.rulesChanged);
+    $scope.$broadcast(valdrEvents.rulesChanged);
 
     // then
     expect(ncaValidator.validate).toHaveBeenCalled();

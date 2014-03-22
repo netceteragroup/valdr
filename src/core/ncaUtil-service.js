@@ -1,4 +1,4 @@
-angular.module('ncaModelValidation')
+angular.module('valdr')
 
 /**
  * Exposes util functions for dependency injection.

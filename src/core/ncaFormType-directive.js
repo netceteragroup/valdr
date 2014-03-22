@@ -1,4 +1,4 @@
-angular.module('ncaModelValidation')
+angular.module('valdr')
 
   .directive('ncaFormType', function () {
     return  {

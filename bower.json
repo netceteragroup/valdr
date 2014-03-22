@@ -1,12 +1,12 @@
 {
   "author": "Netcetera AG",
-  "name": "angular-model-validation",
+  "name": "valdr",
   "description": "Validate AngularJS models",
   "version": "0.0.1",
-  "homepage": "https://github.com/netceteragroup/angular-model-validation",
+  "homepage": "https://github.com/netceteragroup/valdr",
   "repository": {
     "type": "git",
-    "url": "git://github.com/netceteragroup/angular-model-validation"
+    "url": "git://github.com/netceteragroup/valdr"
   },
   "devDependencies": {
     "angular": "~1.2.14",

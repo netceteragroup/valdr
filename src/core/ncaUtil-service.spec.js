@@ -2,7 +2,7 @@ describe('ncaUtil', function () {
 
   var ncaUtil;
 
-  beforeEach(module('ncaModelValidation'));
+  beforeEach(module('valdr'));
   beforeEach(inject(function (_ncaUtil_) {
     ncaUtil = _ncaUtil_;
   }));

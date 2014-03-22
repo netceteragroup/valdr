@@ -8,7 +8,7 @@ describe('ncaFormType directive', function () {
     return element;
   };
 
-  beforeEach(module('ncaModelValidation'));
+  beforeEach(module('valdr'));
 
   beforeEach(inject(function ($rootScope, $controller, _$compile_) {
     $compile = _$compile_;

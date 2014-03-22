@@ -1,4 +1,4 @@
-angular.module('ncaModelValidation')
+angular.module('valdr')
 
   .provider('ncaValidator', function () {
 
@@ -22,8 +22,8 @@ angular.module('ncaModelValidation')
     this.addValidator('requiredValidator');
 
     this.$get =
-      ['$log', '$injector', '$rootScope', '$http', 'ncaModelValidationEvents', 'ncaUtil',
-      function($log, $injector, $rootScope, $http, ncaModelValidationEvents, ncaUtil) {
+      ['$log', '$injector', '$rootScope', '$http', 'valdrEvents', 'ncaUtil',
+      function($log, $injector, $rootScope, $http, valdrEvents, ncaUtil) {
 
       angular.forEach(validatorNames, function(validatorName) {
         var validator = $injector.get(validatorName);
@@ -33,7 +33,7 @@ angular.module('ncaModelValidation')
       if (validationRulesUrl) {
         $http.get(validationRulesUrl).then(function (response) {
           addValidationRules(response.data);
-          $rootScope.$broadcast(ncaModelValidationEvents.rulesChanged);
+          $rootScope.$broadcast(valdrEvents.rulesChanged);
         });
       }
 
@@ -88,7 +88,7 @@ angular.module('ncaModelValidation')
         },
         addValidationRules: function (newValidationRules) {
           addValidationRules(newValidationRules);
-          $rootScope.$broadcast(ncaModelValidationEvents.rulesChanged);
+          $rootScope.$broadcast(valdrEvents.rulesChanged);
         },
         getValidationRules: function () {
           return validationRules;

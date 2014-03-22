@@ -2,7 +2,7 @@ describe('validationUtil', function () {
 
   var validationUtil;
 
-  beforeEach(module('ncaModelValidation'));
+  beforeEach(module('valdr'));
 
   beforeEach(inject(function (_validationUtil_) {
     validationUtil = _validationUtil_;
