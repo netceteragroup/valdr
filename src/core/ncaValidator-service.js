@@ -2,7 +2,7 @@ angular.module('ncaModelValidation')
 
   .provider('ncaValidator', function () {
 
-    var validationRules = {}, validators = {}, validationRulesUrl;
+    var validationRules = {}, validators = {}, customValidators = [], validationRulesUrl;
 
     var addValidationRules = function (newValidationRules) {
       angular.extend(validationRules, newValidationRules);
@@ -14,12 +14,21 @@ angular.module('ncaModelValidation')
       validationRulesUrl = url;
     };
 
+    this.addValidator = function (validatorName) {
+      customValidators.push(validatorName);
+    };
+
     this.$get =
-      ['$log', '$rootScope', '$http', 'ncaModelValidationEvents', 'ncaUtil', 'requiredValidator', 'sizeValidator',
-      function($log, $rootScope, $http, ncaModelValidationEvents, ncaUtil, requiredValidator, sizeValidator) {
+      ['$log', '$injector', '$rootScope', '$http', 'ncaModelValidationEvents', 'ncaUtil', 'requiredValidator', 'sizeValidator',
+      function($log, $injector, $rootScope, $http, ncaModelValidationEvents, ncaUtil, requiredValidator, sizeValidator) {
 
       validators[requiredValidator.name] = requiredValidator;
       validators[sizeValidator.name] = sizeValidator;
+
+      angular.forEach(customValidators, function(validatorName) {
+        var validator = $injector.get(validatorName);
+        validators[validator.name] = validator;
+      });
 
       if (validationRulesUrl) {
         $http.get(validationRulesUrl).then(function (response) {
@@ -48,17 +57,13 @@ angular.module('ncaModelValidation')
          */
         validate: function (typeName, fieldName, value) {
 
-          $log.debug('validating type: ' + typeName + ' field: ' +  fieldName + ' value: ' + value);
-
           var validationRules = getValidationRulesForType(typeName);
           if (ncaUtil.has(validationRules, fieldName)) {
-            var fieldValidationRules = validationRules[fieldName];
-
-            var isValid = true;
-            var validationMessages = [];
+            var fieldValidationRules = validationRules[fieldName],
+                isValid = true,
+                validationMessages = [];
 
             ncaUtil.forOwn(fieldValidationRules, function (validatorName, validationRules) {
-              $log.debug('Validating with validator: ' + validatorName + ' Rules: ' + JSON.stringify(validationRules));
 
               var validator = validators[validatorName];
               if (angular.isUndefined(validator)) {
