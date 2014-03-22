@@ -31,19 +31,19 @@
       </div>
       <pre>$valid {{ demoForm.firstName.$valid }}</pre>
 
-      <div>
+      <div valdr-type="Address">
         <label for="zipCode">Zip Code</label>
         <input type="text"
                id="zipCode"
                name="zipCode"
-               ng-model="person.zipCode">
+               ng-model="person.address.zipCode">
       </div>
       <pre>$valid {{ demoForm.zipCode.$valid }}</pre>
     </div>
 
   </form>
 
-  <button ng-click="addZipRules()">Change ZIP rules</button>
+  <button ng-click="addAddressRules()">Add address rules</button>
   <pre>demoForm.$valid: {{ demoForm.$valid }}</pre>
 
   <h3>demoForm</h3>
@@ -55,7 +55,7 @@
 </div>
 
 <script src="/bower_components/angular/angular.js"></script>
-<script src="js/valdr.js"></script>
+<script src="js/valdr.min.js"></script>
 <script src="http://localhost:35729/livereload.js"></script>
 
 <script>
@@ -68,21 +68,14 @@
         'Size': {
           'min': 2,
           'max': 10,
-          'message': 'javax.validation.constraints.Size.message'
+          'message': 'Last name must be between 2 and 10 characters.'
         }
       },
       'firstName': {
         'Size': {
           'min': 2,
           'max': 20,
-          'message': 'javax.validation.constraints.Size.message'
-        }
-      },
-      'zipCode': {
-        'Digits': {
-          'integer': 4,
-          'fraction': 0,
-          'message': 'javax.validation.constraints.Digits.message'
+          'message': 'First name must be between 2 and 20 characters.'
         }
       }
     }
@@ -96,27 +89,13 @@
     $scope.person = {};
     $scope.VALIDATION_RULES = VALIDATION_RULES;
 
-    $scope.addZipRules = function () {
+    $scope.addAddressRules = function () {
 
       valdrValidator.addValidationRules({
-        'Person': {
-          'lastName': {
-            'Size': {
-              'min': 2,
-              'max': 10,
-              'message': 'javax.validation.constraints.Size.message'
-            }
-          },
-          'firstName': {
-            'Size': {
-              'min': 2,
-              'max': 20,
-              'message': 'javax.validation.constraints.Size.message'
-            }
-          },
+        'Address': {
           'zipCode': {
             'Required': {
-              'message': 'This field is required.'
+              'message': 'Zip code is required.'
             }
           }
         }
