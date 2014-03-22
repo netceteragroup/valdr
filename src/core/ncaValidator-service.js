@@ -15,8 +15,8 @@ angular.module('ncaModelValidation')
     };
 
     this.$get =
-      ['$log', '$rootScope', '$http', 'ncaModelValidationEvents', 'lodash', 'requiredValidator', 'sizeValidator',
-      function($log, $rootScope, $http, ncaModelValidationEvents, lodash, requiredValidator, sizeValidator) {
+      ['$log', '$rootScope', '$http', 'ncaModelValidationEvents', 'ncaUtil', 'requiredValidator', 'sizeValidator',
+      function($log, $rootScope, $http, ncaModelValidationEvents, ncaUtil, requiredValidator, sizeValidator) {
 
       validators[requiredValidator.name] = requiredValidator;
       validators[sizeValidator.name] = sizeValidator;
@@ -29,7 +29,7 @@ angular.module('ncaModelValidation')
       }
 
       var getValidationRulesForType = function (typeName) {
-        if (!lodash.has(validationRules, typeName)) {
+        if (!ncaUtil.has(validationRules, typeName)) {
           $log.warn('No validation rules for type ' + typeName + ' available.');
           return;
         }
@@ -51,14 +51,13 @@ angular.module('ncaModelValidation')
           $log.debug('validating type: ' + typeName + ' field: ' +  fieldName + ' value: ' + value);
 
           var validationRules = getValidationRulesForType(typeName);
-
-          if (lodash.has(validationRules, fieldName)) {
+          if (ncaUtil.has(validationRules, fieldName)) {
             var fieldValidationRules = validationRules[fieldName];
 
             var isValid = true;
             var validationMessages = [];
 
-            lodash.forOwn(fieldValidationRules, function (validationRules, validatorName) {
+            ncaUtil.forOwn(fieldValidationRules, function (validatorName, validationRules) {
               $log.debug('Validating with validator: ' + validatorName + ' Rules: ' + JSON.stringify(validationRules));
 
               var validator = validators[validatorName];
