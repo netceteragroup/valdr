@@ -3,10 +3,13 @@
 
 > Validate your AngularJS models
 
-
 ## Install
 
-TODO
+#### [Bower](http://bower.io)
+
+```
+bower install --save valdr
+```
 
 ## Use
 
