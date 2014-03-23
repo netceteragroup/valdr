@@ -3,7 +3,7 @@ describe('requiredValidator', function () {
   var requiredValidator,
     valdrUtil,
     config = {
-      message: 'messageKey'
+      message: 'message'
     };
 
   beforeEach(module('valdr'));
@@ -33,7 +33,7 @@ describe('requiredValidator', function () {
     var validationResult = requiredValidator.validate(config, value);
 
     // then
-    expect(validationResult.messageKey).toBe(config.message);
+    expect(validationResult.message).toBe(config.message);
     expect(validationResult.valid).toBe(true);
   });
 

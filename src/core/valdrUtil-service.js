@@ -7,7 +7,7 @@ angular.module('valdr')
     return {
 
       /**
-       * @param value the value to validate
+       * @param value the value
        * @returns (boolean) true if the given value is not null, not undefined, not an empty string and not NaN
        */
       notEmpty: function (value) {
@@ -17,13 +17,13 @@ angular.module('valdr')
       /**
        * Creates a validation result.
        * @param valid validity of field
-       * @param messageKey the message key
+       * @param message the message key
        * @param messageParams the message parameters
        */
-      result: function (valid, messageKey, messageParams) {
+      result: function (valid, message, messageParams) {
         return {
           valid: valid,
-          messageKey: messageKey,
+          message: message,
           messageParams: messageParams
         };
       },

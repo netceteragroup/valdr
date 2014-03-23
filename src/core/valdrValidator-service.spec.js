@@ -90,7 +90,7 @@ describe('valdrValidator', function () {
       // then
       expect(sizeValidator.validate).toHaveBeenCalled();
       expect(validationResult.valid).toBe(false);
-      expect(validationResult.messages[0].messageKey).toBe('size');
+      expect(validationResult.messages[0].message).toBe('size');
       expect(validationResult.messages[0].messageParams.max).toBe(10);
       expect(validationResult.messages[0].messageParams.min).toBe(0);
     });
@@ -121,8 +121,8 @@ describe('valdrValidator', function () {
       expect(sizeValidator.validate).toHaveBeenCalled();
       expect(requiredValidator.validate).toHaveBeenCalled();
       expect(validationResult.valid).toBe(false);
-      expect(validationResult.messages[0].messageKey).toBe('size');
-      expect(validationResult.messages[1].messageKey).toBe('required');
+      expect(validationResult.messages[0].message).toBe('size');
+      expect(validationResult.messages[1].message).toBe('required');
     });
 
   });

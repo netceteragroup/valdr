@@ -1,11 +1,10 @@
 describe('sizeValidator', function () {
 
-  var sizeValidator,
-    valdrUtil,
+  var sizeValidator, valdrUtil,
     config = {
       min: 5,
       max: 20,
-      message: 'messageKey'
+      message: 'message'
     };
 
   beforeEach(module('valdr'));
@@ -25,7 +24,7 @@ describe('sizeValidator', function () {
 
     // then
     expect(validationResult.valid).toBe(true);
-    expect(validationResult.messageKey).toBe(config.message);
+    expect(validationResult.message).toBe(config.message);
     expect(validationResult.messageParams).toBeDefined();
     expect(validationResult.messageParams.min).toBe(config.min);
     expect(validationResult.messageParams.max).toBe(config.max);
@@ -40,7 +39,7 @@ describe('sizeValidator', function () {
 
     // then
     expect(validationResult.valid).toBe(false);
-    expect(validationResult.messageKey).toBe(config.message);
+    expect(validationResult.message).toBe(config.message);
     expect(validationResult.messageParams).toBeDefined();
     expect(validationResult.messageParams.min).toBe(config.min);
     expect(validationResult.messageParams.max).toBe(config.max);

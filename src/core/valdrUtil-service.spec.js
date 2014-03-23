@@ -37,29 +37,29 @@ describe('valdrUtil', function () {
     it('should create validation result', function () {
       // given
       var validity = false;
-      var messageKey = 'some.message.key';
+      var message = 'some.message.key';
       var messageParams = ['one', 'two'];
 
       // when
-      var result = valdrUtil.result(validity, messageKey, messageParams);
+      var result = valdrUtil.result(validity, message, messageParams);
 
       // then
       expect(result.valid).toBe(validity);
-      expect(result.messageKey).toBe(messageKey);
+      expect(result.message).toBe(message);
       expect(result.messageParams).toBe(messageParams);
     });
 
     it('should create validation result without message params', function () {
       // given
       var validity = true;
-      var messageKey = 'some.message.key';
+      var message = 'some.message.key';
 
       // when
-      var result = valdrUtil.result(validity, messageKey);
+      var result = valdrUtil.result(validity, message);
 
       // then
       expect(result.valid).toBe(validity);
-      expect(result.messageKey).toBe(messageKey);
+      expect(result.message).toBe(message);
       expect(result.messageParams).toBeUndefined();
     });
 
