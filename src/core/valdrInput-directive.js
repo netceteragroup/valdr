@@ -1,5 +1,9 @@
 angular.module('valdr')
 
+  /**
+   * This directive adds validation to all input fields which are bound to an ngModel and are surrounded
+   * by a valdrType directive.
+   */
   .directive('input',
     ['valdrEvents', 'valdrValidator', function (valdrEvents, valdrValidator) {
     return  {
