@@ -7,14 +7,6 @@ angular.module('valdr')
     return {
 
       /**
-       * @param value the value
-       * @returns (boolean) true if the given value is not null, not undefined, not an empty string and not NaN
-       */
-      notEmpty: function (value) {
-        return angular.isDefined(value) && value !== '' && value !== null && !this.isNaN(value);
-      },
-
-      /**
        * Creates a validation result.
        * @param valid validity of field
        * @param message the message key
@@ -42,6 +34,22 @@ angular.module('valdr')
 
       has: function (object, key) {
         return object ? Object.prototype.hasOwnProperty.call(object, key) : false;
+      },
+
+      /**
+       * @param value the value
+       * @returns (boolean) true if the given value is not null, not undefined, not an empty string and not NaN
+       */
+      notEmpty: function (value) {
+        return angular.isDefined(value) && value !== '' && value !== null && !this.isNaN(value);
+      },
+
+      /**
+       * @param value the value to validate
+       * @returns (boolean) true if the given value is null, undefined, an empty string or NaN
+       */
+      isEmpty: function (value) {
+        return !this.notEmpty(value);
       }
     };
   })

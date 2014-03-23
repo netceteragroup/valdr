@@ -5,7 +5,7 @@ angular.module('valdr')
    * by a valdrType directive.
    */
   .directive('input',
-    ['valdrEvents', 'valdrValidator', function (valdrEvents, valdrValidator) {
+    ['valdrEvents', 'valdrValidator', 'valdrUtil', function (valdrEvents, valdrValidator, valdrUtil) {
     return  {
       restrict: 'E',
       require: ['?^valdrType', '?^ngModel'],
@@ -21,7 +21,7 @@ angular.module('valdr')
           return;
         }
 
-        if (!angular.isString(fieldName) || fieldName.length === 0) {
+        if (valdrUtil.isEmpty(fieldName)) {
           throw new Error('input is not bound to a field name');
         }
 
