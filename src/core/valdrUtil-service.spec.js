@@ -11,19 +11,23 @@ describe('valdrUtil', function () {
     expect(valdrUtil.isNaN);
   }));
 
-  describe('notNull()', function () {
+  describe('notEmpty()', function () {
 
     it('should validate null value', function () {
-      expect(valdrUtil.notNull(null)).toBe(false);
-      expect(valdrUtil.notNull('null')).toBe(true);
+      expect(valdrUtil.notEmpty(null)).toBe(false);
+      expect(valdrUtil.notEmpty('null')).toBe(true);
     });
 
     it('should validate undefined value', function () {
-      expect(valdrUtil.notNull(undefined)).toBe(false);
+      expect(valdrUtil.notEmpty(undefined)).toBe(false);
     });
 
     it('should validate NaN value', function () {
-      expect(valdrUtil.notNull(NaN)).toBe(false);
+      expect(valdrUtil.notEmpty(NaN)).toBe(false);
+    });
+
+    it('should validate empty string', function () {
+      expect(valdrUtil.notEmpty('')).toBe(false);
     });
 
   });

@@ -8,9 +8,9 @@ angular.module('valdr')
 
       /**
        * @param value the value to validate
-       * @returns (boolean) true if the given value is not null, not undefined and not NaN
+       * @returns (boolean) true if the given value is not null, not undefined, not an empty string and not NaN
        */
-      notNull: function (value) {
+      notEmpty: function (value) {
         return angular.isDefined(value) && value !== '' && value !== null && !this.isNaN(value);
       },
 

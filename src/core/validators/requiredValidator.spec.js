@@ -15,14 +15,14 @@ describe('requiredValidator', function () {
 
   it('should validate using the valdrUtil', function () {
     // given
-    spyOn(valdrUtil, 'notNull');
+    spyOn(valdrUtil, 'notEmpty');
     var value = 'someValue';
 
     // when
     requiredValidator.validate(config, value);
 
     // then
-    expect(valdrUtil.notNull).toHaveBeenCalledWith(value);
+    expect(valdrUtil.notEmpty).toHaveBeenCalledWith(value);
   });
 
   it('should return the validation result', function () {
