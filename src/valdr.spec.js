@@ -7,7 +7,7 @@ describe('valdr', function() {
   }));
 
   it('should provide constant for rulesChanged event', inject(function (valdrEvents) {
-    expect(valdrEvents.rulesChanged).toBe('nca-model-validation-rules-changed');
+    expect(valdrEvents.rulesChanged).toBe('valdr-rules-changed');
   }));
 
 });
