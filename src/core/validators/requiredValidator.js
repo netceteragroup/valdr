@@ -5,9 +5,10 @@ angular.module('valdr')
       name: 'Required',
 
       /**
-       * Checks if the value is empty.
+       * Checks if the value is not empty.
+       *
        * @param value the value to validate
-       * @returns (object) validation result
+       * @returns {boolean} true if the value is not empty
        */
       validate: function (value) {
         return valdrUtil.notEmpty(value);

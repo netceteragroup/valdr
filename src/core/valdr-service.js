@@ -3,7 +3,13 @@ angular.module('valdr')
   .provider('valdr', function () {
 
     var constraints = {}, validators = {}, constraintUrl, constraintsLoading,
-      validatorNames = ['sizeValidator', 'requiredValidator', 'emailValidator'];
+      validatorNames = [
+        'requiredValidator',
+        'sizeValidator',
+        'minValidator',
+        'maxValidator',
+        'emailValidator'
+      ];
 
     var addConstraints = function (newConstraints) {
       angular.extend(constraints, newConstraints);
@@ -52,6 +58,7 @@ angular.module('valdr')
       return {
         /**
          * Validates the value of the given type with the constraints for the given field name.
+         *
          * @param typeName the type name
          * @param fieldName the field name
          * @param value the value to validate
@@ -59,8 +66,8 @@ angular.module('valdr')
          */
         validate: function (typeName, fieldName, value) {
 
-          var validResult = { valid: true };
-          var typeConstraints = constraintsForType(typeName);
+          var validResult = { valid: true },
+              typeConstraints = constraintsForType(typeName);
 
           if (valdrUtil.has(typeConstraints, fieldName)) {
             var fieldConstraints = typeConstraints[fieldName],

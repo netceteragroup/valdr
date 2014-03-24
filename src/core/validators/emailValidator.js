@@ -10,8 +10,9 @@ angular.module('valdr')
 
       /**
        * Checks if the value is a valid email address.
+       *
        * @param value the value to validate
-       * @returns (object) validation result
+       * @returns {boolean} true if valid
        */
       validate: function (value) {
         return valdrUtil.isEmpty(value) || EMAIL_REGEXP.test(value);

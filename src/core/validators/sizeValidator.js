@@ -5,9 +5,11 @@ angular.module('valdr')
       name: 'Size',
 
       /**
+       * Checks if the values length is in the range specified by the constraints min and max properties.
+       *
        * @param value the value to validate
-       * @param constraint optional values: min, max
-       * @returns (object) validation result
+       * @param constraint with optional values: min, max
+       * @returns {boolean} true if valid
        */
       validate: function (value, constraint) {
         var minLength = constraint.min || 0,
