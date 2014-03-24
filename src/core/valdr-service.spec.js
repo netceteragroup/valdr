@@ -76,6 +76,7 @@ describe('valdr', function () {
 
       // then
       expect(validationResult.valid).toBe(true);
+      expect(validationResult.violations).toBeUndefined();
       expect(sizeValidator.validate).toHaveBeenCalled();
     });
 
