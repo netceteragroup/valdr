@@ -7,39 +7,51 @@ describe('valdrUtil', function () {
     valdrUtil = _valdrUtil_;
   }));
 
-  it('should have a isNaN function', inject(function (valdrUtil) {
-    expect(valdrUtil.isNaN);
-  }));
 
-  describe('result()', function () {
+  describe('isNaN()', function () {
 
-    it('should create validation result', function () {
-      // given
-      var validity = false;
-      var message = 'some.message.key';
-      var messageParams = ['one', 'two'];
+    it('should provide isNaN function', inject(function (valdrUtil) {
+      expect(valdrUtil.isNaN).toBeDefined();
+      expect(typeof valdrUtil.isNaN).toBe('function');
+    }));
 
-      // when
-      var result = valdrUtil.result(validity, message, messageParams);
-
-      // then
-      expect(result.valid).toBe(validity);
-      expect(result.message).toBe(message);
-      expect(result.messageParams).toBe(messageParams);
+    it('should check if input is NaN', function () {
+      expect(valdrUtil.isNaN(NaN)).toBe(true);
+      expect(valdrUtil.isNaN('string')).toBe(false);
+      expect(valdrUtil.isNaN(0)).toBe(false);
     });
 
-    it('should create validation result without message params', function () {
-      // given
-      var validity = true;
-      var message = 'some.message.key';
+  });
 
-      // when
-      var result = valdrUtil.result(validity, message);
+  describe('isNumber()', function () {
 
-      // then
-      expect(result.valid).toBe(validity);
-      expect(result.message).toBe(message);
-      expect(result.messageParams).toBeUndefined();
+    it('should provide isNumber function', inject(function (valdrUtil) {
+      expect(valdrUtil.isNumber).toBeDefined();
+      expect(typeof valdrUtil.isNumber).toBe('function');
+    }));
+
+    it('should check if input is a number', function () {
+      expect(valdrUtil.isNumber(NaN)).toBe(true);
+      expect(valdrUtil.isNumber(0)).toBe(true);
+      expect(valdrUtil.isNumber('string')).toBe(false);
+      expect(valdrUtil.isNumber(undefined)).toBe(false);
+      expect(valdrUtil.isNumber(null)).toBe(false);
+    });
+
+  });
+
+  describe('has()', function () {
+
+    it('should provide has function', inject(function (valdrUtil) {
+      expect(valdrUtil.has).toBeDefined();
+      expect(typeof valdrUtil.has).toBe('function');
+    }));
+
+    it('should check if object has property', function () {
+      expect(valdrUtil.has({foo: 'a'}, 'foo')).toBe(true);
+      expect(valdrUtil.has({foo: undefined}, 'foo')).toBe(true);
+      expect(valdrUtil.has({}, 'foo')).toBe(false);
+      expect(valdrUtil.has(undefined, 'foo')).toBe(false);
     });
 
   });

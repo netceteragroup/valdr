@@ -6,20 +6,6 @@ angular.module('valdr')
   .factory('valdrUtil', function () {
     return {
 
-      /**
-       * Creates a validation result.
-       * @param valid validity of field
-       * @param message the message key
-       * @param messageParams the message parameters
-       */
-      result: function (valid, message, messageParams) {
-        return {
-          valid: valid,
-          message: message,
-          messageParams: messageParams
-        };
-      },
-
       isNaN: function (value) {
         // `NaN` as a primitive is the only value that is not equal to itself
         // (perform the [[Class]] check first to avoid errors with some host objects in IE)
