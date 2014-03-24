@@ -1,25 +1,21 @@
 angular.module('valdr')
 
-  .factory('sizeValidator', ['valdrUtil', function (valdrUtil) {
+  .factory('sizeValidator', function () {
     return {
       name: 'Size',
 
       /**
-       * @param config optional values: min, max
        * @param value the value to validate
+       * @param config optional values: min, max
        * @returns (object) validation result
        */
-      validate: function (config, value) {
+      validate: function (value, config) {
         var minLength = config.min || 0,
           maxLength = config.max;
 
         value = value || '';
-
-        var valid = value.length >= minLength &&
+        return value.length >= minLength &&
           (maxLength === undefined || value.length <= maxLength);
-
-        var params = { min: minLength, max: maxLength };
-        return valdrUtil.result(valid, config.message, params);
       }
     };
-  }]);
+  });

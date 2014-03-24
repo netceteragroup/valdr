@@ -90,9 +90,9 @@ describe('valdr', function () {
       // then
       expect(sizeValidator.validate).toHaveBeenCalled();
       expect(validationResult.valid).toBe(false);
-      expect(validationResult.messages[0].message).toBe('size');
-      expect(validationResult.messages[0].messageParams.max).toBe(10);
-      expect(validationResult.messages[0].messageParams.min).toBe(0);
+      expect(validationResult.violations[0].message).toBe('size');
+      expect(validationResult.violations[0].max).toBe(10);
+      expect(validationResult.violations[0].min).toBe(0);
     });
 
     it('should return invalid state and message if multiple validations fail', function () {
@@ -121,8 +121,8 @@ describe('valdr', function () {
       expect(sizeValidator.validate).toHaveBeenCalled();
       expect(requiredValidator.validate).toHaveBeenCalled();
       expect(validationResult.valid).toBe(false);
-      expect(validationResult.messages[0].message).toBe('size');
-      expect(validationResult.messages[1].message).toBe('required');
+      expect(validationResult.violations[0].message).toBe('size');
+      expect(validationResult.violations[1].message).toBe('required');
     });
 
   });

@@ -19,22 +19,14 @@ describe('requiredValidator', function () {
     var value = 'someValue';
 
     // when
-    requiredValidator.validate(config, value);
+    requiredValidator.validate(value, config);
 
     // then
     expect(valdrUtil.notEmpty).toHaveBeenCalledWith(value);
   });
 
   it('should return the validation result', function () {
-    // given
-    var value = 'value';
-
-    // when
-    var validationResult = requiredValidator.validate(config, value);
-
-    // then
-    expect(validationResult.message).toBe(config.message);
-    expect(validationResult.valid).toBe(true);
+    expect(requiredValidator.validate('value', config)).toBe(true);
   });
 
   it('should provide the correct name', function () {

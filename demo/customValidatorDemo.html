@@ -46,12 +46,11 @@
 <script>
   var demoApp = angular.module('demoApp', ['valdr']);
 
-  demoApp.factory('customValidator', function (valdrUtil) {
+  demoApp.factory('customValidator', function () {
     return {
       name: 'CustomValidator',
-      validate: function (config, value) {
-        var valid = value === 'Hanueli';
-        return valdrUtil.result(valid, config.message);
+      validate: function (value) {
+        return value === 'Hanueli';
       }
     };
   });

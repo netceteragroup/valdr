@@ -1,7 +1,7 @@
 describe('nca input directive', function () {
 
   var $scope, element, $compile, ngModelController, valdr, valdrEvents,
-    validationMessages = ['validationMessagesArray'];
+    violations = ['violationsArray'];
 
   beforeEach(function () {
     module('valdr');
@@ -14,7 +14,7 @@ describe('nca input directive', function () {
         validate: function (typeName, fieldName, value) {
           return {
             valid: value === 'valid',
-            messages: validationMessages
+            violations: violations
           };
         }
       });
@@ -48,7 +48,7 @@ describe('nca input directive', function () {
 
     // then
     expect(ngModelController.$valid).toBe(false);
-    expect(ngModelController.valdrMessages).toBe(validationMessages);
+    expect(ngModelController.valdrViolations).toBe(violations);
   });
 
   it('should set the validity to true on ngModelController if validation is ok', function () {
@@ -59,7 +59,7 @@ describe('nca input directive', function () {
 
     // then
     expect(ngModelController.$valid).toBe(true);
-    expect(ngModelController.valdrMessages).toBe(validationMessages);
+    expect(ngModelController.valdrViolations).toBe(violations);
   });
 
   it('should throw error if no field name is provided on the input', function () {

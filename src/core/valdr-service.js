@@ -2,7 +2,8 @@ angular.module('valdr')
 
   .provider('valdr', function () {
 
-    var validationRules = {}, validators = {}, validatorNames = [], validationRulesUrl;
+    var validationRules = {}, validators = {}, validationRulesUrl, loadingRules = false,
+      validatorNames = ['sizeValidator', 'requiredValidator'];
 
     var addValidationRules = function (newValidationRules) {
       angular.extend(validationRules, newValidationRules);
@@ -18,34 +19,35 @@ angular.module('valdr')
       validatorNames.push(validatorName);
     };
 
-    this.addValidator('sizeValidator');
-    this.addValidator('requiredValidator');
-
     this.$get =
       ['$log', '$injector', '$rootScope', '$http', 'valdrEvents', 'valdrUtil',
       function($log, $injector, $rootScope, $http, valdrEvents, valdrUtil) {
 
+      // inject all validators
       angular.forEach(validatorNames, function(validatorName) {
         var validator = $injector.get(validatorName);
         validators[validator.name] = validator;
       });
 
+      // load validation rules via $http if validationRulesUrl is configured
       if (validationRulesUrl) {
+        loadingRules = true;
         $http.get(validationRulesUrl).then(function (response) {
+          loadingRules = false;
           addValidationRules(response.data);
           $rootScope.$broadcast(valdrEvents.rulesChanged);
+        }).finally(function () {
+          loadingRules = false;
         });
       }
 
-      var getValidationRulesForType = function (typeName) {
-        if (!valdrUtil.has(validationRules, typeName)) {
-          $log.warn('No validation rules for type ' + typeName + ' available.');
-          return;
+      var getValidationRulesForType = function (type) {
+        if (valdrUtil.has(validationRules, type)) {
+          return validationRules[type];
+        } else if (!loadingRules) {
+          $log.warn('No validation rules for type ' + type + ' available.');
         }
-        return validationRules[typeName];
       };
-
-      var valid = { valid: true };
 
       return {
         /**
@@ -57,33 +59,35 @@ angular.module('valdr')
          */
         validate: function (typeName, fieldName, value) {
 
+          var validResult = { valid: true };
           var validationRules = getValidationRulesForType(typeName);
+
           if (valdrUtil.has(validationRules, fieldName)) {
             var fieldValidationRules = validationRules[fieldName],
-                isValid = true,
-                validationMessages = [];
+                fieldIsValid = true,
+                violations = [];
 
             angular.forEach(fieldValidationRules, function (validationRules, validatorName) {
 
               var validator = validators[validatorName];
               if (angular.isUndefined(validator)) {
                 $log.warn('No validator defined for \'' + validatorName + '\'. Can not validate field ' + fieldName);
-                return valid;
+                return validResult;
               }
 
-              var validationResult = validators[validatorName].validate(validationRules, value);
-              if (!validationResult.valid) {
-                validationMessages.push(validationResult);
+              var valid = validator.validate(value, validationRules);
+              if (!valid) {
+                violations.push(validationRules);
               }
-              isValid = isValid && validationResult.valid;
+              fieldIsValid = fieldIsValid && valid;
             });
 
             return {
-              valid: isValid,
-              messages: validationMessages
+              valid: fieldIsValid,
+              violations: violations
             };
           } else {
-            return valid;
+            return validResult;
           }
         },
         addValidationRules: function (newValidationRules) {

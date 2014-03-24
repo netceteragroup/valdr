@@ -1,7 +1,6 @@
 describe('sizeValidator', function () {
 
-  var sizeValidator, valdrUtil,
-    config = {
+  var sizeValidator, config = {
       min: 5,
       max: 20,
       message: 'message'
@@ -9,25 +8,19 @@ describe('sizeValidator', function () {
 
   beforeEach(module('valdr'));
 
-  beforeEach(inject(function (_sizeValidator_, _valdrUtil_) {
+  beforeEach(inject(function (_sizeValidator_) {
     sizeValidator = _sizeValidator_;
-    valdrUtil = _valdrUtil_;
   }));
-
 
   it('should return true if value is valid', function () {
     // given
     var value = 'valid-value';
 
     // when
-    var validationResult = sizeValidator.validate(config, value);
+    var valid = sizeValidator.validate(value, config);
 
     // then
-    expect(validationResult.valid).toBe(true);
-    expect(validationResult.message).toBe(config.message);
-    expect(validationResult.messageParams).toBeDefined();
-    expect(validationResult.messageParams.min).toBe(config.min);
-    expect(validationResult.messageParams.max).toBe(config.max);
+    expect(valid).toBe(true);
   });
 
   it('should return the validation result', function () {
@@ -35,14 +28,10 @@ describe('sizeValidator', function () {
     var value = 'a';
 
     // when
-    var validationResult = sizeValidator.validate(config, value);
+    var valid = sizeValidator.validate(value, config);
 
     // then
-    expect(validationResult.valid).toBe(false);
-    expect(validationResult.message).toBe(config.message);
-    expect(validationResult.messageParams).toBeDefined();
-    expect(validationResult.messageParams.min).toBe(config.min);
-    expect(validationResult.messageParams.max).toBe(config.max);
+    expect(valid).toBe(false);
   });
 
   it('should be valid if min is 0 and value undefined', function () {
@@ -50,10 +39,10 @@ describe('sizeValidator', function () {
     config.min = 0;
 
     // when
-    var validationResult = sizeValidator.validate(config, undefined);
+    var valid = sizeValidator.validate(undefined, config);
 
     // then
-    expect(validationResult.valid).toBe(true);
+    expect(valid).toBe(true);
   });
 
   it('should be invalid if min is 1 and value undefined', function () {
@@ -61,10 +50,10 @@ describe('sizeValidator', function () {
     config.min = 1;
 
     // when
-    var validationResult = sizeValidator.validate(config, undefined);
+    var valid = sizeValidator.validate(undefined, config);
 
     // then
-    expect(validationResult.valid).toBe(false);
+    expect(valid).toBe(false);
   });
 
   it('should provide the correct name', function () {
