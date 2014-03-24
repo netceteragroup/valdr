@@ -7,7 +7,7 @@
 
 <div ng-controller="TestController">
 
-  <h1>Simple Demo</h1>
+  <h1>Async Demo</h1>
 
   <form name="demoForm" novalidate>
 
@@ -31,78 +31,45 @@
       </div>
       <pre>$valid {{ demoForm.firstName.$valid }}</pre>
 
-      <div valdr-type="Address">
+      <div>
         <label for="zipCode">Zip Code</label>
         <input type="text"
                id="zipCode"
                name="zipCode"
-               ng-model="person.address.zipCode">
+               ng-model="person.zipCode">
       </div>
       <pre>$valid {{ demoForm.zipCode.$valid }}</pre>
     </div>
 
   </form>
 
-  <button ng-click="addAddressRules()">Add address rules</button>
   <pre>demoForm.$valid: {{ demoForm.$valid }}</pre>
 
   <h3>demoForm</h3>
   <pre>{{ demoForm | json }}</pre>
 
-  <h3>validation rules</h3>
-  <pre>{{ VALIDATION_RULES | json }}</pre>
+  <h3>constraints</h3>
+  <pre>{{ constraints | json }}</pre>
 
 </div>
 
 <script src="/bower_components/angular/angular.js"></script>
-<script src="js/valdr.min.js"></script>
+<script src="js/valdr.js"></script>
 <script src="http://localhost:35729/livereload.js"></script>
 
 <script>
   var demoApp = angular.module('demoApp', ['valdr']);
 
-
-  var VALIDATION_RULES = {
-    'Person': {
-      'lastName': {
-        'Size': {
-          'min': 2,
-          'max': 10,
-          'message': 'Last name must be between 2 and 10 characters.'
-        }
-      },
-      'firstName': {
-        'Size': {
-          'min': 2,
-          'max': 20,
-          'message': 'First name must be between 2 and 20 characters.'
-        }
-      }
-    }
-  };
-
   demoApp.config(function(valdrProvider) {
-    valdrProvider.addValidationRules(VALIDATION_RULES);
+    valdrProvider.setConstraintUrl('/api/constraints');
   });
 
   demoApp.controller('TestController', function ($scope, valdr) {
     $scope.person = {};
-    $scope.VALIDATION_RULES = VALIDATION_RULES;
 
-    $scope.addAddressRules = function () {
-
-      valdr.addValidationRules({
-        'Address': {
-          'zipCode': {
-            'Required': {
-              'message': 'Zip code is required.'
-            }
-          }
-        }
-      });
-      $scope.VALIDATION_RULES = valdr.getValidationRules();
-    };
-
+    $scope.$watch(valdr.getConstraints, function (newConstraints) {
+      $scope.constraints = newConstraints;
+    });
   });
 </script>
 </body>

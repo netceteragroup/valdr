@@ -6,8 +6,8 @@ describe('valdr', function() {
     expect(valdrEvents).toBeDefined();
   }));
 
-  it('should provide constant for rulesChanged event', inject(function (valdrEvents) {
-    expect(valdrEvents.rulesChanged).toBe('valdr-rules-changed');
+  it('should provide constant for constraintsChanged event', inject(function (valdrEvents) {
+    expect(valdrEvents.constraintsChanged).toBe('valdr-constraints-changed');
   }));
 
 });

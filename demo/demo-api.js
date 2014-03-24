@@ -3,7 +3,7 @@ module.exports = function (app) {
   var url = require('url'),
       fs = require('fs');
 
-  var getDemoRules = function (req, res) {
+  var getConstraints = function (req, res) {
     function answer(code, data) {
       res.writeHead(code,{
         'Content-Type':'application/json;charset=utf-8',
@@ -13,12 +13,12 @@ module.exports = function (app) {
       res.end(data);
     }
 
-    fs.readFile('./demo/demoRules.json', function(err, data) {
+    fs.readFile('./demo/demoConstraints.json', function(err, data) {
       if (err) answer(404, '');
       else answer(200, data);
     });
   };
 
-  app.get('/api/rules', getDemoRules);
+  app.get('/api/constraints', getConstraints);
 
 };

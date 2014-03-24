@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Demo</title>
+</head>
+<body ng-app="demoApp">
+
+<div ng-controller="TestController">
+
+  <h1>Simple Demo</h1>
+
+  <form name="demoForm" novalidate>
+
+    <div valdr-type="Person">
+
+      <div>
+        <label for="lastName">Last Name</label>
+        <input type="text"
+               id="lastName"
+               name="lastName"
+               ng-model="person.lastName">
+      </div>
+      <pre>$valid {{ demoForm.lastName.$valid }}</pre>
+
+      <div>
+        <label for="firstName">First Name</label>
+        <input type="text"
+               id="firstName"
+               name="firstName"
+               ng-model="person.firstName">
+      </div>
+      <pre>$valid {{ demoForm.firstName.$valid }}</pre>
+
+      <div valdr-type="Address">
+        <label for="zipCode">Zip Code</label>
+        <input type="text"
+               id="zipCode"
+               name="zipCode"
+               ng-model="person.address.zipCode">
+      </div>
+      <pre>$valid {{ demoForm.zipCode.$valid }}</pre>
+    </div>
+
+  </form>
+
+  <button ng-click="addAddressConstraints()">Add address constraints</button>
+  <pre>demoForm.$valid: {{ demoForm.$valid }}</pre>
+
+  <h3>demoForm</h3>
+  <pre>{{ demoForm | json }}</pre>
+
+  <h3>constraints</h3>
+  <pre>{{ constraints | json }}</pre>
+
+</div>
+
+<script src="/bower_components/angular/angular.js"></script>
+<script src="js/valdr.min.js"></script>
+<script src="http://localhost:35729/livereload.js"></script>
+
+<script>
+  var demoApp = angular.module('demoApp', ['valdr']);
+
+  demoApp.config(function(valdrProvider) {
+    valdrProvider.addConstraints({
+      'Person': {
+        'lastName': {
+          'Size': {
+            'min': 2,
+            'max': 10,
+            'message': 'Last name must be between 2 and 10 characters.'
+          }
+        },
+        'firstName': {
+          'Size': {
+            'min': 2,
+            'max': 20,
+            'message': 'First name must be between 2 and 20 characters.'
+          }
+        }
+      }
+    });
+  });
+
+  demoApp.controller('TestController', function ($scope, valdr) {
+    $scope.person = {};
+    $scope.constraints = valdr.getConstraints();
+
+    $scope.addAddressConstraints = function () {
+
+      valdr.addConstraints({
+        'Address': {
+          'zipCode': {
+            'Required': {
+              'message': 'Zip code is required.'
+            }
+          }
+        }
+      });
+      $scope.constraints = valdr.getConstraints();
+    };
+
+  });
+</script>
+</body>
+</html>

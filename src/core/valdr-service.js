@@ -2,17 +2,17 @@ angular.module('valdr')
 
   .provider('valdr', function () {
 
-    var validationRules = {}, validators = {}, validationRulesUrl, loadingRules = false,
+    var constraints = {}, validators = {}, constraintUrl, constraintsLoading,
       validatorNames = ['sizeValidator', 'requiredValidator'];
 
-    var addValidationRules = function (newValidationRules) {
-      angular.extend(validationRules, newValidationRules);
+    var addConstraints = function (newConstraints) {
+      angular.extend(constraints, newConstraints);
     };
 
-    this.addValidationRules = addValidationRules;
+    this.addConstraints = addConstraints;
 
-    this.setValidationRulesUrl = function (url) {
-      validationRulesUrl = url;
+    this.setConstraintUrl = function (url) {
+      constraintUrl = url;
     };
 
     this.addValidator = function (validatorName) {
@@ -29,29 +29,29 @@ angular.module('valdr')
         validators[validator.name] = validator;
       });
 
-      // load validation rules via $http if validationRulesUrl is configured
-      if (validationRulesUrl) {
-        loadingRules = true;
-        $http.get(validationRulesUrl).then(function (response) {
-          loadingRules = false;
-          addValidationRules(response.data);
-          $rootScope.$broadcast(valdrEvents.rulesChanged);
+      // load constraints via $http if constraintUrl is configured
+      if (constraintUrl) {
+        constraintsLoading = true;
+        $http.get(constraintUrl).then(function (response) {
+          constraintsLoading = false;
+          addConstraints(response.data);
+          $rootScope.$broadcast(valdrEvents.constraintsChanged);
         }).finally(function () {
-          loadingRules = false;
+          constraintsLoading = false;
         });
       }
 
-      var getValidationRulesForType = function (type) {
-        if (valdrUtil.has(validationRules, type)) {
-          return validationRules[type];
-        } else if (!loadingRules) {
-          $log.warn('No validation rules for type ' + type + ' available.');
+      var constraintsForType = function (type) {
+        if (valdrUtil.has(constraints, type)) {
+          return constraints[type];
+        } else if (!constraintsLoading) {
+          $log.warn('No constraints for type \'' + type + '\' available.');
         }
       };
 
       return {
         /**
-         * Validates the value of the given type with the validation rules for the given field name.
+         * Validates the value of the given type with the constraints for the given field name.
          * @param typeName the type name
          * @param fieldName the field name
          * @param value the value to validate
@@ -60,24 +60,31 @@ angular.module('valdr')
         validate: function (typeName, fieldName, value) {
 
           var validResult = { valid: true };
-          var validationRules = getValidationRulesForType(typeName);
+          var typeConstraints = constraintsForType(typeName);
 
-          if (valdrUtil.has(validationRules, fieldName)) {
-            var fieldValidationRules = validationRules[fieldName],
+          if (valdrUtil.has(typeConstraints, fieldName)) {
+            var fieldConstraints = typeConstraints[fieldName],
                 fieldIsValid = true,
                 violations = [];
 
-            angular.forEach(fieldValidationRules, function (validationRules, validatorName) {
-
+            angular.forEach(fieldConstraints, function (constraint, validatorName) {
               var validator = validators[validatorName];
+
               if (angular.isUndefined(validator)) {
-                $log.warn('No validator defined for \'' + validatorName + '\'. Can not validate field ' + fieldName);
+                $log.warn('No validator defined for \'' + validatorName +
+                  '\'. Can not validate field \'' + fieldName + '\'');
                 return validResult;
               }
 
-              var valid = validator.validate(value, validationRules);
+              var valid = validator.validate(value, constraint);
               if (!valid) {
-                violations.push(validationRules);
+                var violation = {
+                  value: value,
+                  field: fieldName,
+                  validator: validatorName
+                };
+                angular.extend(violation, constraint);
+                violations.push(violation);
               }
               fieldIsValid = fieldIsValid && valid;
             });
@@ -90,12 +97,12 @@ angular.module('valdr')
             return validResult;
           }
         },
-        addValidationRules: function (newValidationRules) {
-          addValidationRules(newValidationRules);
-          $rootScope.$broadcast(valdrEvents.rulesChanged);
+        addConstraints: function (newConstraints) {
+          addConstraints(newConstraints);
+          $rootScope.$broadcast(valdrEvents.constraintsChanged);
         },
-        getValidationRules: function () {
-          return validationRules;
+        getConstraints: function () {
+          return constraints;
         }
       };
     }];

@@ -1,7 +1,7 @@
 describe('valdr', function () {
 
   var valdr, $rootScope, valdrEvents, sizeValidator, requiredValidator,
-    personRules = {
+    personConstraints = {
       'Person': {
         'firstName': {
           'Size': {
@@ -12,7 +12,7 @@ describe('valdr', function () {
         }
       }
     },
-    addressRules = {
+    addressConstraints = {
       'Address': {
         'street': {
           'Required': {
@@ -32,35 +32,35 @@ describe('valdr', function () {
     requiredValidator = _requiredValidator_;
   }));
 
-  describe('addValidationRules()', function () {
+  describe('addConstraints()', function () {
 
-    it('should add initial validation rules', function () {
+    it('should add initial constraints', function () {
       // when
-      valdr.addValidationRules(personRules);
+      valdr.addConstraints(personConstraints);
 
       // then
-      expect(valdr.getValidationRules()).toEqual(personRules);
+      expect(valdr.getConstraints()).toEqual(personConstraints);
     });
 
-    it('should extend initial validation rules', function () {
+    it('should extend initial constraints', function () {
       // when
-      valdr.addValidationRules(personRules);
-      valdr.addValidationRules(addressRules);
+      valdr.addConstraints(personConstraints);
+      valdr.addConstraints(addressConstraints);
 
       // then
-      expect(valdr.getValidationRules().Person).toEqual(personRules.Person);
-      expect(valdr.getValidationRules().Address).toEqual(addressRules.Address);
+      expect(valdr.getConstraints().Person).toEqual(personConstraints.Person);
+      expect(valdr.getConstraints().Address).toEqual(addressConstraints.Address);
     });
 
-    it('should broadcast event when validation rules change', function () {
+    it('should broadcast event when constraints change', function () {
       // given
       spyOn($rootScope, '$broadcast');
 
       // when
-      valdr.addValidationRules(personRules);
+      valdr.addConstraints(personConstraints);
 
       // then
-      expect($rootScope.$broadcast).toHaveBeenCalledWith(valdrEvents.rulesChanged);
+      expect($rootScope.$broadcast).toHaveBeenCalledWith(valdrEvents.constraintsChanged);
     });
   });
 
@@ -68,7 +68,7 @@ describe('valdr', function () {
 
     it('should validate with correct validator', function () {
       // given
-      valdr.addValidationRules(personRules);
+      valdr.addConstraints(personConstraints);
       spyOn(sizeValidator, 'validate').andCallThrough();
 
       // when
@@ -81,7 +81,7 @@ describe('valdr', function () {
 
     it('should return invalid state and message if validation fails', function () {
       // given
-      valdr.addValidationRules(personRules);
+      valdr.addConstraints(personConstraints);
       spyOn(sizeValidator, 'validate').andCallThrough();
 
       // when
@@ -91,13 +91,15 @@ describe('valdr', function () {
       expect(sizeValidator.validate).toHaveBeenCalled();
       expect(validationResult.valid).toBe(false);
       expect(validationResult.violations[0].message).toBe('size');
+      expect(validationResult.violations[0].field).toBe('firstName');
+      expect(validationResult.violations[0].value).toBe('Hanueli with a name that is too long');
       expect(validationResult.violations[0].max).toBe(10);
       expect(validationResult.violations[0].min).toBe(0);
     });
 
     it('should return invalid state and message if multiple validations fail', function () {
       // given
-      valdr.addValidationRules({
+      valdr.addConstraints({
         'Person': {
           'firstName': {
             'Size': {
@@ -121,6 +123,8 @@ describe('valdr', function () {
       expect(sizeValidator.validate).toHaveBeenCalled();
       expect(requiredValidator.validate).toHaveBeenCalled();
       expect(validationResult.valid).toBe(false);
+      expect(validationResult.violations[0].field).toBe('firstName');
+      expect(validationResult.violations[0].value).toBeUndefined();
       expect(validationResult.violations[0].message).toBe('size');
       expect(validationResult.violations[1].message).toBe('required');
     });
@@ -135,14 +139,14 @@ describe('valdrProvider', function () {
   beforeEach(function () {
     module('valdr');
     module(function (valdrProvider) {
-      valdrProvider.setValidationRulesUrl(apiUrl);
+      valdrProvider.setConstraintUrl(apiUrl);
     });
     inject(function (_$httpBackend_) {
       $httpBackend= _$httpBackend_;
     });
   });
 
-  it('should load the validation rules via $http', function () {
+  it('should load the constraints via $http', function () {
 
     $httpBackend.expect('GET', apiUrl).respond(200, {});
 

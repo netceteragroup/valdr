@@ -25,21 +25,17 @@ angular.module('valdr')
           throw new Error('input is not bound to a field name');
         }
 
-        var setValidityAndViolations = function (validationResult) {
-          ngModelController.$setValidity('valdr', validationResult.valid);
-          ngModelController.valdrViolations = validationResult.violations;
-        };
-
         var validate = function (value) {
           var validationResult = valdr.validate(valdrTypeController.getType(), fieldName, value);
-          setValidityAndViolations(validationResult);
+          ngModelController.$setValidity('valdr', validationResult.valid);
+          ngModelController.valdrViolations = validationResult.violations;
           return validationResult.valid ? value : undefined;
         };
 
         ngModelController.$parsers.push(validate);
         ngModelController.$formatters.push(validate);
 
-        scope.$on(valdrEvents.rulesChanged, function () {
+        scope.$on(valdrEvents.constraintsChanged, function () {
           validate(ngModelController.$viewValue);
         });
       }

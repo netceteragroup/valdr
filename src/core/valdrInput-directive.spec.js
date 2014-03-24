@@ -75,12 +75,12 @@ describe('nca input directive', function () {
     }).toThrow(new Error('input is not bound to a field name'));
   });
 
-  it('should handle validation rule changed events', function () {
+  it('should handle constraint changed events', function () {
     // given
     spyOn(valdr, 'validate').andCallThrough();
 
     // when
-    $scope.$broadcast(valdrEvents.rulesChanged);
+    $scope.$broadcast(valdrEvents.constraintsChanged);
 
     // then
     expect(valdr.validate).toHaveBeenCalled();
