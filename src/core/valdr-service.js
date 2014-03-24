@@ -3,7 +3,7 @@ angular.module('valdr')
   .provider('valdr', function () {
 
     var constraints = {}, validators = {}, constraintUrl, constraintsLoading,
-      validatorNames = ['sizeValidator', 'requiredValidator'];
+      validatorNames = ['sizeValidator', 'requiredValidator', 'emailValidator'];
 
     var addConstraints = function (newConstraints) {
       angular.extend(constraints, newConstraints);

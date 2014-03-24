@@ -32,13 +32,24 @@
       <pre>$valid {{ demoForm.firstName.$valid }}</pre>
 
       <div valdr-type="Address">
-        <label for="zipCode">Zip Code</label>
-        <input type="text"
-               id="zipCode"
-               name="zipCode"
-               ng-model="person.address.zipCode">
+        <div>
+          <label for="zipCode">Zip Code</label>
+          <input type="text"
+                 id="zipCode"
+                 name="zipCode"
+                 ng-model="person.address.zipCode">
+        </div>
+        <pre>$valid {{ demoForm.zipCode.$valid }}</pre>
+
+        <div>
+          <label for="email">E-Mail</label>
+          <input type="text"
+                 id="email"
+                 name="email"
+                 ng-model="person.address.email">
+        </div>
+        <pre>$valid {{ demoForm.email.$valid }}</pre>
       </div>
-      <pre>$valid {{ demoForm.zipCode.$valid }}</pre>
     </div>
 
   </form>
@@ -69,6 +80,9 @@
             'min': 2,
             'max': 10,
             'message': 'Last name must be between 2 and 10 characters.'
+          },
+          'Required': {
+            'message': 'Last name code is required.'
           }
         },
         'firstName': {
@@ -90,6 +104,11 @@
 
       valdr.addConstraints({
         'Address': {
+          'email': {
+            'Email': {
+              'message': 'Must be a valid E-Mail address.'
+            }
+          },
           'zipCode': {
             'Required': {
               'message': 'Zip code is required.'
