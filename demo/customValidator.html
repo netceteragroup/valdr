@@ -16,8 +16,8 @@
                id="lastName"
                name="lastName"
                ng-model="person.lastName">
+        <span>$valid {{ demoForm.lastName.$valid }}</span>
       </div>
-      <pre>$valid {{ demoForm.lastName.$valid }}</pre>
 
       <div>
         <label for="firstName">First Name</label>
@@ -25,8 +25,9 @@
                id="firstName"
                name="firstName"
                ng-model="person.firstName">
+        <span>$valid {{ demoForm.firstName.$valid }}</span>
       </div>
-      <pre>$valid {{ demoForm.firstName.$valid }}</pre>
+
   </form>
 
   <pre>demoForm.$valid: {{ demoForm.$valid }}</pre>

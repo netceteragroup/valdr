@@ -13,14 +13,15 @@
 
     <div valdr-type="Person">
 
+      <h4>Person</h4>
       <div>
         <label for="lastName">Last Name</label>
         <input type="text"
                id="lastName"
                name="lastName"
                ng-model="person.lastName">
+        <span>$valid {{ demoForm.lastName.$valid }}</span>
       </div>
-      <pre>$valid {{ demoForm.lastName.$valid }}</pre>
 
       <div>
         <label for="firstName">First Name</label>
@@ -28,9 +29,20 @@
                id="firstName"
                name="firstName"
                ng-model="person.firstName">
+        <span>$valid {{ demoForm.firstName.$valid }}</span>
       </div>
-      <pre>$valid {{ demoForm.firstName.$valid }}</pre>
 
+
+      <div>
+        <label for="age">Age</label>
+        <input type="number"
+               id="age"
+               name="age"
+               ng-model="person.age">
+        <span>$valid {{ demoForm.age.$valid }}</span>
+      </div>
+
+      <h4>Address</h4>
       <div valdr-type="Address">
         <div>
           <label for="zipCode">Zip Code</label>
@@ -38,8 +50,8 @@
                  id="zipCode"
                  name="zipCode"
                  ng-model="person.address.zipCode">
+          <span>$valid {{ demoForm.zipCode.$valid }}</span>
         </div>
-        <pre>$valid {{ demoForm.zipCode.$valid }}</pre>
 
         <div>
           <label for="email">E-Mail</label>
@@ -47,8 +59,8 @@
                  id="email"
                  name="email"
                  ng-model="person.address.email">
+          <span>$valid {{ demoForm.email.$valid }}</span>
         </div>
-        <pre>$valid {{ demoForm.email.$valid }}</pre>
       </div>
     </div>
 
@@ -82,7 +94,7 @@
             'message': 'Last name must be between 2 and 10 characters.'
           },
           'Required': {
-            'message': 'Last name code is required.'
+            'message': 'Last name is required.'
           }
         },
         'firstName': {
@@ -90,6 +102,15 @@
             'min': 2,
             'max': 20,
             'message': 'First name must be between 2 and 20 characters.'
+          }
+        },
+        'age': {
+          'Min': {
+            value: '21',
+            message: 'Must be 21 years old.'
+          },
+          'Required': {
+            message: 'Age is required.'
           }
         }
       }
