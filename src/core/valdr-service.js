@@ -1,6 +1,6 @@
 angular.module('valdr')
 
-  .provider('valdrValidator', function () {
+  .provider('valdr', function () {
 
     var validationRules = {}, validators = {}, validatorNames = [], validationRulesUrl;
 

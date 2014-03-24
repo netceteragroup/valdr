@@ -1,16 +1,16 @@
 describe('nca input directive', function () {
 
-  var $scope, element, $compile, ngModelController, valdrValidator, valdrEvents,
+  var $scope, element, $compile, ngModelController, valdr, valdrEvents,
     validationMessages = ['validationMessagesArray'];
 
   beforeEach(function () {
     module('valdr');
 
     /**
-     * Mock the valdrValidator to always return 'true' when the value equals the string 'valid'.
+     * Mock the valdr to always return 'true' when the value equals the string 'valid'.
      */
     module(function ($provide) {
-      $provide.value('valdrValidator', {
+      $provide.value('valdr', {
         validate: function (typeName, fieldName, value) {
           return {
             valid: value === 'valid',
@@ -30,13 +30,13 @@ describe('nca input directive', function () {
     return element;
   };
 
-  beforeEach(inject(function ($rootScope, _$compile_, _valdrValidator_, _valdrEvents_) {
+  beforeEach(inject(function ($rootScope, _$compile_, _valdr_, _valdrEvents_) {
     $compile = _$compile_;
     $scope = $rootScope.$new();
     $scope.myObject = { field: 'fieldValue' };
     element = compileTemplate();
     ngModelController = element.find('input').controller('ngModel');
-    valdrValidator = _valdrValidator_;
+    valdr = _valdr_;
     valdrEvents = _valdrEvents_;
   }));
 
@@ -77,13 +77,13 @@ describe('nca input directive', function () {
 
   it('should handle validation rule changed events', function () {
     // given
-    spyOn(valdrValidator, 'validate').andCallThrough();
+    spyOn(valdr, 'validate').andCallThrough();
 
     // when
     $scope.$broadcast(valdrEvents.rulesChanged);
 
     // then
-    expect(valdrValidator.validate).toHaveBeenCalled();
+    expect(valdr.validate).toHaveBeenCalled();
   });
 
 });

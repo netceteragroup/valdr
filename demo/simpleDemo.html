@@ -81,17 +81,17 @@
     }
   };
 
-  demoApp.config(function(valdrValidatorProvider) {
-    valdrValidatorProvider.addValidationRules(VALIDATION_RULES);
+  demoApp.config(function(valdrProvider) {
+    valdrProvider.addValidationRules(VALIDATION_RULES);
   });
 
-  demoApp.controller('TestController', function ($scope, valdrValidator) {
+  demoApp.controller('TestController', function ($scope, valdr) {
     $scope.person = {};
     $scope.VALIDATION_RULES = VALIDATION_RULES;
 
     $scope.addAddressRules = function () {
 
-      valdrValidator.addValidationRules({
+      valdr.addValidationRules({
         'Address': {
           'zipCode': {
             'Required': {
@@ -100,7 +100,7 @@
           }
         }
       });
-      $scope.VALIDATION_RULES = valdrValidator.getValidationRules();
+      $scope.VALIDATION_RULES = valdr.getValidationRules();
     };
 
   });

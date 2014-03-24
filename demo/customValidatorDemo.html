@@ -56,11 +56,11 @@
     };
   });
 
-  demoApp.config(function (valdrValidatorProvider) {
+  demoApp.config(function (valdrProvider) {
 
-    valdrValidatorProvider.addValidator('customValidator');
+    valdrProvider.addValidator('customValidator');
 
-    valdrValidatorProvider.addValidationRules({
+    valdrProvider.addValidationRules({
       'Person': {
         'lastName': {
           'Required': {
@@ -77,10 +77,10 @@
 
   });
 
-  demoApp.controller('TestController', function ($scope, valdrValidator) {
+  demoApp.controller('TestController', function ($scope, valdr) {
     $scope.person = {};
 
-    $scope.$watch(valdrValidator.getValidationRules, function (rules) {
+    $scope.$watch(valdr.getValidationRules, function (rules) {
       $scope.VALIDATION_RULES = rules;
     });
   });

@@ -1,6 +1,6 @@
-describe('valdrValidator', function () {
+describe('valdr', function () {
 
-  var valdrValidator, $rootScope, valdrEvents, sizeValidator, requiredValidator,
+  var valdr, $rootScope, valdrEvents, sizeValidator, requiredValidator,
     personRules = {
       'Person': {
         'firstName': {
@@ -24,8 +24,8 @@ describe('valdrValidator', function () {
 
   beforeEach(module('valdr'));
 
-  beforeEach(inject(function (_valdrValidator_, _$rootScope_, _valdrEvents_, _sizeValidator_, _requiredValidator_) {
-    valdrValidator = _valdrValidator_;
+  beforeEach(inject(function (_valdr_, _$rootScope_, _valdrEvents_, _sizeValidator_, _requiredValidator_) {
+    valdr = _valdr_;
     $rootScope = _$rootScope_;
     valdrEvents = _valdrEvents_;
     sizeValidator = _sizeValidator_;
@@ -36,20 +36,20 @@ describe('valdrValidator', function () {
 
     it('should add initial validation rules', function () {
       // when
-      valdrValidator.addValidationRules(personRules);
+      valdr.addValidationRules(personRules);
 
       // then
-      expect(valdrValidator.getValidationRules()).toEqual(personRules);
+      expect(valdr.getValidationRules()).toEqual(personRules);
     });
 
     it('should extend initial validation rules', function () {
       // when
-      valdrValidator.addValidationRules(personRules);
-      valdrValidator.addValidationRules(addressRules);
+      valdr.addValidationRules(personRules);
+      valdr.addValidationRules(addressRules);
 
       // then
-      expect(valdrValidator.getValidationRules().Person).toEqual(personRules.Person);
-      expect(valdrValidator.getValidationRules().Address).toEqual(addressRules.Address);
+      expect(valdr.getValidationRules().Person).toEqual(personRules.Person);
+      expect(valdr.getValidationRules().Address).toEqual(addressRules.Address);
     });
 
     it('should broadcast event when validation rules change', function () {
@@ -57,7 +57,7 @@ describe('valdrValidator', function () {
       spyOn($rootScope, '$broadcast');
 
       // when
-      valdrValidator.addValidationRules(personRules);
+      valdr.addValidationRules(personRules);
 
       // then
       expect($rootScope.$broadcast).toHaveBeenCalledWith(valdrEvents.rulesChanged);
@@ -68,11 +68,11 @@ describe('valdrValidator', function () {
 
     it('should validate with correct validator', function () {
       // given
-      valdrValidator.addValidationRules(personRules);
+      valdr.addValidationRules(personRules);
       spyOn(sizeValidator, 'validate').andCallThrough();
 
       // when
-      var validationResult = valdrValidator.validate('Person', 'firstName', 'Hanueli');
+      var validationResult = valdr.validate('Person', 'firstName', 'Hanueli');
 
       // then
       expect(validationResult.valid).toBe(true);
@@ -81,11 +81,11 @@ describe('valdrValidator', function () {
 
     it('should return invalid state and message if validation fails', function () {
       // given
-      valdrValidator.addValidationRules(personRules);
+      valdr.addValidationRules(personRules);
       spyOn(sizeValidator, 'validate').andCallThrough();
 
       // when
-      var validationResult = valdrValidator.validate('Person', 'firstName', 'Hanueli with a name that is too long');
+      var validationResult = valdr.validate('Person', 'firstName', 'Hanueli with a name that is too long');
 
       // then
       expect(sizeValidator.validate).toHaveBeenCalled();
@@ -97,7 +97,7 @@ describe('valdrValidator', function () {
 
     it('should return invalid state and message if multiple validations fail', function () {
       // given
-      valdrValidator.addValidationRules({
+      valdr.addValidationRules({
         'Person': {
           'firstName': {
             'Size': {
@@ -115,7 +115,7 @@ describe('valdrValidator', function () {
       spyOn(requiredValidator, 'validate').andCallThrough();
 
       // when
-      var validationResult = valdrValidator.validate('Person', 'firstName', undefined);
+      var validationResult = valdr.validate('Person', 'firstName', undefined);
 
       // then
       expect(sizeValidator.validate).toHaveBeenCalled();
@@ -128,14 +128,14 @@ describe('valdrValidator', function () {
   });
 });
 
-describe('valdrValidatorProvider', function () {
+describe('valdrProvider', function () {
 
   var $httpBackend, apiUrl = '/api/validation';
 
   beforeEach(function () {
     module('valdr');
-    module(function (valdrValidatorProvider) {
-      valdrValidatorProvider.setValidationRulesUrl(apiUrl);
+    module(function (valdrProvider) {
+      valdrProvider.setValidationRulesUrl(apiUrl);
     });
     inject(function (_$httpBackend_) {
       $httpBackend= _$httpBackend_;
@@ -147,7 +147,7 @@ describe('valdrValidatorProvider', function () {
     $httpBackend.expect('GET', apiUrl).respond(200, {});
 
     /*jshint unused:false */
-    inject(function (valdrValidator) {
+    inject(function (valdr) {
       $httpBackend.flush();
     });
   });

@@ -60,14 +60,14 @@
 <script>
   var demoApp = angular.module('demoApp', ['valdr']);
 
-  demoApp.config(function(valdrValidatorProvider) {
-    valdrValidatorProvider.setValidationRulesUrl('/api/rules');
+  demoApp.config(function(valdrProvider) {
+    valdrProvider.setValidationRulesUrl('/api/rules');
   });
 
-  demoApp.controller('TestController', function ($scope, valdrValidator) {
+  demoApp.controller('TestController', function ($scope, valdr) {
     $scope.person = {};
 
-    $scope.$watch(valdrValidator.getValidationRules, function (rules) {
+    $scope.$watch(valdr.getValidationRules, function (rules) {
       $scope.VALIDATION_RULES = rules;
     });
   });

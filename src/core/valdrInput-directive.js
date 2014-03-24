@@ -5,7 +5,7 @@ angular.module('valdr')
    * by a valdrType directive.
    */
   .directive('input',
-    ['valdrEvents', 'valdrValidator', 'valdrUtil', function (valdrEvents, valdrValidator, valdrUtil) {
+    ['valdrEvents', 'valdr', 'valdrUtil', function (valdrEvents, valdr, valdrUtil) {
     return  {
       restrict: 'E',
       require: ['?^valdrType', '?^ngModel'],
@@ -26,12 +26,12 @@ angular.module('valdr')
         }
 
         var setValidityAndMessages = function (validationResult) {
-          ngModelController.$setValidity('valdrValidator', validationResult.valid);
+          ngModelController.$setValidity('valdr', validationResult.valid);
           ngModelController.valdrMessages = validationResult.messages;
         };
 
         var validate = function (value) {
-          var validationResult = valdrValidator.validate(valdrTypeController.getType(), fieldName, value);
+          var validationResult = valdr.validate(valdrTypeController.getType(), fieldName, value);
           setValidityAndMessages(validationResult);
           return validationResult.valid ? value : undefined;
         };
