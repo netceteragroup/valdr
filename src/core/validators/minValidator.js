@@ -2,7 +2,6 @@ angular.module('valdr')
 
   .factory('minValidator', ['valdrUtil', function (valdrUtil) {
 
-
     return {
       name: 'Min',
 

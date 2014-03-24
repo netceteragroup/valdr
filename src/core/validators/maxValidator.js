@@ -2,7 +2,6 @@ angular.module('valdr')
 
   .factory('maxValidator', ['valdrUtil', function (valdrUtil) {
 
-
     return {
       name: 'Max',
 

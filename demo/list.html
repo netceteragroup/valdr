@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Demo</title>
+</head>
+<body ng-app="demoApp">
+
+<div ng-controller="TestController">
+
+  <h1>List Demo</h1>
+
+  <form name="demoForm" novalidate>
+
+    <div valdr-type="Person">
+
+      <h4>Person</h4>
+      <div>
+        <label for="firstName">First Name</label>
+        <input type="text"
+               id="firstName"
+               name="firstName"
+               ng-model="person.firstName">
+        <span>$valid {{ demoForm.firstName.$valid }}</span>
+      </div>
+    </div>
+
+    <div ng-form="addressForm" valdr-type="Address" ng-repeat="address in person.addresses">
+      <h4>Address {{ $index + 1 }} <span ng-click="removeAddress(address)" style="cursor: pointer; color: red" >[x]</span></h4>
+      <div>
+        <label for="zipCode">Zip Code</label>
+        <input type="text"
+               id="zipCode"
+               name="zipCode"
+               ng-model="address.zipCode">
+        <span>$valid {{ addressForm.zipCode.$valid }}</span>
+      </div>
+
+      <div>
+        <label for="email">E-Mail</label>
+        <input type="text"
+               id="email"
+               name="email"
+               ng-model="address.email">
+        <span>$valid {{ addressForm.email.$valid }}</span>
+      </div>
+      <pre>{{ addressForm | json }}</pre>
+    </div>
+
+  </form>
+
+  <button ng-click="addAddress()">Add address</button>
+  <pre>demoForm.$valid: {{ demoForm.$valid }}</pre>
+
+  <h3>demoForm</h3>
+  <pre>{{ demoForm | json }}</pre>
+
+  <h3>constraints</h3>
+  <pre>{{ constraints | json }}</pre>
+
+</div>
+
+<script src="/bower_components/angular/angular.js"></script>
+<script src="js/valdr.min.js"></script>
+<script src="http://localhost:35729/livereload.js"></script>
+
+<script>
+  var demoApp = angular.module('demoApp', ['valdr']);
+
+  demoApp.config(function (valdrProvider) {
+    valdrProvider.addConstraints({
+      'Person': {
+        'firstName': {
+          'Size': {
+            'min': 2,
+            'max': 20,
+            'message': 'First name must be between 2 and 20 characters.'
+          }
+        }
+      },
+      'Address': {
+        'email': {
+          'Email': {
+            'message': 'Must be a valid E-Mail address.'
+          }
+        },
+        'zipCode': {
+          'Size': {
+            'min': '4',
+            'max': '6',
+            'message': 'Zip code must be between 4 and 6 characters.'
+          }
+        }
+      }
+    });
+  });
+
+  demoApp.controller('TestController', function ($scope, valdr) {
+    $scope.person = {
+      addresses: []
+    };
+
+    $scope.constraints = valdr.getConstraints();
+
+    $scope.addAddress = function () {
+      $scope.person.addresses.push({});
+    };
+
+    $scope.removeAddress = function(address) {
+      var index = $scope.person.addresses.indexOf(address);
+      $scope.person.addresses.splice(index, 1);
+    };
+  });
+</script>
+</body>
+</html>
