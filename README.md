@@ -7,14 +7,33 @@
 
 #### [Bower](http://bower.io)
 
-```
+```bash
 bower install --save valdr
 ```
 
 ## Use
 
-TODO
 Use it in combination with [valdr-jsr303](https://github.com/netceteragroup/valdr-jsr303).
+
+## Develop
+
+```bash
+git clone https://github.com/netceteragroup/valdr.git
+cd valdr
+npm install
+```
+
+First start live-reload
+```bash
+grunt dev
+```
+
+Then start the dev server
+```bash
+grunt server
+```
+
+Open http://localhost:3005/demo in your browser.
 
 ## License
 
