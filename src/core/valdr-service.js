@@ -91,7 +91,7 @@ angular.module('valdr')
 
             return {
               valid: fieldIsValid,
-              violations: violations.length == 0 ? undefined : violations
+              violations: violations.length === 0 ? undefined : violations
             };
           } else {
             return validResult;
