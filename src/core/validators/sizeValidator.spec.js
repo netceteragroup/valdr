@@ -1,6 +1,6 @@
 describe('sizeValidator', function () {
 
-  var sizeValidator, config = {
+  var sizeValidator, constraint = {
       min: 5,
       max: 20,
       message: 'message'
@@ -12,12 +12,16 @@ describe('sizeValidator', function () {
     sizeValidator = _sizeValidator_;
   }));
 
+  it('should provide the correct name', function () {
+    expect(sizeValidator.name).toBe('Size');
+  });
+
   it('should return true if value is valid', function () {
     // given
     var value = 'valid-value';
 
     // when
-    var valid = sizeValidator.validate(value, config);
+    var valid = sizeValidator.validate(value, constraint);
 
     // then
     expect(valid).toBe(true);
@@ -28,7 +32,7 @@ describe('sizeValidator', function () {
     var value = 'a';
 
     // when
-    var valid = sizeValidator.validate(value, config);
+    var valid = sizeValidator.validate(value, constraint);
 
     // then
     expect(valid).toBe(false);
@@ -36,10 +40,10 @@ describe('sizeValidator', function () {
 
   it('should be valid if min is 0 and value undefined', function () {
     // given
-    config.min = 0;
+    constraint.min = 0;
 
     // when
-    var valid = sizeValidator.validate(undefined, config);
+    var valid = sizeValidator.validate(undefined, constraint);
 
     // then
     expect(valid).toBe(true);
@@ -47,17 +51,13 @@ describe('sizeValidator', function () {
 
   it('should be invalid if min is 1 and value undefined', function () {
     // given
-    config.min = 1;
+    constraint.min = 1;
 
     // when
-    var valid = sizeValidator.validate(undefined, config);
+    var valid = sizeValidator.validate(undefined, constraint);
 
     // then
     expect(valid).toBe(false);
-  });
-
-  it('should provide the correct name', function () {
-    expect(sizeValidator.name).toBe('Size');
   });
 
 });

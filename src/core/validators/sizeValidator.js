@@ -6,12 +6,12 @@ angular.module('valdr')
 
       /**
        * @param value the value to validate
-       * @param config optional values: min, max
+       * @param constraint optional values: min, max
        * @returns (object) validation result
        */
-      validate: function (value, config) {
-        var minLength = config.min || 0,
-          maxLength = config.max;
+      validate: function (value, constraint) {
+        var minLength = constraint.min || 0,
+          maxLength = constraint.max;
 
         value = value || '';
         return value.length >= minLength &&

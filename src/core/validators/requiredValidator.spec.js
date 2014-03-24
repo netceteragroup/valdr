@@ -1,10 +1,6 @@
 describe('requiredValidator', function () {
 
-  var requiredValidator,
-    valdrUtil,
-    config = {
-      message: 'message'
-    };
+  var requiredValidator, valdrUtil;
 
   beforeEach(module('valdr'));
 
@@ -13,24 +9,24 @@ describe('requiredValidator', function () {
     valdrUtil = _valdrUtil_;
   }));
 
+  it('should provide the correct name', function () {
+    expect(requiredValidator.name).toBe('Required');
+  });
+
   it('should validate using the valdrUtil', function () {
     // given
     spyOn(valdrUtil, 'notEmpty');
     var value = 'someValue';
 
     // when
-    requiredValidator.validate(value, config);
+    requiredValidator.validate(value);
 
     // then
     expect(valdrUtil.notEmpty).toHaveBeenCalledWith(value);
   });
 
   it('should return the validation result', function () {
-    expect(requiredValidator.validate('value', config)).toBe(true);
-  });
-
-  it('should provide the correct name', function () {
-    expect(requiredValidator.name).toBe('Required');
+    expect(requiredValidator.validate('value')).toBe(true);
   });
 
 });
