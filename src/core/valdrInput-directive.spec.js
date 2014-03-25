@@ -1,6 +1,6 @@
-describe('nca input directive', function () {
+describe('valdrInput directive', function () {
 
-  var $scope, element, $compile, ngModelController, valdr, valdrEvents,
+  var $scope, element, $compile, ngModelController, valdr, valdrEvents, valdrClasses,
     violations = ['violationsArray'];
 
   beforeEach(function () {
@@ -30,7 +30,7 @@ describe('nca input directive', function () {
     return element;
   };
 
-  beforeEach(inject(function ($rootScope, _$compile_, _valdr_, _valdrEvents_) {
+  beforeEach(inject(function ($rootScope, _$compile_, _valdr_, _valdrEvents_, _valdrClasses_) {
     $compile = _$compile_;
     $scope = $rootScope.$new();
     $scope.myObject = { field: 'fieldValue' };
@@ -38,6 +38,7 @@ describe('nca input directive', function () {
     ngModelController = element.find('input').controller('ngModel');
     valdr = _valdr_;
     valdrEvents = _valdrEvents_;
+    valdrClasses = _valdrClasses_;
   }));
 
   it('should set the validity to false on ngModelController if validation fails', function () {
@@ -61,6 +62,35 @@ describe('nca input directive', function () {
     expect(ngModelController.$valid).toBe(true);
     expect(ngModelController.valdrViolations).toBe(violations);
   });
+
+  it('should add class to surrounding element if input is valid', function () {
+    // given
+    var surroundingElement = element.find('div');
+
+    // when
+    $scope.$apply(function () {
+      $scope.myObject.field = 'valid';
+    });
+
+    // then
+    expect(surroundingElement.hasClass(valdrClasses.valid)).toBe(true);
+    expect(surroundingElement.hasClass(valdrClasses.invalid)).toBe(false);
+  });
+
+  it('should add class to surrounding element if input is invalid', function () {
+    // given
+    var surroundingElement = element.find('div');
+
+    // when
+    $scope.$apply(function () {
+      $scope.myObject.field = 'invalid';
+    });
+
+    // then
+    expect(surroundingElement.hasClass(valdrClasses.invalid)).toBe(true);
+    expect(surroundingElement.hasClass(valdrClasses.valid)).toBe(false);
+  });
+
 
   it('should throw error if no field name is provided on the input', function () {
     // given
