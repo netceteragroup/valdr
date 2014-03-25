@@ -1,12 +1,11 @@
 describe('emailValidator', function () {
 
-  var emailValidator, valdrUtil;
+  var emailValidator;
 
   beforeEach(module('valdr'));
 
-  beforeEach(inject(function (_emailValidator_, _valdrUtil_) {
+  beforeEach(inject(function (_emailValidator_) {
     emailValidator = _emailValidator_;
-    valdrUtil = _valdrUtil_;
   }));
 
   it('should provide the correct name', function () {
