@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Demo</title>
+</head>
+<body ng-app="demoApp">
+
+<div ng-controller="TestController">
+
+  <h1>angular-translate Demo</h1>
+
+  <ul>
+    <li><a href="" ng-click="changeLanguage('en')">english</a></li>
+    <li><a href="" ng-click="changeLanguage('de')">german</a></li>
+  </ul>
+
+  <form name="demoForm" novalidate>
+
+    <div valdr-type="Person">
+
+      <h4>Person</h4>
+      <div>
+        <label for="lastName">Last Name</label>
+        <input type="text"
+               id="lastName"
+               name="lastName"
+               ng-model="person.lastName">
+
+        <pre>{{ demoForm.lastName.valdrViolations | json }}</pre>
+      </div>
+
+      <div>
+        <label for="firstName">First Name</label>
+        <input type="text"
+               id="firstName"
+               name="firstName"
+               ng-model="person.firstName">
+      </div>
+
+    </div>
+
+  </form>
+
+  <h3>constraints</h3>
+  <pre>{{ constraints | json }}</pre>
+
+</div>
+
+<script src="/bower_components/angular/angular.js"></script>
+<script src="/bower_components/angular-translate/angular-translate.js"></script>
+<script src="js/valdr.js"></script>
+<script src="js/valdr-message.js"></script>
+<script src="http://localhost:35729/livereload.js"></script>
+
+<script>
+  var demoApp = angular.module('demoApp', ['valdr', 'pascalprecht.translate']);
+
+  demoApp.config(function(valdrProvider, valdrMessageProvider, $translateProvider) {
+
+    valdrMessageProvider
+      .setTemplate('<span ng-if="violation" translate="{{violation.message}}" translate-values="violation"></span>');
+
+    valdrProvider.addConstraints({
+      'Person': {
+        'lastName': {
+          'Required': {
+            'message': 'message.required'
+          },
+          'Size': {
+            'min': 5,
+            'max': 20,
+            'message': 'message.size'
+          }
+        },
+        'firstName': {
+          'Size': {
+            'min': 3,
+            'max': 10,
+            'message': 'message.size'
+          }
+        }
+      }
+    });
+
+    $translateProvider.translations('en', {
+      'message.required': '{{fieldName}} is required.',
+      'message.size': 'Size must be between {{min}} and {{max}} characters.',
+      'lastName': 'Last name',
+      'firstName': 'First name'
+    });
+
+    $translateProvider.translations('de', {
+      'message.required': '{{fieldName}} ist ein Pflichtfeld.',
+      'message.size': 'Zwischen {{min}} und {{max}} Zeichen sind im Feld {{fieldName}} erlaubt.',
+      'lastName': 'Nachname',
+      'firstName': 'Vorname'
+    });
+
+    $translateProvider.preferredLanguage('en');
+  });
+
+  demoApp.controller('TestController', function ($scope, valdr, $translate) {
+    $scope.person = {};
+    $scope.constraints = valdr.getConstraints();
+
+    $scope.changeLanguage = function (key) {
+      $translate.use(key);
+    };
+  });
+</script>
+</body>
+</html>
