@@ -1,6 +1,6 @@
 describe('valdr', function () {
 
-  var valdr, $rootScope, valdrEvents, sizeValidator, requiredValidator,
+  var valdr, $rootScope, valdrEvents, valdrClasses, sizeValidator, requiredValidator,
     personConstraints = {
       'Person': {
         'firstName': {
@@ -24,10 +24,12 @@ describe('valdr', function () {
 
   beforeEach(module('valdr'));
 
-  beforeEach(inject(function (_valdr_, _$rootScope_, _valdrEvents_, _sizeValidator_, _requiredValidator_) {
+  beforeEach(inject(
+    function (_valdr_, _$rootScope_, _valdrEvents_, _valdrClasses_, _sizeValidator_, _requiredValidator_) {
     valdr = _valdr_;
     $rootScope = _$rootScope_;
     valdrEvents = _valdrEvents_;
+    valdrClasses = _valdrClasses_;
     sizeValidator = _sizeValidator_;
     requiredValidator = _requiredValidator_;
   }));
@@ -128,6 +130,29 @@ describe('valdr', function () {
       expect(validationResult.violations[0].value).toBeUndefined();
       expect(validationResult.violations[0].message).toBe('size');
       expect(validationResult.violations[1].message).toBe('required');
+    });
+
+  });
+
+  describe('setClasses()', function () {
+
+    it('should add the given classes to the valdrClasses and broadcast an event', function () {
+      // given
+      spyOn($rootScope, '$broadcast');
+      var newClass = 'is-valid';
+      expect(valdrClasses.valid).toBe('has-success');
+      expect(valdrClasses.invalid).toBe('has-error');
+
+      // when
+      valdr.setClasses({ valid: newClass });
+
+      // then
+      expect($rootScope.$broadcast).toHaveBeenCalledWith(valdrEvents.constraintsChanged);
+      expect(valdrClasses.valid).toBe(newClass);
+      expect(valdrClasses.invalid).toBe('has-error');
+
+      // cleanup to prevent side-effects
+      valdr.setClasses({ valid: 'has-success' });
     });
 
   });

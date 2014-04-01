@@ -26,8 +26,8 @@ angular.module('valdr')
     };
 
     this.$get =
-      ['$log', '$injector', '$rootScope', '$http', 'valdrEvents', 'valdrUtil',
-      function($log, $injector, $rootScope, $http, valdrEvents, valdrUtil) {
+      ['$log', '$injector', '$rootScope', '$http', 'valdrEvents', 'valdrUtil', 'valdrClasses',
+      function($log, $injector, $rootScope, $http, valdrEvents, valdrUtil, valdrClasses) {
 
       // inject all validators
       angular.forEach(validatorNames, function(validatorName) {
@@ -110,6 +110,10 @@ angular.module('valdr')
         },
         getConstraints: function () {
           return constraints;
+        },
+        setClasses: function (newClasses) {
+          angular.extend(valdrClasses, newClasses);
+          $rootScope.$broadcast(valdrEvents.constraintsChanged);
         }
       };
     }];

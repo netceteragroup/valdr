@@ -10,4 +10,9 @@ describe('valdr', function() {
     expect(valdrEvents.constraintsChanged).toBe('valdr-constraints-changed');
   }));
 
+  it('should provide a value for valdrClasses', inject(function (valdrClasses) {
+    expect(valdrClasses.valid).toBe('has-success');
+    expect(valdrClasses.invalid).toBe('has-error');
+  }));
+
 });
