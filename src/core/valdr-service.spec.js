@@ -62,7 +62,7 @@ describe('valdr', function () {
       valdr.addConstraints(personConstraints);
 
       // then
-      expect($rootScope.$broadcast).toHaveBeenCalledWith(valdrEvents.constraintsChanged);
+      expect($rootScope.$broadcast).toHaveBeenCalledWith(valdrEvents.revalidate);
     });
   });
 
@@ -147,7 +147,7 @@ describe('valdr', function () {
       valdr.setClasses({ valid: newClass });
 
       // then
-      expect($rootScope.$broadcast).toHaveBeenCalledWith(valdrEvents.constraintsChanged);
+      expect($rootScope.$broadcast).toHaveBeenCalledWith(valdrEvents.revalidate);
       expect(valdrClasses.valid).toBe(newClass);
       expect(valdrClasses.invalid).toBe('has-error');
 

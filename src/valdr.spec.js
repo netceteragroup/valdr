@@ -6,8 +6,8 @@ describe('valdr', function() {
     expect(valdrEvents).toBeDefined();
   }));
 
-  it('should provide constant for constraintsChanged event', inject(function (valdrEvents) {
-    expect(valdrEvents.constraintsChanged).toBe('valdr-constraints-changed');
+  it('should provide constant for revalidate event', inject(function (valdrEvents) {
+    expect(valdrEvents.revalidate).toBe('valdr-revalidate');
   }));
 
   it('should provide a value for valdrClasses', inject(function (valdrClasses) {
