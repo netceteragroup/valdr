@@ -110,7 +110,7 @@ describe('valdrInput directive', function () {
     spyOn(valdr, 'validate').andCallThrough();
 
     // when
-    $scope.$broadcast(valdrEvents.constraintsChanged);
+    $scope.$broadcast(valdrEvents.revalidate);
 
     // then
     expect(valdr.validate).toHaveBeenCalled();

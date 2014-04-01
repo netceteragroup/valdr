@@ -46,7 +46,7 @@ angular.module('valdr')
         ngModelController.$parsers.push(validate);
         ngModelController.$formatters.push(validate);
 
-        scope.$on(valdrEvents.constraintsChanged, function () {
+        scope.$on(valdrEvents.revalidate, function () {
           validate(ngModelController.$viewValue);
         });
       }

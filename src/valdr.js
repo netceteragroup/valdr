@@ -1,8 +1,8 @@
 angular.module('valdr', ['ng'])
   .constant('valdrEvents', {
-    'constraintsChanged': 'valdr-constraints-changed'
+    'revalidate': 'valdr-revalidate'
   })
-  .constant('valdrClasses', {
-    'valid': 'is-valid',
-    'invalid': 'is-invalid'
+  .value('valdrClasses', {
+    'valid': 'has-success',
+    'invalid': 'has-error'
   });

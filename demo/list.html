@@ -2,11 +2,24 @@
 <html>
 <head>
   <title>Demo</title>
+
+  <style>
+    .demo-is-invalid label {
+      color: red;
+    }
+    .demo-is-valid label {
+      color: green;
+    }
+    .demo-is-invalid input {
+      background-color: red;
+    }
+  </style>
 </head>
 <body ng-app="demoApp">
 
 <div ng-controller="TestController">
 
+  <h1>List Demo</h1>
   <h1>List Demo</h1>
 
   <form name="demoForm" novalidate>
@@ -25,7 +38,7 @@
     </div>
 
     <div ng-form="addressForm" valdr-type="Address" ng-repeat="address in person.addresses">
-      <h4>Address {{ $index + 1 }} <span ng-click="removeAddress(address)" style="cursor: pointer; color: red" >[x]</span></h4>
+      <h4>Address {{ $index + 1 }} <button ng-click="removeAddress(address)" >remove</button></h4>
       <div>
         <label for="zipCode">Zip Code</label>
         <input type="text"
@@ -95,6 +108,12 @@
   });
 
   demoApp.controller('TestController', function ($scope, valdr) {
+    // use custom classes on the surrounding elements
+    valdr.setClasses({
+      valid: 'demo-is-valid',
+      invalid: 'demo-is-invalid'
+    });
+
     $scope.person = {
       addresses: []
     };
