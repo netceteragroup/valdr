@@ -56,11 +56,6 @@
 
   demoApp.config(function(valdrProvider, valdrMessageProvider, $translateProvider) {
 
-    valdrMessageProvider.setTemplate('<span ng-if="violation" ' +
-                                       'translate="{{violation.message}}" ' +
-                                       'translate-values="violation">' +
-                                     '</span>');
-
     valdrProvider.addConstraints({
       'Person': {
         'lastName': {
@@ -85,7 +80,7 @@
 
     $translateProvider.translations('en', {
       'message.required': '{{fieldName}} is required.',
-      'message.size': 'Size must be between {{min}} and {{max}} characters.',
+      'message.size': '{{fieldName}} must be between {{min}} and {{max}} characters.',
       'lastName': 'Last name',
       'firstName': 'First name'
     });
