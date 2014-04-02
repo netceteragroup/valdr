@@ -55,7 +55,7 @@
 </div>
 
 <script src="/bower_components/angular/angular.js"></script>
-<script src="js/valdr.js"></script>
+<script src="../js/valdr.js"></script>
 <script src="http://localhost:35729/livereload.js"></script>
 
 <script>

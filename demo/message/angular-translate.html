@@ -38,7 +38,6 @@
       </div>
 
     </div>
-
   </form>
 
   <h3>constraints</h3>
@@ -48,8 +47,8 @@
 
 <script src="/bower_components/angular/angular.js"></script>
 <script src="/bower_components/angular-translate/angular-translate.js"></script>
-<script src="js/valdr.js"></script>
-<script src="js/valdr-message.js"></script>
+<script src="../js/valdr.js"></script>
+<script src="../js/valdr-message.js"></script>
 <script src="http://localhost:35729/livereload.js"></script>
 
 <script>
@@ -57,8 +56,10 @@
 
   demoApp.config(function(valdrProvider, valdrMessageProvider, $translateProvider) {
 
-    valdrMessageProvider
-      .setTemplate('<span ng-if="violation" translate="{{violation.message}}" translate-values="violation"></span>');
+    valdrMessageProvider.setTemplate('<span ng-if="violation" ' +
+                                       'translate="{{violation.message}}" ' +
+                                       'translate-values="violation">' +
+                                     '</span>');
 
     valdrProvider.addConstraints({
       'Person': {

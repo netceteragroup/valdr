@@ -39,34 +39,9 @@
                ng-model="person.age">
 
       </div>
-
-      <h4>Address</h4>
-      <div valdr-type="Address">
-        <div>
-          <label for="zipCode">Zip Code</label>
-          <input type="text"
-                 id="zipCode"
-                 name="zipCode"
-                 ng-model="person.address.zipCode">
-        </div>
-
-        <div>
-          <label for="email">E-Mail</label>
-          <input type="text"
-                 id="email"
-                 name="email"
-                 ng-model="person.address.email">
-        </div>
-      </div>
     </div>
 
   </form>
-
-  <button ng-click="addAddressConstraints()">Add address constraints</button>
-  <pre>demoForm2.$valid: {{ demoForm2.$valid }}</pre>
-
-  <h3>demoForm2</h3>
-  <pre>{{ demoForm2 | json }}</pre>
 
   <h3>constraints</h3>
   <pre>{{ constraints | json }}</pre>
@@ -74,8 +49,8 @@
 </div>
 
 <script src="/bower_components/angular/angular.js"></script>
-<script src="js/valdr.min.js"></script>
-<script src="js/valdr-message.js"></script>
+<script src="../js/valdr.min.js"></script>
+<script src="../js/valdr-message.js"></script>
 <script src="http://localhost:35729/livereload.js"></script>
 
 <script>
@@ -86,7 +61,7 @@
     valdrMessageProvider.setTemplate('<span ng-if="violation" class="help-block">FEHLER: {{ violation.message }}</span>');
 
 //    valdrMessageProvider
-//            .setTemplateUrl('/demo/messageTemplate.html');
+//            .setTemplateUrl('/demo/message/message-template.tpl.html');
 
     valdrProvider.addConstraints({
       'Person': {
