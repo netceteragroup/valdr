@@ -9,7 +9,8 @@
     "url": "git://github.com/netceteragroup/valdr"
   },
   "devDependencies": {
-    "angular": "~1.2.14",
-    "angular-mocks": "~1.2.14"
+    "angular": "~1.2.15",
+    "angular-mocks": "~1.2.15",
+    "angular-translate": "~2.0.1"
   }
 }

@@ -35,6 +35,11 @@ module.exports = function (grunt) {
         'src/core/valdrInput-directive.js'
       ],
 
+      message: [
+        'src/message/valdrMessage-service.js',
+        'src/message/valdrMessage-directive.js'
+      ],
+
       test: ['src/**/*.spec.js']
     },
 
@@ -44,13 +49,7 @@ module.exports = function (grunt) {
         jshintrc: true
       },
 
-      all: ['Gruntfile.js', '<%= files.core %>', '<%= files.test %>'],
-
-      core: {
-        files: {
-          src: ['<%= files.core %>']
-        }
-      },
+      all: ['Gruntfile.js', '<%= files.core %>', '<%= files.message %>', '<%= files.test %>'],
 
       test: {
         files: {
@@ -72,6 +71,11 @@ module.exports = function (grunt) {
       core: {
         src: ['js.prefix', '<%= files.core %>', 'js.suffix'],
         dest: '<%= build_dir %>/valdr.js'
+      },
+
+      message: {
+        src: ['js.prefix', '<%= files.message %>', 'js.suffix'],
+        dest: '<%= build_dir %>/valdr-message.js'
       }
 
     },
@@ -80,6 +84,11 @@ module.exports = function (grunt) {
       core: {
         files: {
           '<%= build_dir %>/valdr.min.js': '<%= concat.core.dest %>'
+        }
+      },
+      message: {
+        files: {
+          '<%= build_dir %>/valdr-message.min.js': '<%= concat.message.dest %>'
         }
       }
     },
@@ -122,7 +131,7 @@ module.exports = function (grunt) {
           livereload: true
         },
         files: ['src/**/*.js'],
-        tasks: ['concat:core', 'concat:banner', 'uglify:core', 'copy:demo']
+        tasks: ['concat:core', 'concat:message', 'concat:banner', 'uglify:core', 'uglify:message', 'copy:demo']
       }
     },
 
@@ -149,8 +158,10 @@ module.exports = function (grunt) {
     'jshint:all',
     'karma:unit',
     'concat:core',
+    'concat:message',
     'concat:banner',
-    'uglify:core'
+    'uglify:core',
+    'uglify:message'
   ]);
 
   // For development purpose.

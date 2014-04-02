@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Demo</title>
+</head>
+<body ng-app="demoApp">
+
+<div ng-controller="TestController">
+
+  <h1>Message Demo</h1>
+
+  <form name="demoForm2" novalidate>
+
+    <div valdr-type="Person">
+
+      <h4>Person</h4>
+      <div>
+        <label for="lastName">Last Name</label>
+        <input type="text"
+               id="lastName"
+               name="lastName"
+               ng-model="person.lastName"
+               no-valdr-message>
+      </div>
+
+      <div>
+        <label for="firstName">First Name</label>
+        <input type="text"
+               id="firstName"
+               name="firstName"
+               ng-model="person.firstName">
+      </div>
+
+      <div>
+        <label for="age">Age</label>
+        <input type="number"
+               id="age"
+               name="age"
+               ng-model="person.age">
+
+      </div>
+    </div>
+
+  </form>
+
+  <h3>constraints</h3>
+  <pre>{{ constraints | json }}</pre>
+
+</div>
+
+<script src="/bower_components/angular/angular.js"></script>
+<script src="../js/valdr.min.js"></script>
+<script src="../js/valdr-message.js"></script>
+<script src="http://localhost:35729/livereload.js"></script>
+
+<script>
+  var demoApp = angular.module('demoApp', ['valdr']);
+
+  demoApp.config(function(valdrProvider, valdrMessageProvider) {
+
+    valdrMessageProvider.setTemplate('<span ng-if="violation" class="help-block">FEHLER: {{ violation.message }}</span>');
+
+//    valdrMessageProvider
+//            .setTemplateUrl('/demo/message/message-template.tpl.html');
+
+    valdrProvider.addConstraints({
+      'Person': {
+        'lastName': {
+          'Size': {
+            'min': 2,
+            'max': 10,
+            'message': 'Last name must be between 2 and 10 characters.'
+          },
+          'Required': {
+            'message': 'Last name is required.'
+          }
+        },
+        'firstName': {
+          'Size': {
+            'min': 2,
+            'max': 20,
+            'message': 'First name must be between 2 and 20 characters.'
+          }
+        },
+        'age': {
+          'Min': {
+            value: '21',
+            message: 'Must be 21 years old.'
+          },
+          'Required': {
+            message: 'Age is required.'
+          }
+        }
+      }
+    });
+  });
+
+  demoApp.controller('TestController', function ($scope, valdr) {
+    $scope.person = {};
+    $scope.constraints = valdr.getConstraints();
+
+    $scope.addAddressConstraints = function () {
+
+      valdr.addConstraints({
+        'Address': {
+          'email': {
+            'Email': {
+              'message': 'Must be a valid E-Mail address.'
+            }
+          },
+          'zipCode': {
+            'Required': {
+              'message': 'Zip code is required.'
+            }
+          }
+        }
+      });
+      $scope.constraints = valdr.getConstraints();
+    };
+
+  });
+</script>
+</body>
+</html>

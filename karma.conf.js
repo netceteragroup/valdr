@@ -7,6 +7,7 @@ module.exports = function (config) {
 
     files: [
       'bower_components/angular/angular.js',
+      'bower_components/angular-translate/angular-translate.js',
       'bower_components/angular-mocks/angular-mocks.js',
       'src/valdr.js',
       'src/**/*.js',

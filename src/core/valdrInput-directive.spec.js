@@ -23,9 +23,11 @@ describe('valdrInput directive', function () {
 
   var compileTemplate = function () {
     var element = $compile(angular.element(
-      '<form name="demoForm"><div valdr-type="TestClass">' +
-        '<input type="text" name="fieldName" ng-model="myObject.field">' +
-      '</div></form>'))($scope);
+      '<form name="demoForm">' +
+        '<div valdr-type="TestClass">' +
+          '<input type="text" name="fieldName" ng-model="myObject.field">' +
+        '</div>' +
+      '</form>'))($scope);
     $scope.$digest();
     return element;
   };
