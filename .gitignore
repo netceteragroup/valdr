@@ -5,4 +5,5 @@ dist
 demo/js
 npm-debug.log
 *.iml
-.idea
+.idea/workspace.xml
+.idea/tasks.xml
