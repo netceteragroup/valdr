@@ -145,11 +145,13 @@ describe('valdrMessage directive with angular-translate', function () {
     module(function ($translateProvider) {
       $translateProvider.translations('en', {
         'message-1': '{{fieldName}} english.',
+        'message-2': 'field: {{fieldName}} param: {{param}} secondParam: {{secondParam}}',
         'testField': 'Field Name'
       });
 
       $translateProvider.translations('de', {
         'message-1': '{{fieldName}} deutsch.',
+        'message-2': 'field: {{fieldName}} param: {{param}} secondParam: {{secondParam}}',
         'testField': 'Feldname'
       });
 
@@ -200,6 +202,39 @@ describe('valdrMessage directive with angular-translate', function () {
 
     // then
     expect(element.html()).toBe('Feldname');
+  });
+
+  it('should update field names on language switch at runtime', function () {
+    // given
+    valdrMessage.setTemplate('<div>{{ violations[0].fieldName }}</div>');
+    var element = compileTemplate('<span valdr-message="testForm.testField"></span>');
+    expect(element.html()).toBe('Field Name');
+
+    // when
+    $translate.use('de');
+    $scope.$digest();
+
+    // then
+    expect(element.html()).toBe('Feldname');
+  });
+
+
+  it('should allow to use parameters in the translated messages', function () {
+    // given
+    $scope.testForm = {
+      testField: {
+        valdrViolations: [
+          // note: message-2 has parameters defined in the translation tables
+          { message: 'message-2', field: 'testField', param: '3', secondParam: '4' }
+        ]
+      }
+    };
+
+    // when
+    var element = compileTemplate('<span valdr-message="testForm.testField"></span>');
+
+    // then
+    expect(element.find('span').html()).toBe('field: Field Name param: 3 secondParam: 4');
   });
 
 });

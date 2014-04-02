@@ -19,8 +19,7 @@
         <input type="text"
                id="lastName"
                name="lastName"
-               ng-model="person.lastName"
-               no-valdr-message>
+               ng-model="person.lastName">
       </div>
 
       <div>
@@ -28,7 +27,9 @@
         <input type="text"
                id="firstName"
                name="firstName"
-               ng-model="person.firstName">
+               ng-model="person.firstName"
+               no-valdr-message>
+        <span><em>Error message disabled for this field.</em></span>
       </div>
 
       <div>
@@ -56,10 +57,10 @@
 <script>
   var demoApp = angular.module('demoApp', ['valdr']);
 
-  demoApp.config(function(valdrProvider, valdrMessageProvider) {
+  demoApp.config(function(valdrProvider) {
 
-    valdrMessageProvider.setTemplate('<span ng-if="violation" class="help-block">FEHLER: {{ violation.message }}</span>');
-
+// TODO PDE: add demo for custom templates and templateUrl
+//    valdrMessageProvider.setTemplate('<span ng-if="violation" class="help-block">FEHLER: {{ violation.message }}</span>');
 //    valdrMessageProvider
 //            .setTemplateUrl('/demo/message/message-template.tpl.html');
 
@@ -85,7 +86,7 @@
         'age': {
           'Min': {
             value: '21',
-            message: 'Must be 21 years old.'
+            message: 'Person must be 21 years old.'
           },
           'Required': {
             message: 'Age is required.'
@@ -98,26 +99,6 @@
   demoApp.controller('TestController', function ($scope, valdr) {
     $scope.person = {};
     $scope.constraints = valdr.getConstraints();
-
-    $scope.addAddressConstraints = function () {
-
-      valdr.addConstraints({
-        'Address': {
-          'email': {
-            'Email': {
-              'message': 'Must be a valid E-Mail address.'
-            }
-          },
-          'zipCode': {
-            'Required': {
-              'message': 'Zip code is required.'
-            }
-          }
-        }
-      });
-      $scope.constraints = valdr.getConstraints();
-    };
-
   });
 </script>
 </body>
