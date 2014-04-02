@@ -160,25 +160,58 @@ describe('valdr', function () {
 
 describe('valdrProvider', function () {
 
-  var $httpBackend, apiUrl = '/api/validation';
+  it('should load the constraints via $http', function () {
+    // given
+    var $httpBackend, apiUrl = '/api/validation';
 
-  beforeEach(function () {
+    // when
     module('valdr');
     module(function (valdrProvider) {
       valdrProvider.setConstraintUrl(apiUrl);
     });
     inject(function (_$httpBackend_) {
       $httpBackend= _$httpBackend_;
+      $httpBackend.expect('GET', apiUrl).respond(200, {});
     });
-  });
-
-  it('should load the constraints via $http', function () {
-
-    $httpBackend.expect('GET', apiUrl).respond(200, {});
 
     /*jshint unused:false */
     inject(function (valdr) {
+      // injecting the valdr service triggers the loading and therefore the GET to the apiUrl
       $httpBackend.flush();
+
+      // then
+      $httpBackend.verifyNoOutstandingExpectation();
+      $httpBackend.verifyNoOutstandingRequest();
+    });
+  });
+
+  it('should support to use aliases for constraint names', function () {
+    // given
+    module('valdr');
+    module(function (valdrProvider) {
+      valdrProvider.addConstraints({
+        'Person': {
+          'firstName': {
+            'SizeBetween': {
+              'min': 0,
+              'max': 10
+            }
+          }
+        }
+      });
+      valdrProvider.addConstraintAlias('Size', 'SizeBetween');
+    });
+
+
+    inject(function (valdr, sizeValidator) {
+      // when
+      spyOn(sizeValidator, 'validate').andCallThrough();
+      var validationResult = valdr.validate('Person', 'firstName', 'Hanueli');
+
+      // then
+      expect(validationResult.valid).toBe(true);
+      expect(validationResult.violations).toBeUndefined();
+      expect(sizeValidator.validate).toHaveBeenCalled();
     });
   });
 

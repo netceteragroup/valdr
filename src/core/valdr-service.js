@@ -2,7 +2,7 @@ angular.module('valdr')
 
   .provider('valdr', function () {
 
-    var constraints = {}, validators = {}, constraintUrl, constraintsLoading,
+    var constraints = {}, validators = {}, constraintUrl, constraintsLoading, constraintAliases = {},
       validatorNames = [
         'requiredValidator',
         'sizeValidator',
@@ -25,6 +25,10 @@ angular.module('valdr')
       validatorNames.push(validatorName);
     };
 
+    this.addConstraintAlias = function (valdrName, customName) {
+      constraintAliases[valdrName] = customName;
+    };
+
     this.$get =
       ['$log', '$injector', '$rootScope', '$http', 'valdrEvents', 'valdrUtil', 'valdrClasses',
       function($log, $injector, $rootScope, $http, valdrEvents, valdrUtil, valdrClasses) {
@@ -32,7 +36,8 @@ angular.module('valdr')
       // inject all validators
       angular.forEach(validatorNames, function(validatorName) {
         var validator = $injector.get(validatorName);
-        validators[validator.name] = validator;
+        var constraintName = constraintAliases[validator.name] || validator.name;
+        validators[constraintName] = validator;
       });
 
       // load constraints via $http if constraintUrl is configured
