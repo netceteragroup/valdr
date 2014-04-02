@@ -10,8 +10,7 @@ module.exports = function (config) {
       'bower_components/angular-translate/angular-translate.js',
       'bower_components/angular-mocks/angular-mocks.js',
       'src/valdr.js',
-      'src/*.js',
-      'src/core/**/*.js',
+      'src/**/*.js',
       'src/**/*.spec.js'
     ],
 
