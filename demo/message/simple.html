@@ -85,7 +85,7 @@
         'age': {
           'Min': {
             value: '21',
-            message: 'Must be 21 years old.'
+            message: 'Person must be 21 years old.'
           },
           'Required': {
             message: 'Age is required.'
@@ -98,26 +98,6 @@
   demoApp.controller('TestController', function ($scope, valdr) {
     $scope.person = {};
     $scope.constraints = valdr.getConstraints();
-
-    $scope.addAddressConstraints = function () {
-
-      valdr.addConstraints({
-        'Address': {
-          'email': {
-            'Email': {
-              'message': 'Must be a valid E-Mail address.'
-            }
-          },
-          'zipCode': {
-            'Required': {
-              'message': 'Zip code is required.'
-            }
-          }
-        }
-      });
-      $scope.constraints = valdr.getConstraints();
-    };
-
   });
 </script>
 </body>
