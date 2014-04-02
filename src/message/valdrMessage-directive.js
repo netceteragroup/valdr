@@ -1,10 +1,10 @@
 angular.module('valdr')
 
   /**
-   * This directive appends a validation messages after all input elements, which are nested in a valdr-type
-   * directive and have an ng-model bound to them.
-   * To prevent adding messages to specific input fields, the attribute 'no-valdr-message' can be added to those input fields.
-   * The valdr-message directive is used to do the actual rendering of the violation messages.
+   * This directive appends a validation message after each input element, which is nested in a valdr-type
+   * directive and has an ng-model bound to it.
+   * To prevent adding messages to specific input fields, the attribute 'no-valdr-message' can be added to those input
+   * fields. The valdr-message directive is used to do the actual rendering of the violation messages.
    */
   .directive('input',
   ['$compile', function ($compile) {
@@ -39,7 +39,8 @@ angular.module('valdr')
   * The valdr-message directive is responsible for the rendering of violation messages. The template used for rendering
   * is defined in the valdrMessage service where it can be overridden or a template URL can be configured.
   */
-  .directive('valdrMessage', function (valdrMessage, $rootScope, $injector) {
+  .directive('valdrMessage',
+  ['$rootScope', '$injector', 'valdrMessage', function ($rootScope, $injector, valdrMessage) {
     return {
       replace: true,
       scope: {
@@ -52,12 +53,14 @@ angular.module('valdr')
 
         try {
           var $translate = $injector.get('$translate');
-        } catch (error) { /* just ignore if angular-translate is not available */ }
+        } catch (error) { /* ignore if angular-translate is not available */ }
 
         var updateTranslations = function () {
-          if ($translate && scope.violations && scope.violations.length) {
+          if ($translate && angular.isArray(scope.violations)) {
             angular.forEach(scope.violations, function (violation) {
-              violation.fieldName = $translate.instant(violation.field);
+              $translate(violation.field).then(function (translation) {
+                violation.fieldName = translation;
+              });
             });
           }
         };
@@ -78,4 +81,4 @@ angular.module('valdr')
         });
       }
     };
-  });
+  }]);

@@ -16,13 +16,21 @@ angular.module('valdr')
 
     this.$get = ['$templateCache', function($templateCache) {
 
-      $templateCache.put(defaultTemplateUrl, template || defaultTemplate);
-      if (templateUrl && template) {
-        $templateCache.put(templateUrl, template);
-      }
+      var updateTemplateCache = function () {
+        $templateCache.put(defaultTemplateUrl, template || defaultTemplate);
+        if (templateUrl && template) {
+          $templateCache.put(templateUrl, template);
+        }
+      };
+
+      updateTemplateCache();
 
       return {
-        templateUrl: templateUrl || defaultTemplateUrl
+        templateUrl: templateUrl || defaultTemplateUrl,
+        setTemplate: function (newTemplate) {
+          template = newTemplate;
+          updateTemplateCache();
+        }
       };
     }];
   });
