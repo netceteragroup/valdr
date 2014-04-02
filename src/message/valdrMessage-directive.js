@@ -43,6 +43,7 @@ angular.module('valdr')
   ['$rootScope', '$injector', 'valdrMessage', function ($rootScope, $injector, valdrMessage) {
     return {
       replace: true,
+      restrict: 'A',
       scope: {
         formField: '=valdrMessage'
       },
@@ -51,14 +52,10 @@ angular.module('valdr')
       },
       link: function (scope) {
 
-        try {
-          var $translate = $injector.get('$translate');
-        } catch (error) { /* ignore if angular-translate is not available */ }
-
         var updateTranslations = function () {
-          if ($translate && angular.isArray(scope.violations)) {
+          if (valdrMessage.translateAvailable && angular.isArray(scope.violations)) {
             angular.forEach(scope.violations, function (violation) {
-              $translate(violation.field).then(function (translation) {
+              valdrMessage.$translate(violation.field).then(function (translation) {
                 violation.fieldName = translation;
               });
             });
