@@ -16,8 +16,12 @@ angular.module('valdr')
         var minValue = Number(constraint.value),
             valueAsNumber = Number(value);
 
-        return valdrUtil.isEmpty(value) ||
-            (!valdrUtil.isNaN(valueAsNumber) && valueAsNumber >= minValue);
+
+        if (valdrUtil.isNaN(value)) {
+          return false;
+        }
+
+        return valdrUtil.isEmpty(value) || valueAsNumber >= minValue;
       }
     };
   }]);

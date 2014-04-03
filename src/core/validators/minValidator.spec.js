@@ -15,7 +15,12 @@ describe('minValidator', function () {
 
   it('should return true for empty values', function () {
     expect(minValidator.validate('', constraint)).toBe(true);
+    expect(minValidator.validate(null, constraint)).toBe(true);
     expect(minValidator.validate(undefined, constraint)).toBe(true);
+  });
+
+  it('should return false for NaN', function () {
+    expect(minValidator.validate(NaN, constraint)).toBe(false);
   });
 
   it('should return true for valid numbers', function () {

@@ -1,8 +1,8 @@
 angular.module('valdr')
 
-  /**
-   * Exposes utility functions used in validators and valdr core.
-   */
+/**
+ * Exposes utility functions used in validators and valdr core.
+ */
   .factory('valdrUtil', function () {
     return {
 
@@ -24,17 +24,23 @@ angular.module('valdr')
 
       /**
        * @param value the value
-       * @returns {boolean} true if the given value is not null, not undefined, not an empty string and not NaN
+       * @returns {boolean} true if the given value is not null, not undefined, not an empty string, NaN returns false
        */
       notEmpty: function (value) {
+        if (this.isNaN(value)) {
+          return false;
+        }
         return angular.isDefined(value) && value !== '' && value !== null && !this.isNaN(value);
       },
 
       /**
        * @param value the value to validate
-       * @returns {boolean} true if the given value is null, undefined, an empty string or NaN
+       * @returns {boolean} true if the given value is null, undefined, an empty string, NaN returns false
        */
       isEmpty: function (value) {
+        if (this.isNaN(value)) {
+          return false;
+        }
         return !this.notEmpty(value);
       }
     };

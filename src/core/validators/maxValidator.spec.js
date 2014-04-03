@@ -15,7 +15,12 @@ describe('maxValidator', function () {
 
   it('should return true for empty values', function () {
     expect(maxValidator.validate('', constraint)).toBe(true);
+    expect(maxValidator.validate(null, constraint)).toBe(true);
     expect(maxValidator.validate(undefined, constraint)).toBe(true);
+  });
+
+  it('should return false for NaN', function () {
+    expect(maxValidator.validate(NaN, constraint)).toBe(false);
   });
 
   it('should return true for valid numbers', function () {

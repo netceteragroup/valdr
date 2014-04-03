@@ -13,7 +13,7 @@ bower install --save valdr
 
 ## Use
 
-Use it in combination with [valdr-jsr303](https://github.com/netceteragroup/valdr-jsr303).
+Use it in combination with [valdr-jsr303](https://github.com/netceteragroup/valdr-bean-validation).
 
 ## Develop
 
@@ -41,7 +41,7 @@ Open http://localhost:3005/demo in your browser.
 
 ## Credits
 
-Kudos to the gang who brainstormed with us the name for this project over a diner on top of [mount Rigi](https://maps.google.com/maps?q=Hotel+Rigi+Kaltbad&hl=en&cid=7481422441262508040&gl=US&hq=Hotel+Rigi+Kaltbad&t=m&z=16). Guys we really appreciate your patience!
+Kudos to the gang who brainstormed the name for this project with us over a diner on [mount Rigi](https://maps.google.com/maps?q=Hotel+Rigi+Kaltbad&hl=en&cid=7481422441262508040&gl=US&hq=Hotel+Rigi+Kaltbad&t=m&z=16). Guys we really appreciate your patience!
 * [Björn Mosler](https://github.com/brelsom)
 * Roland Weiss, father of 'valdr'
 * [Jason Brazile](https://github.com/jbrazile)
