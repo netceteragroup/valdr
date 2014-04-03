@@ -146,13 +146,13 @@ describe('valdrMessage directive with angular-translate', function () {
       $translateProvider.translations('en', {
         'message-1': '{{fieldName}} english.',
         'message-2': 'field: {{fieldName}} param: {{param}} secondParam: {{secondParam}}',
-        'testField': 'Field Name'
+        'Person.testField': 'Field Name'
       });
 
       $translateProvider.translations('de', {
         'message-1': '{{fieldName}} deutsch.',
         'message-2': 'field: {{fieldName}} param: {{param}} secondParam: {{secondParam}}',
-        'testField': 'Feldname'
+        'Person.testField': 'Feldname'
       });
 
       $translateProvider.preferredLanguage('en');
@@ -174,8 +174,8 @@ describe('valdrMessage directive with angular-translate', function () {
     $scope.testForm = {
       testField: {
         valdrViolations: [
-          { message: 'message-1', field: 'testField', param: '2' },
-          { message: 'message-2', field: 'testField', param: '3' }
+          { message: 'message-1', field: 'testField', type: 'Person', param: '2' },
+          { message: 'message-2', field: 'testField', type: 'Person', param: '3' }
         ]
       }
     };
@@ -225,7 +225,7 @@ describe('valdrMessage directive with angular-translate', function () {
       testField: {
         valdrViolations: [
           // note: message-2 has parameters defined in the translation tables
-          { message: 'message-2', field: 'testField', param: '3', secondParam: '4' }
+          { message: 'message-2', field: 'testField', type: 'Person', param: '3', secondParam: '4' }
         ]
       }
     };
