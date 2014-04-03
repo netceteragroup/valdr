@@ -16,8 +16,11 @@ angular.module('valdr')
         var maxValue = Number(constraint.value),
             valueAsNumber = Number(value);
 
-        return valdrUtil.isEmpty(value) ||
-            (!valdrUtil.isNaN(valueAsNumber) && valueAsNumber <= maxValue);
+        if (valdrUtil.isNaN(value)) {
+          return false;
+        }
+
+        return valdrUtil.isEmpty(value) || valueAsNumber <= maxValue;
       }
     };
   }]);
