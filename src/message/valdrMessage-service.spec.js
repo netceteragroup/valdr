@@ -69,7 +69,8 @@ describe('valdrMessage service with angular-translate', function () {
       // then
       expect(template).toBeDefined();
       expect(template).toBe('<div class="valdr-message">' +
-                              '<span translate="{{ violation.message }}" ' +
+                              '<span ng-if="violation" ' +
+                              'translate="{{ violation.message }}" ' +
                               'translate-values="violation"></span>' +
                             '</div>');
     });

@@ -12,7 +12,8 @@ angular.module('valdr')
                             '{{ violation.message }}' +
                           '</div>',
       translateTemplate = '<div class="valdr-message">' +
-                            '<span translate="{{ violation.message }}" ' +
+                            '<span ng-if="violation" ' +
+                            'translate="{{ violation.message }}" ' +
                             'translate-values="violation"></span>' +
                           '</div>';
 
