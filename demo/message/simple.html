@@ -2,6 +2,22 @@
 <html>
 <head>
   <title>Demo</title>
+
+  <style>
+    .valdr-message {
+      display: none;
+    }
+    .has-error.dirty-blurred .valdr-message {
+      display: inline;
+      background: red;
+    }
+    .has-error.dirty-blurred input {
+      background: red;
+    }
+    .has-error.dirty-blurred label {
+      color: red;
+    }
+  </style>
 </head>
 <body ng-app="demoApp">
 
@@ -67,13 +83,13 @@
     valdrProvider.addConstraints({
       'Person': {
         'lastName': {
+          'Required': {
+            'message': 'Last name is required.'
+          },
           'Size': {
             'min': 2,
             'max': 10,
             'message': 'Last name must be between 2 and 10 characters.'
-          },
-          'Required': {
-            'message': 'Last name is required.'
           }
         },
         'firstName': {
@@ -87,9 +103,6 @@
           'Min': {
             value: '21',
             message: 'Person must be 21 years old.'
-          },
-          'Required': {
-            message: 'Age is required.'
           }
         }
       }

@@ -3,6 +3,7 @@ angular.module('valdr', ['ng'])
     'revalidate': 'valdr-revalidate'
   })
   .value('valdrClasses', {
-    'valid': 'has-success',
-    'invalid': 'has-error'
+    valid: 'has-success',
+    invalid: 'has-error',
+    dirtyBlurred: 'dirty-blurred'
   });

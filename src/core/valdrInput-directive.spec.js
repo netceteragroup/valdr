@@ -93,7 +93,6 @@ describe('valdrInput directive', function () {
     expect(surroundingElement.hasClass(valdrClasses.valid)).toBe(false);
   });
 
-
   it('should throw error if no field name is provided on the input', function () {
     // given
     var invalidInput =
@@ -116,6 +115,55 @@ describe('valdrInput directive', function () {
 
     // then
     expect(valdr.validate).toHaveBeenCalled();
+  });
+
+  describe('blur behavior', function () {
+
+    it('should add dirtyBlurred class when the model is dirty, invalid and the input gets blurred', function () {
+      // given
+      var input = element.find('input');
+      var surroundingElement = element.find('div');
+      ngModelController.$dirty = true;
+      ngModelController.$invalid = true;
+      ngModelController.$valid = false;
+
+      // when
+      input.triggerHandler('blur');
+
+      // then
+      expect(surroundingElement.hasClass(valdrClasses.dirtyBlurred)).toBe(true);
+    });
+
+    it('should add not dirtyBlurred class when the model is pristine, invalid and the input gets blurred', function () {
+      // given
+      var input = element.find('input');
+      var surroundingElement = element.find('div');
+      ngModelController.$dirty = false;
+      ngModelController.$invalid = true;
+      ngModelController.$valid = false;
+
+      // when
+      input.triggerHandler('blur');
+
+      // then
+      expect(surroundingElement.hasClass(valdrClasses.dirtyBlurred)).toBe(false);
+    });
+
+    it('should add not dirtyBlurred class when the model is dirty, valid and the input gets blurred', function () {
+      // given
+      var input = element.find('input');
+      var surroundingElement = element.find('div');
+      ngModelController.$dirty = true;
+      ngModelController.$invalid = false;
+      ngModelController.$valid = true;
+
+      // when
+      input.triggerHandler('blur');
+
+      // then
+      expect(surroundingElement.hasClass(valdrClasses.dirtyBlurred)).toBe(false);
+    });
+
   });
 
 });

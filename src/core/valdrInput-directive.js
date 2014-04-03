@@ -49,6 +49,12 @@ angular.module('valdr')
         scope.$on(valdrEvents.revalidate, function () {
           validate(ngModelController.$viewValue);
         });
+
+        element.bind('blur', function () {
+          if (ngModelController.$invalid && ngModelController.$dirty) {
+            parentElement.addClass(valdrClasses.dirtyBlurred);
+          }
+        });
       }
     };
   }]);
