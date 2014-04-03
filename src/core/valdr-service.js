@@ -93,6 +93,7 @@ angular.module('valdr')
                 var violation = {
                   value: value,
                   field: fieldName,
+                  type: typeName,
                   validator: validatorName
                 };
                 angular.extend(violation, constraint);

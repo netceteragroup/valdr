@@ -95,6 +95,7 @@ describe('valdr', function () {
       expect(validationResult.valid).toBe(false);
       expect(validationResult.violations[0].message).toBe('size');
       expect(validationResult.violations[0].field).toBe('firstName');
+      expect(validationResult.violations[0].type).toBe('Person');
       expect(validationResult.violations[0].value).toBe('Hanueli with a name that is too long');
       expect(validationResult.violations[0].max).toBe(10);
       expect(validationResult.violations[0].min).toBe(0);
