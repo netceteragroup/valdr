@@ -76,8 +76,9 @@ describe('valdrUtil', function () {
     });
 
     it('should validate NaN value', function () {
+      // NaN obviously is not a number but we don't know what it is, hence we cannot tell whether it's empty or not
       expect(valdrUtil.notEmpty(NaN)).toBe(false);
-      expect(valdrUtil.isEmpty(NaN)).toBe(true);
+      expect(valdrUtil.isEmpty(NaN)).toBe(false);
     });
 
     it('should validate empty string', function () {
