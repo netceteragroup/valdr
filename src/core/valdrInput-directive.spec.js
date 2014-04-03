@@ -118,11 +118,15 @@ describe('valdrInput directive', function () {
   });
 
   describe('blur behavior', function () {
+    var input, surroundingElement;
+
+    beforeEach(function () {
+      input = element.find('input');
+      surroundingElement = element.find('div');
+    });
 
     it('should add dirtyBlurred class when the model is dirty, invalid and the input gets blurred', function () {
       // given
-      var input = element.find('input');
-      var surroundingElement = element.find('div');
       ngModelController.$dirty = true;
       ngModelController.$invalid = true;
       ngModelController.$valid = false;
@@ -136,8 +140,6 @@ describe('valdrInput directive', function () {
 
     it('should add not dirtyBlurred class when the model is pristine, invalid and the input gets blurred', function () {
       // given
-      var input = element.find('input');
-      var surroundingElement = element.find('div');
       ngModelController.$dirty = false;
       ngModelController.$invalid = true;
       ngModelController.$valid = false;
@@ -151,8 +153,6 @@ describe('valdrInput directive', function () {
 
     it('should add not dirtyBlurred class when the model is dirty, valid and the input gets blurred', function () {
       // given
-      var input = element.find('input');
-      var surroundingElement = element.find('div');
       ngModelController.$dirty = true;
       ngModelController.$invalid = false;
       ngModelController.$valid = true;
