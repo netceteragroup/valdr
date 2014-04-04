@@ -8,7 +8,8 @@ angular.module('valdr')
         'sizeValidator',
         'minValidator',
         'maxValidator',
-        'emailValidator'
+        'emailValidator',
+        'digitsValidator'
       ];
 
     var addConstraints = function (newConstraints) {
