@@ -1,5 +1,4 @@
-# valdr [![Build Status](https://travis-ci.org/netceteragroup/valdr.png?branch=master)](https://travis-ci.org/netceteragroup/valdr)
-
+# valdr [![Build Status](https://travis-ci.org/netceteragroup/valdr.svg?branch=master)](https://travis-ci.org/netceteragroup/valdr)
 
 > Validate your AngularJS models
 
