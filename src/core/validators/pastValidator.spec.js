@@ -39,6 +39,15 @@ describe('pastValidator', function () {
 
   it('should return true for dates in the past', function () {
     expect(pastValidator.validate('1.1.1900')).toBe(true);
+    expect(pastValidator.validate('01.01.1900')).toBe(true);
+    expect(pastValidator.validate('1. 1. 1900')).toBe(true);
+    expect(pastValidator.validate('01. 01. 1900')).toBe(true);
+    expect(pastValidator.validate('1-1-1900')).toBe(true);
+    expect(pastValidator.validate('01-01-1900')).toBe(true);
+    expect(pastValidator.validate('1/1/1900')).toBe(true);
+    expect(pastValidator.validate('01/01/1900')).toBe(true);
+    expect(pastValidator.validate('1900.1.1')).toBe(true);
+    expect(pastValidator.validate('1900.01.01')).toBe(true);
     expect(pastValidator.validate('2000/12/31')).toBe(true);
     expect(pastValidator.validate('2000-12-31')).toBe(true);
     expect(pastValidator.validate(moment().subtract('seconds', 10))).toBe(true);

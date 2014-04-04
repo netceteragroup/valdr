@@ -1,6 +1,6 @@
 angular.module('valdr')
 
-  .factory('futureValidator', ['valdrUtil', function (valdrUtil) {
+  .factory('futureValidator', ['futureAndPastSharedValidator', function (futureAndPastSharedValidator) {
 
     return {
       name: 'Future',
@@ -12,9 +12,10 @@ angular.module('valdr')
        * @returns {boolean} true if empty, null, undefined or a date in the future, false otherwise
        */
       validate: function (value) {
-        var valueAsMoment = moment(value);
-        var now = moment();
-        return valdrUtil.isEmpty(value) || (valueAsMoment.isValid() && valueAsMoment.isAfter(now));
+
+        return futureAndPastSharedValidator.validate(value, function (valueAsMoment, now) {
+          return valueAsMoment.isAfter(now);
+        });
       }
     };
   }]);

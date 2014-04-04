@@ -32,6 +32,15 @@ describe('futureValidator', function () {
 
   it('should return false for dates in the past', function () {
     expect(futureValidator.validate('1.1.1900')).toBe(false);
+    expect(futureValidator.validate('01.01.1900')).toBe(false);
+    expect(futureValidator.validate('1. 1. 1900')).toBe(false);
+    expect(futureValidator.validate('01. 01. 1900')).toBe(false);
+    expect(futureValidator.validate('1-1-1900')).toBe(false);
+    expect(futureValidator.validate('01-01-1900')).toBe(false);
+    expect(futureValidator.validate('1/1/1900')).toBe(false);
+    expect(futureValidator.validate('01/01/1900')).toBe(false);
+    expect(futureValidator.validate('1900.1.1')).toBe(false);
+    expect(futureValidator.validate('1900.01.01')).toBe(false);
     expect(futureValidator.validate('2000/12/31')).toBe(false);
     expect(futureValidator.validate('2000-12-31')).toBe(false);
     expect(futureValidator.validate(moment().subtract('seconds', 1))).toBe(false);
