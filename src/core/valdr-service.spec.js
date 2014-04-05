@@ -216,4 +216,46 @@ describe('valdrProvider', function () {
     });
   });
 
+  describe('custom validators', function () {
+
+    it('should allow to add custom validators', function () {
+      // given
+      module('valdr');
+
+      module(function ($provide){
+        $provide.factory('customValidator', function () {
+          return {
+            name: 'Custom',
+            validate: function (value) {
+              return value === 'Hanueli';
+            }
+          };
+        });
+      });
+
+      module(function (valdrProvider) {
+        valdrProvider.addValidator('customValidator');
+        valdrProvider.addConstraints({
+          'Person': {
+            'firstName': {
+              'Custom': {}
+            }
+          }
+        });
+      });
+
+      inject(function (valdr, customValidator) {
+        // when
+        spyOn(customValidator, 'validate').andCallThrough();
+        var validationResult = valdr.validate('Person', 'firstName', 'Hanueli');
+
+        // then
+        expect(validationResult.valid).toBe(true);
+        expect(validationResult.violations).toBeUndefined();
+        expect(customValidator.validate).toHaveBeenCalled();
+      });
+    })
+
+  });
+
 });
