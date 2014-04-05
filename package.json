@@ -8,8 +8,7 @@
     "url": "git://github.com/netceteragroup/valdr"
   },
   "scripts": {
-    "postinstall": "bower install",
-    "test": "./node_modules/karma/bin/karma start karma.conf.js --single-run"
+    "postinstall": "bower install"
   },
   "author": {
     "name": "Netcetera AG"
