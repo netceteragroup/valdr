@@ -271,7 +271,7 @@ describe('valdrProvider', function () {
         expect(validationResult.violations).toBeUndefined();
         expect(customValidator.validate).toHaveBeenCalled();
       });
-    })
+    });
 
   });
 
