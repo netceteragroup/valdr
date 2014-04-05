@@ -6,20 +6,13 @@ angular.module('valdr')
    */
   .directive('valdrType', function () {
     return  {
-      controller: function() {
-        var type;
-
-        this.setType = function (newType) {
-          type = newType;
-        };
+      priority: 1,
+      controller: ['$attrs', function($attrs) {
 
         this.getType = function () {
-          return type;
+          return $attrs.valdrType;
         };
-      },
-      priority: 1,
-      link: function (scope, element, attrs, controller) {
-        controller.setType(attrs.valdrType);
-      }
+
+      }]
     };
   });
