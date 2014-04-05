@@ -82,6 +82,23 @@ describe('valdr', function () {
       expect(sizeValidator.validate).toHaveBeenCalled();
     });
 
+    it('should return true if no validator is available for a constraint', function () {
+      // given
+      valdr.addConstraints({
+        'Person': {
+          'firstName': {
+            'ThereIsNoValidatorForThisConstraint': {}
+          }
+        }
+      });
+
+      // when
+      var validationResult = valdr.validate('Person', 'firstName', 'Hanueli');
+
+      // then
+      expect(validationResult.valid).toBe(true);
+    });
+
     it('should return invalid state and message if validation fails', function () {
       // given
       valdr.addConstraints(personConstraints);
