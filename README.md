@@ -1,4 +1,4 @@
-# valdr [![Build Status](https://travis-ci.org/netceteragroup/valdr.png?branch=master)](https://travis-ci.org/netceteragroup/valdr) [![Coverage Status](https://coveralls.io/repos/netceteragroup/valdr/badge.png?branch=master)](https://coveralls.io/r/netceteragroup/valdr?branch=master)
+# valdr [![Build Status](https://travis-ci.org/netceteragroup/valdr.svg?branch=master)](https://travis-ci.org/netceteragroup/valdr) [![Coverage Status](https://coveralls.io/repos/netceteragroup/valdr/badge.png?branch=master)](https://coveralls.io/r/netceteragroup/valdr?branch=master)
 
 > Validate your AngularJS models
 
@@ -12,7 +12,7 @@ bower install --save valdr
 
 ## Use
 
-Use it in combination with [valdr-jsr303](https://github.com/netceteragroup/valdr-bean-validation).
+Use it in combination with [valdr-bean-validation](https://github.com/netceteragroup/valdr-bean-validation).
 
 ## Develop
 
