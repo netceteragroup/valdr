@@ -131,8 +131,9 @@
             }
           },
           'zipCode': {
-            'Required': {
-              'message': 'Zip code is required.'
+            'Pattern': {
+              'value': /^\d{4}$/,
+              'message': 'Zip code must be 4 digits.'
             }
           }
         }

@@ -9,7 +9,8 @@ angular.module('valdr')
         'minValidator',
         'maxValidator',
         'emailValidator',
-        'digitsValidator'
+        'digitsValidator',
+        'patternValidator'
       ];
 
     var addConstraints = function (newConstraints) {
