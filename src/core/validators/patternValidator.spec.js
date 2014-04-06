@@ -32,4 +32,11 @@ describe('patternValidator', function () {
     expect(patternValidator.validate('123', constraint)).toBe(false);
   });
 
+  it('should throw when RegExp is invalid', function () {
+    constraint.value= 'no RegExp';
+    expect(function () {
+      patternValidator.validate('asd', constraint);
+    }).toThrow();
+  });
+
 });
