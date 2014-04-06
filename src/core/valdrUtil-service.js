@@ -30,7 +30,7 @@ angular.module('valdr')
         if (this.isNaN(value)) {
           return false;
         }
-        return angular.isDefined(value) && value !== '' && value !== null && !this.isNaN(value);
+        return angular.isDefined(value) && value !== '' && value !== null;
       },
 
       /**
