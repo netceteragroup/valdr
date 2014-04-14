@@ -1,0 +1,214 @@
+body {
+  font-family: 'Oxygen', sans;
+  line-height: 2em;
+  color: #666;
+}
+
+.container {
+  font-size: 16px;
+}
+
+.fade.out {
+  opacity: 0;
+}
+
+.glyphicon {
+  top: 2px;
+}
+
+.octicon-mark-github:before {
+  content: '\f00a';
+}
+
+.octicon-code {
+  font-size: 1.5em;
+}
+.octicon-code:before {
+  content: '\f05f';
+}
+
+h1 {
+  font-weight: bold;
+  font-size: 3.5em;
+}
+
+h1 .emphasis {
+  color: #3498db;
+  opacity: 0.5;
+}
+
+pre {
+  background-color: transparent;
+  padding: 0;
+  border: none;
+  font-size: 1em;
+}
+
+.hljs {
+  border-radius: 5px;
+}
+
+.btn-outline {
+  border-color: #fff;
+  background-color: transparent;
+  color: #fff;
+}
+
+.btn-outline:hover {
+  color: #3498db;
+  border-color: #3498db;
+}
+
+.intro {
+  background: url(../img/valdr.png) 50% 0 no-repeat fixed #000;
+  position: relative;
+  width: 100%;
+  height: auto;
+  margin: 0;
+  padding: 100px 0 100px;
+  text-align:center;
+  color: #fff;
+  font-size: 1.5em;
+}
+
+.intro .icon {
+  font-size: 6em;
+  line-height: 0.6em;
+  color: #3498db;
+}
+
+.tagline {
+  font-weight: 300;
+  color: #fff;
+}
+
+.actions {
+  margin: 35px 0 15px;
+  font-size: 2em;
+}
+
+.scroll-down {
+  position: relative;
+  top: 85px;
+}
+
+.scroll-down a {
+  color: #fff;
+}
+
+.scroll-down a:hover {
+  color: #3498db;
+}
+
+.author {
+  position: absolute;
+  top: 0;
+  left: 0;
+  font-size: 0.75em;
+  color: #ccc;
+  font-weight: 300;
+}
+
+.author-img, .author-text {
+  display: inline-block;
+  margin: 15px 0 0 15px
+}
+
+.author img {
+  height: 30px;
+  border-radius: 50%;
+}
+
+.features {
+  margin: 50px 0;
+  text-align: center;
+}
+
+.feature {
+  float: left;
+  width: 33%;
+  padding: 0 20px;
+}
+
+.feature i {
+  font-size: 3em;
+}
+.feature h2 {
+  margin: 8px 0;
+  color: #333;
+}
+
+.feature div {
+  font-weight: 300;
+}
+
+
+.section h2 {
+  color: #333;
+  margin-top: 60px;
+}
+
+.section.cta {
+  background: url(../img/valdr.png) 50% 285px no-repeat fixed #000;
+  padding: 30px 0 85px;
+  text-align:center;
+  color: #fff;
+  font-size: 1.5em;
+}
+.section.cta h2 {
+  color: #fff;
+}
+.section.cta .author {
+  text-align: center;
+  position: static;
+}
+
+.section.license {
+  font-size:0.85em;
+  line-height: 2em;
+  margin-bottom: 55px;
+}
+
+footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  text-align: center;
+  padding: 10px 0 0 0;
+  height: 40px;
+  background-color: rgba(255,255,255,0.9);
+  box-shadow: 0 -1px 7px rgba(0,0,0,0.1);
+}
+
+@media all and (max-width: 675px) {
+  .intro {
+    font-size: 1.3em;
+    padding: 75px 0 75px;
+    background-position: 50% -50px;
+  }
+  .author {
+    font-size: 0.8em;
+  }
+  .scroll-down {
+    top: 50px;
+  }
+  .feature {
+    float: none;
+    width: auto;
+    padding: 25px 0;
+  }
+}
+
+@media all and (max-width: 600px) {
+  .intro {
+    font-size: 1em;
+    padding: 50px 0 40px;
+  }
+  .scroll-down {
+    top: 30px;
+  }
+  .author {
+    font-size: 1em;
+  }
+}
