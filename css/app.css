@@ -60,7 +60,7 @@ pre {
 }
 
 .intro {
-  background: url(../img/valdr.png) 50% 0 no-repeat fixed #000;
+  background: url(../img/valdr.jpg) 50% 0 no-repeat fixed #000;
   position: relative;
   width: 100%;
   height: auto;
@@ -149,7 +149,7 @@ pre {
 }
 
 .section.cta {
-  background: url(../img/valdr.png) 50% 285px no-repeat fixed #000;
+  background: url(../img/valdr.jpg) 50% 285px no-repeat fixed #000;
   padding: 30px 0 85px;
   text-align:center;
   color: #fff;
