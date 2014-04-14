@@ -50,19 +50,19 @@
       <div class="feature">
         <i class="fa fa-gears"></i>
        <h2>Model centric</h2>
-       <div>No need to repeat validation attributes in your input fields. Define the constraints for your models once and reuse them in all forms of your app.</div>
-      </div>
-
-      <div class="feature">
-        <i class="fa fa-magic"></i>
-        <h2>Simple validation messages</h2>
-        <div>Define the template used to render validation messages once and let valdr take care of the rest. There is no need to repeat yourself for every input field. It even integrates nicely with <a href="http://angular-translate.github.io">angular-translate</a>!</div>
+       <div>With valdr, there is no need to repeat the validation attributes in your input fields. Define the constraints for your models once and reuse them in all forms of your app.</div>
       </div>
 
       <div class="feature">
         <i class="fa fa-refresh"></i>
         <h2>Keep your rules in sync</h2>
-        <div>Keep your validation rules in sync with your back-end. For example with the <a href="https://github.com/netceteragroup/valdr-bean-validation">Bean Validation</a> plugin for Java back-ends or by writing your own REST service which provides the validation rules.</div>
+        <div>Keep your validation rules in sync with your back-end. Either by using the <a href="https://github.com/netceteragroup/valdr-bean-validation">Bean Validation</a> plugin for Java back-ends or by writing your own REST service which provides the validation rules.</div>
+      </div>
+
+      <div class="feature">
+        <i class="fa fa-magic"></i>
+        <h2>Simple error messages</h2>
+        <div>Define the template used to show error messages once and let valdr take care of the rest. There is no need to repeat yourself for every input field. Need i18n? valdr integrates nicely with <a href="http://angular-translate.github.io">angular-translate</a>!</div>
       </div>
 
     </div>
@@ -70,7 +70,7 @@
     <div class="section">
 
       <h2>Why valdr?</h2>
-      <p>Using the built-in AngularJS validation, a single input field of your form may look something like this:</p>
+      <p>In your typical AngularJS app, an input field with error messages may look something like this:</p>
 
 <pre><code>&lt;div&gt;
     &lt;label for=&quot;lastName&quot;&gt;Last Name&lt;/label&gt;
@@ -97,9 +97,9 @@
 &lt;/div&gt;
 </code></pre>
 
-      <p>This may be fine for smaller applications... but once your app grows, you end up managing <strong>hundreds of validation attributes and messages on dozens of input fields.</strong></p>
+      <p>This may be fine for smaller applications, but once your app grows, you end up managing <strong>hundreds of validation attributes and messages for dozens of input fields.</strong></p>
 
-      <p>Using valdr, you define the constraints and (optionally) the validation messages once:<p>
+      <p>Using valdr, you define the constraints and the messages once...<p>
 
 <pre><code>myApp.config(function(valdrProvider) {
   valdrProvider.addConstraints({
@@ -117,7 +117,7 @@
   });
 });
 </code></pre>
-    <p>And then use the valdr-type directive on a single or around multiple input fields to apply the validation rules for the given type:</p>
+    <p>...and use the valdr-type directive to apply the validation rules:</p>
 
 <pre><code>&lt;div valdr-type=&quot;Person&quot;&gt;
     &lt;label for=&quot;firstName&quot;&gt;First Name&lt;/label&gt;
