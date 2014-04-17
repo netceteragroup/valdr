@@ -2,7 +2,7 @@
   "author": "Netcetera AG",
   "name": "valdr",
   "description": "Validate AngularJS models",
-  "version": "0.1.1",
+  "version": "0.1.2-SNAPSHOT",
   "homepage": "https://github.com/netceteragroup/valdr",
   "repository": {
     "type": "git",
