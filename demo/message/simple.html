@@ -56,6 +56,17 @@
                ng-model="person.age">
 
       </div>
+
+      <div>
+        <label for="gender">Gender</label>
+        <select id="gender"
+                name="gender"
+                ng-options="gender as gender.label for gender in genders"
+                ng-model="person.gender">
+          <option value=""></option>
+        </select>
+      </div>
+
     </div>
 
   </form>
@@ -104,6 +115,11 @@
             value: '21',
             message: 'Person must be 21 years old.'
           }
+        },
+        'gender': {
+          'Required': {
+            'message': 'Gender is required.'
+          }
         }
       }
     });
@@ -111,6 +127,10 @@
 
   demoApp.controller('TestController', function ($scope, valdr) {
     $scope.person = {};
+    $scope.genders = [
+      { label: 'Male', value: 1 },
+      { label: 'Female', value: 2 }
+    ];
     $scope.constraints = valdr.getConstraints();
   });
 </script>

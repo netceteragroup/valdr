@@ -42,6 +42,17 @@
         <span>$valid {{ demoForm.age.$valid }}</span>
       </div>
 
+      <div>
+        <label for="gender">Gender</label>
+        <select id="gender"
+               name="gender"
+               ng-options="gender as gender.label for gender in genders"
+               ng-model="person.gender">
+          <option value=""></option>
+        </select>
+        <span>$valid {{ demoForm.gender.$valid }}</span>
+      </div>
+
       <h4>Address</h4>
       <div valdr-type="Address">
         <div>
@@ -112,6 +123,11 @@
           'Required': {
             message: 'Age is required.'
           }
+        },
+        'gender': {
+          'Required': {
+            message: 'Gender is required.'
+          }
         }
       }
     });
@@ -119,6 +135,10 @@
 
   demoApp.controller('TestController', function ($scope, valdr) {
     $scope.person = {};
+    $scope.genders = [
+      { label: 'Male', value: 1 },
+      { label: 'Female', value: 2 }
+    ];
     $scope.constraints = valdr.getConstraints();
 
     $scope.addAddressConstraints = function () {

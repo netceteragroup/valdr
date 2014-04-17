@@ -1,39 +1,40 @@
-angular.module('valdr')
+/**
+ * This directive appends a validation message after each input or select element, which is nested in a valdr-type
+ * directive and has an ng-model bound to it.
+ * To prevent adding messages to specific input fields, the attribute 'no-valdr-message' can be added to those input
+ * or select fields. The valdr-message directive is used to do the actual rendering of the violation messages.
+ */
+var valdrMessageDirectiveDefinition = ['$compile', function ($compile) {
+  return  {
+    restrict: 'E',
+    require: ['?^valdrType', '?^ngModel', '?^form'],
+    link: function (scope, element, attrs, controllers) {
 
-  /**
-   * This directive appends a validation message after each input element, which is nested in a valdr-type
-   * directive and has an ng-model bound to it.
-   * To prevent adding messages to specific input fields, the attribute 'no-valdr-message' can be added to those input
-   * fields. The valdr-message directive is used to do the actual rendering of the violation messages.
-   */
-  .directive('input',
-  ['$compile', function ($compile) {
-    return  {
-      restrict: 'E',
-      require: ['?^valdrType', '?^ngModel', '?^form'],
-      link: function (scope, element, attrs, controllers) {
+      var valdrTypeController = controllers[0],
+        ngModelController = controllers[1],
+        formController = controllers[2],
+        fieldName = attrs.name;
 
-        var valdrTypeController = controllers[0],
-          ngModelController = controllers[1],
-          formController = controllers[2],
-          fieldName = attrs.name;
-
-        // Stop right here if this is an <input> that's either not inside of a valdr-type block
-        // or there is no ng-model bound to it.
-        if (!valdrTypeController || !ngModelController || !formController) {
-          return;
-        }
-
-        // Add violation message if there is no 'no-valdr-message' attribute on this input field.
-        if (angular.isUndefined(attrs.noValdrMessage)) {
-          var formField = formController.$name + '.' + fieldName;
-          var valdrMessageElement = angular.element('<span valdr-message="' + formField + '"></span>');
-          element.after(valdrMessageElement);
-          $compile(valdrMessageElement)(scope);
-        }
+      // Stop right here if this is an <input> that's either not inside of a valdr-type block
+      // or there is no ng-model bound to it.
+      if (!valdrTypeController || !ngModelController || !formController) {
+        return;
       }
-    };
-  }])
+
+      // Add violation message if there is no 'no-valdr-message' attribute on this input field.
+      if (angular.isUndefined(attrs.noValdrMessage)) {
+        var formField = formController.$name + '.' + fieldName;
+        var valdrMessageElement = angular.element('<span valdr-message="' + formField + '"></span>');
+        element.after(valdrMessageElement);
+        $compile(valdrMessageElement)(scope);
+      }
+    }
+  };
+}];
+
+angular.module('valdr')
+  .directive('input', valdrMessageDirectiveDefinition)
+  .directive('select', valdrMessageDirectiveDefinition)
 
   /**
   * The valdr-message directive is responsible for the rendering of violation messages. The template used for rendering

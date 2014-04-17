@@ -36,7 +36,7 @@ module.exports = function (grunt) {
         'src/core/validators/patternValidator.js',
         'src/core/valdr-service.js',
         'src/core/valdrType-directive.js',
-        'src/core/valdrInput-directive.js'
+        'src/core/valdrFormItem-directive.js'
       ],
 
       message: [
