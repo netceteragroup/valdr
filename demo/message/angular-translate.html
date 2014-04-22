@@ -59,17 +59,17 @@
     valdrProvider.addConstraints({
       'Person': {
         'lastName': {
-          'Required': {
+          'required': {
             'message': 'message.required'
           },
-          'Size': {
+          'size': {
             'min': 5,
             'max': 20,
             'message': 'message.size'
           }
         },
         'firstName': {
-          'Size': {
+          'size': {
             'min': 3,
             'max': 10,
             'message': 'message.size'

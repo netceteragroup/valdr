@@ -9,7 +9,7 @@ describe('emailValidator', function () {
   }));
 
   it('should provide the correct name', function () {
-    expect(emailValidator.name).toBe('Email');
+    expect(emailValidator.name).toBe('email');
   });
 
   it('should return true for empty values', function () {

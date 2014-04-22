@@ -13,7 +13,7 @@ describe('sizeValidator', function () {
   }));
 
   it('should provide the correct name', function () {
-    expect(sizeValidator.name).toBe('Size');
+    expect(sizeValidator.name).toBe('size');
   });
 
   it('should return true if value is valid', function () {

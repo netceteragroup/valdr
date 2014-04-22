@@ -99,33 +99,33 @@
     valdrProvider.addConstraints({
       'Person': {
         'lastName': {
-          'Size': {
+          'size': {
             'min': 2,
             'max': 10,
             'message': 'Last name must be between 2 and 10 characters.'
           },
-          'Required': {
+          'required': {
             'message': 'Last name is required.'
           }
         },
         'firstName': {
-          'Size': {
+          'size': {
             'min': 2,
             'max': 20,
             'message': 'First name must be between 2 and 20 characters.'
           }
         },
         'age': {
-          'Min': {
+          'min': {
             value: '21',
             message: 'Must be 21 years old.'
           },
-          'Required': {
+          'required': {
             message: 'Age is required.'
           }
         },
         'gender': {
-          'Required': {
+          'required': {
             message: 'Gender is required.'
           }
         }
@@ -146,12 +146,12 @@
       valdr.addConstraints({
         'Address': {
           'email': {
-            'Email': {
+            'email': {
               'message': 'Must be a valid E-Mail address.'
             }
           },
           'zipCode': {
-            'Pattern': {
+            'pattern': {
               'value': /^\d{4}$/,
               'message': 'Zip code must be 4 digits.'
             }

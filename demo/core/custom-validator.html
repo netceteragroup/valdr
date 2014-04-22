@@ -49,7 +49,7 @@
 
   demoApp.factory('customValidator', function () {
     return {
-      name: 'CustomValidator',
+      name: 'customValidator',
       validate: function (value) {
         return value === 'Hanueli';
       }
@@ -63,12 +63,12 @@
     valdrProvider.addConstraints({
       'Person': {
         'lastName': {
-          'Required': {
+          'required': {
             'message': 'This field is required.'
           }
         },
         'firstName': {
-          'CustomValidator': {
+          'customValidator': {
             'message': 'First name must be Hanueli.'
           }
         }

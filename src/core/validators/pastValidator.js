@@ -3,7 +3,7 @@ angular.module('valdr')
   .factory('pastValidator', ['futureAndPastSharedValidator', function (futureAndPastSharedValidator) {
 
     return {
-      name: 'Past',
+      name: 'past',
 
       /**
        * Checks if the value is a date in the past.

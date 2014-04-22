@@ -10,7 +10,7 @@ describe('requiredValidator', function () {
   }));
 
   it('should provide the correct name', function () {
-    expect(requiredValidator.name).toBe('Required');
+    expect(requiredValidator.name).toBe('required');
   });
 
   it('should validate using the valdrUtil', function () {

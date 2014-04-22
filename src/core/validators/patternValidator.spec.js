@@ -10,7 +10,7 @@ describe('patternValidator', function () {
   }));
 
   it('should provide the correct name', function () {
-    expect(patternValidator.name).toBe('Pattern');
+    expect(patternValidator.name).toBe('pattern');
   });
 
   it('should return true for empty values', function () {

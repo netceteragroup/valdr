@@ -8,8 +8,8 @@ describe('pastValidator', function () {
     pastValidator = _pastValidator_;
   }));
 
-  it('should be named "Past"', function () {
-    expect(pastValidator.name).toBe('Past');
+  it('should be named "past"', function () {
+    expect(pastValidator.name).toBe('past');
   });
 
   it('should return true for empty values', function () {

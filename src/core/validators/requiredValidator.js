@@ -2,7 +2,7 @@ angular.module('valdr')
 
   .factory('requiredValidator', ['valdrUtil', function (valdrUtil) {
     return {
-      name: 'Required',
+      name: 'required',
 
       /**
        * Checks if the value is not empty.

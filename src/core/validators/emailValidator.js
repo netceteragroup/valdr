@@ -6,7 +6,7 @@ angular.module('valdr')
     var EMAIL_REGEXP = /^[a-z0-9!#$%&'*+/=?^_`{|}~.-]+@[a-z0-9-]+(\.[a-z0-9-]+)*$/i;
 
     return {
-      name: 'Email',
+      name: 'email',
 
       /**
        * Checks if the value is a valid email address.

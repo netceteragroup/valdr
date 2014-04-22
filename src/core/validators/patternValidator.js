@@ -27,7 +27,7 @@ angular.module('valdr')
     };
 
     return {
-      name: 'Pattern',
+      name: 'pattern',
 
       /**
        * Checks if the value matches the pattern defined in the constraint.

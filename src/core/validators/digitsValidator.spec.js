@@ -9,8 +9,8 @@ describe('digitsValidator', function () {
     constraint = { integer: '4', fraction: '2' };
   }));
 
-  it('should be named "Digits"', function () {
-    expect(digitsValidator.name).toBe('Digits');
+  it('should be named "digits"', function () {
+    expect(digitsValidator.name).toBe('digits');
   });
 
   it('should return true for empty, null, and undefined', function () {

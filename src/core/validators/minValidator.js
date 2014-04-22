@@ -3,7 +3,7 @@ angular.module('valdr')
   .factory('minValidator', ['valdrUtil', function (valdrUtil) {
 
     return {
-      name: 'Min',
+      name: 'min',
 
       /**
        * Checks if the value is a number and higher or equal as the value specified in the constraint.

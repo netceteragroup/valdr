@@ -82,7 +82,7 @@
     valdrProvider.addConstraints({
       'Person': {
         'firstName': {
-          'Size': {
+          'size': {
             'min': 2,
             'max': 20,
             'message': 'First name must be between 2 and 20 characters.'
@@ -91,12 +91,12 @@
       },
       'Address': {
         'email': {
-          'Email': {
+          'email': {
             'message': 'Must be a valid E-Mail address.'
           }
         },
         'zipCode': {
-          'Size': {
+          'size': {
             'min': '4',
             'max': '6',
             'message': 'Zip code must be between 4 and 6 characters.'

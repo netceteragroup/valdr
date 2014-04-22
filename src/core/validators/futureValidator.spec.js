@@ -8,8 +8,8 @@ describe('futureValidator', function () {
     futureValidator = _futureValidator_;
   }));
 
-  it('should be named "Future"', function () {
-    expect(futureValidator.name).toBe('Future');
+  it('should be named "future"', function () {
+    expect(futureValidator.name).toBe('future');
   });
 
   it('should return true for empty values', function () {

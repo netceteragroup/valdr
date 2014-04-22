@@ -2,7 +2,7 @@ angular.module('valdr')
 
   .factory('sizeValidator', function () {
     return {
-      name: 'Size',
+      name: 'size',
 
       /**
        * Checks if the values length is in the range specified by the constraints min and max properties.

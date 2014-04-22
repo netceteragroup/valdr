@@ -10,7 +10,7 @@ describe('minValidator', function () {
   }));
 
   it('should provide the correct name', function () {
-    expect(minValidator.name).toBe('Min');
+    expect(minValidator.name).toBe('min');
   });
 
   it('should return true for empty values', function () {

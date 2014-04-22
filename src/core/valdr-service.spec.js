@@ -4,7 +4,7 @@ describe('valdr', function () {
     personConstraints = {
       'Person': {
         'firstName': {
-          'Size': {
+          'size': {
             'min': 0,
             'max': 10,
             'message': 'size'
@@ -15,7 +15,7 @@ describe('valdr', function () {
     addressConstraints = {
       'Address': {
         'street': {
-          'Required': {
+          'required': {
             'message': 'required'
           }
         }
@@ -123,12 +123,12 @@ describe('valdr', function () {
       valdr.addConstraints({
         'Person': {
           'firstName': {
-            'Size': {
+            'size': {
               'min': 2,
               'max': 10,
               'message': 'size'
             },
-            'Required': {
+            'required': {
               'message': 'required'
             }
           }
@@ -210,14 +210,14 @@ describe('valdrProvider', function () {
       valdrProvider.addConstraints({
         'Person': {
           'firstName': {
-            'SizeBetween': {
+            'sizeBetween': {
               'min': 0,
               'max': 10
             }
           }
         }
       });
-      valdrProvider.addConstraintAlias('Size', 'SizeBetween');
+      valdrProvider.addConstraintAlias('size', 'sizeBetween');
     });
 
 
@@ -242,7 +242,7 @@ describe('valdrProvider', function () {
       module(function ($provide){
         $provide.factory('customValidator', function () {
           return {
-            name: 'Custom',
+            name: 'custom',
             validate: function (value) {
               return value === 'Hanueli';
             }
@@ -255,7 +255,7 @@ describe('valdrProvider', function () {
         valdrProvider.addConstraints({
           'Person': {
             'firstName': {
-              'Custom': {}
+              'custom': {}
             }
           }
         });

@@ -10,7 +10,7 @@ describe('maxValidator', function () {
   }));
 
   it('should provide the correct name', function () {
-    expect(maxValidator.name).toBe('Max');
+    expect(maxValidator.name).toBe('max');
   });
 
   it('should return true for empty values', function () {

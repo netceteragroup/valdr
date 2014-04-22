@@ -27,7 +27,7 @@ angular.module('valdr')
     };
 
     return {
-      name: 'Digits',
+      name: 'digits',
 
       /**
        * Checks if the value is a number within accepted range.
