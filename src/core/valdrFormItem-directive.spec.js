@@ -23,6 +23,14 @@ describe('valdrFormItem directive', function () {
       '</div>' +
     '</form>';
 
+  var textareaTemplate =
+      '<form name="demoForm">' +
+        '<div valdr-type="TestClass">' +
+          '<textarea name="fieldName" ng-model="myObject.field">' +
+          '</textarea>' +
+        '</div>' +
+      '</form>';
+
   // TEST UTILITIES
 
   function compileTemplate (template) {
@@ -157,6 +165,18 @@ describe('valdrFormItem directive', function () {
     beforeEach(function (){
       compileTemplate(selectTemplate);
       ngModelController = element.find('select').controller('ngModel');
+    });
+
+    runFormItemCommonTests();
+
+  });
+
+
+  describe('on textarea elements', function () {
+
+    beforeEach(function (){
+      compileTemplate(textareaTemplate);
+      ngModelController = element.find('textarea').controller('ngModel');
     });
 
     runFormItemCommonTests();

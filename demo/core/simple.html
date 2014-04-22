@@ -53,6 +53,16 @@
         <span>$valid {{ demoForm.gender.$valid }}</span>
       </div>
 
+      <div>
+        <label for="bio">Bio</label>
+        <textarea
+               id="bio"
+               name="bio"
+               ng-model="person.bio"
+               rows="3"></textarea>
+        <span>$valid {{ demoForm.bio.$valid }}</span>
+      </div>
+
       <h4>Address</h4>
       <div valdr-type="Address">
         <div>
@@ -127,6 +137,12 @@
         'gender': {
           'required': {
             message: 'Gender is required.'
+          }
+        },
+        'bio': {
+          'size': {
+            max: 20,
+            message: 'Bio can not be longer than 20 characters.'
           }
         }
       }

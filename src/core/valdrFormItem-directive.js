@@ -59,4 +59,5 @@ var valdrFormItemDirectiveDefinition =
 
 angular.module('valdr')
   .directive('input', valdrFormItemDirectiveDefinition)
-  .directive('select', valdrFormItemDirectiveDefinition);
+  .directive('select', valdrFormItemDirectiveDefinition)
+  .directive('textarea', valdrFormItemDirectiveDefinition);

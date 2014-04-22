@@ -35,6 +35,7 @@ var valdrMessageDirectiveDefinition = ['$compile', function ($compile) {
 angular.module('valdr')
   .directive('input', valdrMessageDirectiveDefinition)
   .directive('select', valdrMessageDirectiveDefinition)
+  .directive('textarea', valdrMessageDirectiveDefinition)
 
   /**
   * The valdr-message directive is responsible for the rendering of violation messages. The template used for rendering
