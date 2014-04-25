@@ -6,6 +6,8 @@ angular.module('valdr')
       validatorNames = [
         'requiredValidator',
         'sizeValidator',
+        'minLengthValidator',
+        'maxLengthValidator',
         'minValidator',
         'maxValidator',
         'emailValidator',
