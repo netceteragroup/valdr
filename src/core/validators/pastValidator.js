@@ -1,6 +1,6 @@
 angular.module('valdr')
 
-  .factory('pastValidator', ['futureAndPastSharedValidator', function (futureAndPastSharedValidator) {
+  .factory('valdrPastValidator', ['futureAndPastSharedValidator', function (futureAndPastSharedValidator) {
 
     return {
       name: 'past',

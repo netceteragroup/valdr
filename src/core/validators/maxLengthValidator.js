@@ -1,6 +1,6 @@
 angular.module('valdr')
 
-  .factory('maxLengthValidator', ['valdrUtil', function (valdrUtil) {
+  .factory('valdrMaxLengthValidator', ['valdrUtil', function (valdrUtil) {
     return {
       name: 'maxLength',
 

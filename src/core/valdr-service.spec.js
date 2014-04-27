@@ -25,13 +25,13 @@ describe('valdr', function () {
   beforeEach(module('valdr'));
 
   beforeEach(inject(
-    function (_valdr_, _$rootScope_, _valdrEvents_, _valdrClasses_, _sizeValidator_, _requiredValidator_) {
+    function (_valdr_, _$rootScope_, _valdrEvents_, _valdrClasses_, _valdrSizeValidator_, _valdrRequiredValidator_) {
     valdr = _valdr_;
     $rootScope = _$rootScope_;
     valdrEvents = _valdrEvents_;
     valdrClasses = _valdrClasses_;
-    sizeValidator = _sizeValidator_;
-    requiredValidator = _requiredValidator_;
+    sizeValidator = _valdrSizeValidator_;
+    requiredValidator = _valdrRequiredValidator_;
   }));
 
   describe('addConstraints()', function () {
@@ -221,15 +221,15 @@ describe('valdrProvider', function () {
     });
 
 
-    inject(function (valdr, sizeValidator) {
+    inject(function (valdr, valdrSizeValidator) {
       // when
-      spyOn(sizeValidator, 'validate').andCallThrough();
+      spyOn(valdrSizeValidator, 'validate').andCallThrough();
       var validationResult = valdr.validate('Person', 'firstName', 'Hanueli');
 
       // then
       expect(validationResult.valid).toBe(true);
       expect(validationResult.violations).toBeUndefined();
-      expect(sizeValidator.validate).toHaveBeenCalled();
+      expect(valdrSizeValidator.validate).toHaveBeenCalled();
     });
   });
 

@@ -1,12 +1,12 @@
-describe('patternValidator', function () {
+describe('valdrPatternValidator', function () {
 
   var patternValidator,
       constraint = { value: '/^[a-z]+$/' };
 
   beforeEach(module('valdr'));
 
-  beforeEach(inject(function (_patternValidator_) {
-    patternValidator = _patternValidator_;
+  beforeEach(inject(function (valdrPatternValidator) {
+    patternValidator = valdrPatternValidator;
   }));
 
   it('should provide the correct name', function () {

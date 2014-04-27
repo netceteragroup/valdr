@@ -1,6 +1,6 @@
 angular.module('valdr')
 
-  .factory('requiredValidator', ['valdrUtil', function (valdrUtil) {
+  .factory('valdrRequiredValidator', ['valdrUtil', function (valdrUtil) {
     return {
       name: 'required',
 

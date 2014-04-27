@@ -4,15 +4,17 @@ angular.module('valdr')
 
     var constraints = {}, validators = {}, constraintUrl, constraintsLoading, constraintAliases = {},
       validatorNames = [
-        'requiredValidator',
-        'sizeValidator',
-        'minLengthValidator',
-        'maxLengthValidator',
-        'minValidator',
-        'maxValidator',
-        'emailValidator',
-        'digitsValidator',
-        'patternValidator'
+        'valdrRequiredValidator',
+        'valdrSizeValidator',
+        'valdrMinLengthValidator',
+        'valdrMaxLengthValidator',
+        'valdrMinValidator',
+        'valdrMaxValidator',
+        'valdrEmailValidator',
+        'valdrDigitsValidator',
+        'valdrFutureValidator',
+        'valdrPastValidator',
+        'valdrPatternValidator'
       ];
 
     var addConstraints = function (newConstraints) {

@@ -1,4 +1,4 @@
-describe('sizeValidator', function () {
+describe('valdrSizeValidator', function () {
 
   var sizeValidator, constraint = {
       min: 5,
@@ -8,8 +8,8 @@ describe('sizeValidator', function () {
 
   beforeEach(module('valdr'));
 
-  beforeEach(inject(function (_sizeValidator_) {
-    sizeValidator = _sizeValidator_;
+  beforeEach(inject(function (valdrSizeValidator) {
+    sizeValidator = valdrSizeValidator;
   }));
 
   it('should provide the correct name', function () {

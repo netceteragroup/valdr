@@ -1,11 +1,11 @@
-describe('pastValidator', function () {
+describe('valdrPastValidator', function () {
 
   var pastValidator;
 
   beforeEach(module('valdr'));
 
-  beforeEach(inject(function (_pastValidator_) {
-    pastValidator = _pastValidator_;
+  beforeEach(inject(function (valdrPastValidator) {
+    pastValidator = valdrPastValidator;
   }));
 
   it('should be named "past"', function () {

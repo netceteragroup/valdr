@@ -1,6 +1,6 @@
 angular.module('valdr')
 
-  .factory('sizeValidator', function () {
+  .factory('valdrSizeValidator', function () {
     return {
       name: 'size',
 

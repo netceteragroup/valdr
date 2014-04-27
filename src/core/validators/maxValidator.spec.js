@@ -1,11 +1,11 @@
-describe('maxValidator', function () {
+describe('valdrMaxValidator', function () {
 
   var maxValidator, constraint;
 
   beforeEach(module('valdr'));
 
-  beforeEach(inject(function (_maxValidator_) {
-    maxValidator = _maxValidator_;
+  beforeEach(inject(function (valdrMaxValidator) {
+    maxValidator = valdrMaxValidator;
     constraint = { value: '10' };
   }));
 

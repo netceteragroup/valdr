@@ -1,4 +1,4 @@
-describe('minLengthValidator', function () {
+describe('valdrMinLengthValidator', function () {
 
   var minLengthValidator, constraint = {
       number: 5,
@@ -7,8 +7,8 @@ describe('minLengthValidator', function () {
 
   beforeEach(module('valdr'));
 
-  beforeEach(inject(function (_minLengthValidator_) {
-    minLengthValidator = _minLengthValidator_;
+  beforeEach(inject(function (valdrMinLengthValidator) {
+    minLengthValidator = valdrMinLengthValidator;
   }));
 
   it('should provide the correct name', function () {

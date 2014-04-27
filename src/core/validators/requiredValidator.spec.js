@@ -1,11 +1,11 @@
-describe('requiredValidator', function () {
+describe('valdrRequiredValidator', function () {
 
   var requiredValidator, valdrUtil;
 
   beforeEach(module('valdr'));
 
-  beforeEach(inject(function (_requiredValidator_, _valdrUtil_) {
-    requiredValidator = _requiredValidator_;
+  beforeEach(inject(function (valdrRequiredValidator, _valdrUtil_) {
+    requiredValidator = valdrRequiredValidator;
     valdrUtil = _valdrUtil_;
   }));
 

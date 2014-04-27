@@ -1,6 +1,6 @@
 angular.module('valdr')
 
-  .factory('minValidator', ['valdrUtil', function (valdrUtil) {
+  .factory('valdrMinValidator', ['valdrUtil', function (valdrUtil) {
 
     return {
       name: 'min',

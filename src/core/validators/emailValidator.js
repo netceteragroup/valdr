@@ -1,6 +1,6 @@
 angular.module('valdr')
 
-  .factory('emailValidator', ['valdrUtil', function (valdrUtil) {
+  .factory('valdrEmailValidator', ['valdrUtil', function (valdrUtil) {
 
     // the e-mail pattern used in angular.js
     var EMAIL_REGEXP = /^[a-z0-9!#$%&'*+/=?^_`{|}~.-]+@[a-z0-9-]+(\.[a-z0-9-]+)*$/i;

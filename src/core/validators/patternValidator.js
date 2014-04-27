@@ -1,6 +1,6 @@
 angular.module('valdr')
 
-  .factory('patternValidator', ['valdrUtil', function (valdrUtil) {
+  .factory('valdrPatternValidator', ['valdrUtil', function (valdrUtil) {
 
     var REGEXP_PATTERN = /^\/(.*)\/([gim]*)$/;
 

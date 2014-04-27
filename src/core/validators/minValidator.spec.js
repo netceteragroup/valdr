@@ -1,11 +1,11 @@
-describe('minValidator', function () {
+describe('valdrMinValidator', function () {
 
   var minValidator, constraint;
 
   beforeEach(module('valdr'));
 
-  beforeEach(inject(function (_minValidator_) {
-    minValidator = _minValidator_;
+  beforeEach(inject(function (valdrMinValidator) {
+    minValidator = valdrMinValidator;
     constraint = { value: '10' };
   }));
 

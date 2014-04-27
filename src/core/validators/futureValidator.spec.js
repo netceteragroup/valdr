@@ -1,11 +1,11 @@
-describe('futureValidator', function () {
+describe('valdrFutureValidator', function () {
 
   var futureValidator;
 
   beforeEach(module('valdr'));
 
-  beforeEach(inject(function (_futureValidator_) {
-    futureValidator = _futureValidator_;
+  beforeEach(inject(function (valdrFutureValidator) {
+    futureValidator = valdrFutureValidator;
   }));
 
   it('should be named "future"', function () {

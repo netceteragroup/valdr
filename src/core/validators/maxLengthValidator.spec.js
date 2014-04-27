@@ -1,4 +1,4 @@
-describe('minLengthValidator', function () {
+describe('valdrMaxLengthValidator', function () {
 
   var maxLengthValidator, constraint = {
       number: 5,
@@ -7,8 +7,8 @@ describe('minLengthValidator', function () {
 
   beforeEach(module('valdr'));
 
-  beforeEach(inject(function (_maxLengthValidator_) {
-    maxLengthValidator = _maxLengthValidator_;
+  beforeEach(inject(function (valdrMaxLengthValidator) {
+    maxLengthValidator = valdrMaxLengthValidator;
   }));
 
   it('should provide the correct name', function () {

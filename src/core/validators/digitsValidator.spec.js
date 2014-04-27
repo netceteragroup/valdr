@@ -1,11 +1,11 @@
-describe('digitsValidator', function () {
+describe('valdrDigitsValidator', function () {
 
   var digitsValidator, constraint;
 
   beforeEach(module('valdr'));
 
-  beforeEach(inject(function (_digitsValidator_) {
-    digitsValidator = _digitsValidator_;
+  beforeEach(inject(function (valdrDigitsValidator) {
+    digitsValidator = valdrDigitsValidator;
     constraint = { integer: '4', fraction: '2' };
   }));
 

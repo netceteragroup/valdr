@@ -1,6 +1,6 @@
 angular.module('valdr')
 
-  .factory('digitsValidator', ['valdrUtil', function (valdrUtil) {
+  .factory('valdrDigitsValidator', ['valdrUtil', function (valdrUtil) {
 
     var decimalSeparator = 1.1.toLocaleString().substring(1, 2); // jshint ignore:line
 
