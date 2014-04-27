@@ -53,7 +53,7 @@ angular.module('valdr')
           constraintsLoading = false;
           addConstraints(response.data);
           $rootScope.$broadcast(valdrEvents.revalidate);
-        }).finally(function () {
+        })['finally'](function () {
           constraintsLoading = false;
         });
       }
