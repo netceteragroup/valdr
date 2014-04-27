@@ -2,7 +2,7 @@ angular.module('valdr')
 
   .factory('minLengthValidator', ['valdrUtil', function (valdrUtil) {
     return {
-      name: 'minLengthValidator',
+      name: 'minLength',
 
       /**
        * Checks if the value is a string and if it's at least 'constraint.number' of characters long.

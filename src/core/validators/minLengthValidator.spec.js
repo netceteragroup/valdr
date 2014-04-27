@@ -12,7 +12,7 @@ describe('minLengthValidator', function () {
   }));
 
   it('should provide the correct name', function () {
-    expect(minLengthValidator.name).toBe('minLengthValidator');
+    expect(minLengthValidator.name).toBe('minLength');
   });
 
   it('should return true if value is valid', function () {
@@ -46,6 +46,17 @@ describe('minLengthValidator', function () {
 
     // then
     expect(valid).toBe(true);
+  });
+
+  it('should be invalid if value is number', function () {
+    // given
+    constraint.number = 4;
+
+    // when
+    var valid = minLengthValidator.validate(123, constraint);
+
+    // then
+    expect(valid).toBe(false);
   });
 
   it('should be valid if minLength is 0 and value null', function () {

@@ -2,7 +2,7 @@ angular.module('valdr')
 
   .factory('maxLengthValidator', ['valdrUtil', function (valdrUtil) {
     return {
-      name: 'maxLengthValidator',
+      name: 'maxLength',
 
       /**
        * Checks if the value is a string and if it's at most 'constraint.number' of characters long.
