@@ -31,9 +31,13 @@ module.exports = function (grunt) {
         'src/core/validators/sizeValidator.js',
         'src/core/validators/emailValidator.js',
         'src/core/validators/digitsValidator.js',
+        'src/core/validators/futureAndPastSharedValidator.js',
         'src/core/validators/pastValidator.js',
         'src/core/validators/futureValidator.js',
         'src/core/validators/patternValidator.js',
+        'src/core/validators/minLengthValidator.js',
+        'src/core/validators/maxLengthValidator.js',
+        'src/core/validators/hibernateEmailValidator.js',
         'src/core/valdr-service.js',
         'src/core/valdrType-directive.js',
         'src/core/valdrFormItem-directive.js'

@@ -14,7 +14,8 @@ angular.module('valdr')
         'valdrDigitsValidator',
         'valdrFutureValidator',
         'valdrPastValidator',
-        'valdrPatternValidator'
+        'valdrPatternValidator',
+        'valdrHibernateEmailValidator'
       ];
 
     var addConstraints = function (newConstraints) {
