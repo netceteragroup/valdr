@@ -188,7 +188,7 @@ describe('valdrProvider', function () {
       valdrProvider.setConstraintUrl(apiUrl);
     });
     inject(function (_$httpBackend_) {
-      $httpBackend= _$httpBackend_;
+      $httpBackend = _$httpBackend_;
       $httpBackend.expect('GET', apiUrl).respond(200, {});
     });
 
@@ -239,7 +239,7 @@ describe('valdrProvider', function () {
       // given
       module('valdr');
 
-      module(function ($provide){
+      module(function ($provide) {
         $provide.factory('customValidator', function () {
           return {
             name: 'custom',

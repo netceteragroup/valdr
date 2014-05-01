@@ -1,10 +1,10 @@
 describe('valdrSizeValidator', function () {
 
   var sizeValidator, constraint = {
-      min: 5,
-      max: 20,
-      message: 'message'
-    };
+    min: 5,
+    max: 20,
+    message: 'message'
+  };
 
   beforeEach(module('valdr'));
 

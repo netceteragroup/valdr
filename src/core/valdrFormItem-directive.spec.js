@@ -33,12 +33,12 @@ describe('valdrFormItem directive', function () {
 
   // TEST UTILITIES
 
-  function compileTemplate (template) {
+  function compileTemplate(template) {
     element = $compile(angular.element(template))($scope);
     $scope.$digest();
   }
 
-  function compileInputTemplate () {
+  function compileInputTemplate() {
     compileTemplate(inputTemplate);
     ngModelController = element.find('input').controller('ngModel');
   }
@@ -74,7 +74,7 @@ describe('valdrFormItem directive', function () {
 
   // COMMON TESTS
 
-  function runFormItemCommonTests () {
+  function runFormItemCommonTests() {
     it('should set the validity to false on ngModelController if validation fails', function () {
       // when
       $scope.$apply(function () {
@@ -140,7 +140,7 @@ describe('valdrFormItem directive', function () {
 
   describe('on input fields', function () {
 
-    beforeEach(function (){
+    beforeEach(function () {
       compileInputTemplate();
     });
 
@@ -150,8 +150,8 @@ describe('valdrFormItem directive', function () {
       // given
       var invalidInput =
         '<form name="demoForm"><div valdr-type="TestClass">' +
-        '<input type="text" ng-model="myObject.field">' +
-        '</div></form>';
+          '<input type="text" ng-model="myObject.field">' +
+          '</div></form>';
 
       // when / then
       expect(function () {
@@ -162,7 +162,7 @@ describe('valdrFormItem directive', function () {
 
   describe('on select elements', function () {
 
-    beforeEach(function (){
+    beforeEach(function () {
       compileTemplate(selectTemplate);
       ngModelController = element.find('select').controller('ngModel');
     });
@@ -174,7 +174,7 @@ describe('valdrFormItem directive', function () {
 
   describe('on textarea elements', function () {
 
-    beforeEach(function (){
+    beforeEach(function () {
       compileTemplate(textareaTemplate);
       ngModelController = element.find('textarea').controller('ngModel');
     });

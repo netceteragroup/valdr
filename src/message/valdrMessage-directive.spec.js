@@ -19,31 +19,31 @@ describe('valdrMessage input directive', function () {
 
   it('should add a the valdr-message directive after the input field and bind it to the correct form field',
     function () {
-    // given
-    var element = compileTemplate(
-      '<form name="demoForm">' +
-        '<div valdr-type="TestClass">' +
+      // given
+      var element = compileTemplate(
+        '<form name="demoForm">' +
+          '<div valdr-type="TestClass">' +
           '<input type="text" name="fieldName" ng-model="myObject.field">' +
-        '</div>' +
-      '</form>'
-    );
+          '</div>' +
+          '</form>'
+      );
 
-    // when
-    var nextElement = element.find('input').next()[0];
+      // when
+      var nextElement = element.find('input').next()[0];
 
-    //then
-    expect(nextElement.attributes['valdr-message']).toBeDefined();
-    expect(nextElement.attributes['valdr-message'].value).toBe('demoForm.fieldName');
-  });
+      //then
+      expect(nextElement.attributes['valdr-message']).toBeDefined();
+      expect(nextElement.attributes['valdr-message'].value).toBe('demoForm.fieldName');
+    });
 
   it('should NOT add a the valdr-message after the input if no-valdr-message is set', function () {
     // given
     var element = compileTemplate(
       '<form name="demoForm">' +
         '<div valdr-type="TestClass">' +
-          '<input type="text" name="fieldName" ng-model="myObject.field" no-valdr-message>' +
+        '<input type="text" name="fieldName" ng-model="myObject.field" no-valdr-message>' +
         '</div>' +
-      '</form>'
+        '</form>'
     );
 
     // when
@@ -58,9 +58,9 @@ describe('valdrMessage input directive', function () {
     var element = compileTemplate(
       '<form name="demoForm">' +
         '<div>' +
-         '<input type="text" name="fieldName" ng-model="myObject.field">' +
+        '<input type="text" name="fieldName" ng-model="myObject.field">' +
         '</div>' +
-      '</form>'
+        '</form>'
     );
 
     // when
