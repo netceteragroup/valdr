@@ -14,7 +14,7 @@ angular.module('valdr')
        */
       validate: function (value, constraint) {
         var minValue = Number(constraint.value),
-            valueAsNumber = Number(value);
+          valueAsNumber = Number(value);
 
 
         if (valdrUtil.isNaN(value)) {

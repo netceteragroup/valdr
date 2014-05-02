@@ -26,7 +26,7 @@ describe('valdrType directive', function () {
     var element = $compile(angular.element(
       '<div valdr-type="TestClass">' +
         '<span valdr-type="NestedClass"></span>' +
-      '</div>'))($scope);
+        '</div>'))($scope);
 
     // when
     var rootController = element.controller('valdrType');

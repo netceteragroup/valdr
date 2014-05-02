@@ -1,9 +1,9 @@
 describe('valdrMaxLengthValidator', function () {
 
   var maxLengthValidator, constraint = {
-      number: 5,
-      message: 'message'
-    };
+    number: 5,
+    message: 'message'
+  };
 
   beforeEach(module('valdr'));
 

@@ -14,7 +14,7 @@ angular.module('valdr')
        */
       validate: function (value, constraint) {
         var maxValue = Number(constraint.value),
-            valueAsNumber = Number(value);
+          valueAsNumber = Number(value);
 
         if (valdrUtil.isNaN(value)) {
           return false;

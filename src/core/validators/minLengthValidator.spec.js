@@ -1,9 +1,9 @@
 describe('valdrMinLengthValidator', function () {
 
   var minLengthValidator, constraint = {
-      number: 5,
-      message: 'message'
-    };
+    number: 5,
+    message: 'message'
+  };
 
   beforeEach(module('valdr'));
 

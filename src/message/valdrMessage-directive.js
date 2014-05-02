@@ -37,48 +37,48 @@ angular.module('valdr')
   .directive('select', valdrMessageDirectiveDefinition)
   .directive('textarea', valdrMessageDirectiveDefinition)
 
-  /**
-  * The valdr-message directive is responsible for the rendering of violation messages. The template used for rendering
-  * is defined in the valdrMessage service where it can be overridden or a template URL can be configured.
-  */
+/**
+ * The valdr-message directive is responsible for the rendering of violation messages. The template used for rendering
+ * is defined in the valdrMessage service where it can be overridden or a template URL can be configured.
+ */
   .directive('valdrMessage',
-  ['$rootScope', '$injector', 'valdrMessage', function ($rootScope, $injector, valdrMessage) {
-    return {
-      replace: true,
-      restrict: 'A',
-      scope: {
-        formField: '=valdrMessage'
-      },
-      templateUrl: function () {
-        return valdrMessage.templateUrl;
-      },
-      link: function (scope) {
+    ['$rootScope', '$injector', 'valdrMessage', function ($rootScope, $injector, valdrMessage) {
+      return {
+        replace: true,
+        restrict: 'A',
+        scope: {
+          formField: '=valdrMessage'
+        },
+        templateUrl: function () {
+          return valdrMessage.templateUrl;
+        },
+        link: function (scope) {
 
-        var updateTranslations = function () {
-          if (valdrMessage.translateAvailable && angular.isArray(scope.violations)) {
-            angular.forEach(scope.violations, function (violation) {
-              var fieldNameKey = violation.type + '.' + violation.field;
-              valdrMessage.$translate(fieldNameKey).then(function (translation) {
-                violation.fieldName = translation;
+          var updateTranslations = function () {
+            if (valdrMessage.translateAvailable && angular.isArray(scope.violations)) {
+              angular.forEach(scope.violations, function (violation) {
+                var fieldNameKey = violation.type + '.' + violation.field;
+                valdrMessage.$translate(fieldNameKey).then(function (translation) {
+                  violation.fieldName = translation;
+                });
               });
-            });
-          }
-        };
+            }
+          };
 
-        scope.$watch('formField.valdrViolations', function (valdrViolations) {
-          if (valdrViolations && valdrViolations.length) {
-            scope.violations = valdrViolations;
-            scope.violation = valdrViolations[0];
+          scope.$watch('formField.valdrViolations', function (valdrViolations) {
+            if (valdrViolations && valdrViolations.length) {
+              scope.violations = valdrViolations;
+              scope.violation = valdrViolations[0];
+              updateTranslations();
+            } else {
+              scope.violation = undefined;
+              scope.violations = undefined;
+            }
+          });
+
+          $rootScope.$on('$translateChangeSuccess', function () {
             updateTranslations();
-          } else {
-            scope.violation = undefined;
-            scope.violations = undefined;
-          }
-        });
-
-        $rootScope.$on('$translateChangeSuccess', function () {
-          updateTranslations();
-        });
-      }
-    };
-  }]);
+          });
+        }
+      };
+    }]);

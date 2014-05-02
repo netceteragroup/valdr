@@ -1,4 +1,4 @@
-describe('valdr', function() {
+describe('valdr', function () {
 
   beforeEach(module('valdr'));
 

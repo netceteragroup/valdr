@@ -1,7 +1,7 @@
 describe('valdrPatternValidator', function () {
 
   var patternValidator,
-      constraint = { value: '/^[a-z]+$/' };
+    constraint = { value: '/^[a-z]+$/' };
 
   beforeEach(module('valdr'));
 
@@ -27,13 +27,13 @@ describe('valdrPatternValidator', function () {
   });
 
   it('should work with RegExp object in constraint', function () {
-    constraint.value= /^[a-z]+$/;
+    constraint.value = /^[a-z]+$/;
     expect(patternValidator.validate('asd', constraint)).toBe(true);
     expect(patternValidator.validate('123', constraint)).toBe(false);
   });
 
   it('should throw when RegExp is invalid', function () {
-    constraint.value= 'no RegExp';
+    constraint.value = 'no RegExp';
     expect(function () {
       patternValidator.validate('asd', constraint);
     }).toThrow();

@@ -1,9 +1,9 @@
 angular.module('valdr')
 
-  /**
-   * This service provides shared configuration between all valdr-message directive instances like the configured
-   * template to render the violation messages and whether or not angular-translate is available.
-   */
+/**
+ * This service provides shared configuration between all valdr-message directive instances like the configured
+ * template to render the violation messages and whether or not angular-translate is available.
+ */
   .provider('valdrMessage', function () {
 
     var userDefinedTemplateUrl, userDefinedTemplate,
@@ -25,19 +25,20 @@ angular.module('valdr')
       userDefinedTemplateUrl = templateUrl;
     };
 
-    this.$get = ['$templateCache', '$injector', function($templateCache, $injector) {
+    this.$get = ['$templateCache', '$injector', function ($templateCache, $injector) {
 
-      function getTranslateService () {
+      function getTranslateService() {
         try {
           return $injector.get('$translate');
         } catch (error) {
           return undefined;
         }
       }
+
       var $translate = getTranslateService(),
         translateAvailable = angular.isDefined($translate);
 
-      function determineTemplate () {
+      function determineTemplate() {
         if (angular.isDefined(userDefinedTemplate)) {
           return userDefinedTemplate;
         } else if (translateAvailable) {
@@ -47,12 +48,13 @@ angular.module('valdr')
         }
       }
 
-      function updateTemplateCache () {
+      function updateTemplateCache() {
         $templateCache.put(defaultTemplateUrl, determineTemplate());
         if (userDefinedTemplateUrl && userDefinedTemplate) {
           $templateCache.put(userDefinedTemplateUrl, userDefinedTemplate);
         }
       }
+
       updateTemplateCache();
 
       return {
