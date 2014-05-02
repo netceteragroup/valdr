@@ -63,6 +63,15 @@
         <span>$valid {{ demoForm.bio.$valid }}</span>
       </div>
 
+      <div>
+        <label for="homepage">Homepage</label>
+        <input type="text"
+               id="homepage"
+               name="homepage"
+               ng-model="person.homepage">
+        <span>$valid {{ demoForm.homepage.$valid }}</span>
+      </div>
+
       <h4>Address</h4>
       <div valdr-type="Address">
         <div>
@@ -143,6 +152,11 @@
           'size': {
             max: 20,
             message: 'Bio can not be longer than 20 characters.'
+          }
+        },
+        'homepage': {
+          'url': {
+            message: 'Must be a valid URL.'
           }
         }
       }

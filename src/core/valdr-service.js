@@ -11,6 +11,7 @@ angular.module('valdr')
         'valdrMinValidator',
         'valdrMaxValidator',
         'valdrEmailValidator',
+        'valdrUrlValidator',
         'valdrDigitsValidator',
         'valdrFutureValidator',
         'valdrPastValidator',
