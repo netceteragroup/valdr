@@ -18,8 +18,15 @@ describe('valdrUrlValidator', function () {
   });
 
   it('should return true for valid url', function () {
+    // some trivial tests
     expect(urlValidator.validate('http://www.google.ch')).toBe(true);
     expect(urlValidator.validate('http://server:123/path')).toBe(true);
+    // some tests from http://djpowell.net/atomrdf/0.1/files/uritest.xml
+    expect(urlValidator.validate('http://a/b/c/d;p?q#s')).toBe(true);
+    expect(urlValidator.validate('http://a/b/c/g?y#s')).toBe(true);
+    expect(urlValidator.validate('http://a/b/c/g..')).toBe(true);
+    expect(urlValidator.validate('http://a/b/c/d;p?y')).toBe(true);
+    expect(urlValidator.validate('http://a/b/c/g;x=1/y')).toBe(true);
   });
 
   it('should return false for invalid url', function () {
