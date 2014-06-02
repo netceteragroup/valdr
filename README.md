@@ -30,30 +30,195 @@ bower install --save valdr
 
 ## Getting started
 
-TODO, for now just have a look at the [demos](https://github.com/netceteragroup/valdr/tree/master/demo/core)
+1) Add valdr.js to your index.html
 
-
-## Constraints JSON
-
+2) Add it as a dependency to your apps module:
 
 ```javascript
-
-TODO
-
+angular.module('yourApp', ['valdr']);
 ```
 
-## Default Validators
-TODO add description
-- size (min/max string length)
-- required
-- pattern
-- email
-- digits (to define number of integral/fractional digits accepted for a number)
-- min/max (for numbers)
-- future/past (for dates)
+3) Define the constraints:
+```javascript
+yourApp.config(function(valdrProvider) {
+  valdrProvider.addConstraints({
+    'Person': {
+      'lastName': {
+        'size': {
+          'min': 2,
+          'max': 10,
+          'message': 'Last name must be between 2 and 10 characters.'
+        },
+        'required': {
+          'message': 'Last name is required.'
+        }
+      },
+      'firstName': {
+        'size': {
+          'min': 2,
+          'max': 20,
+          'message': 'First name must be between 2 and 20 characters.'
+        }
+      }
+    }
+});
+```
+
+4) Add the *valdr-type* directive in your form on any parent element of the input fields that you want to validate.
+The **important** thing is, that the attribute *name* on the input field matches the field name in the constraints JSON.
+
+```html
+<form name="yourForm" novalidate valdr-type="Person">
+  <div class="form-group">
+    <label for="lastName">Last Name</label>
+    <input type="text"
+           id="lastName"
+           name="lastName"
+           ng-model="person.lastName">
+  </div>
+
+  <div class="form-group">
+    <label for="firstName">First Name</label>
+    <input type="text"
+           id="firstName"
+           name="firstName"
+           ng-model="person.firstName">
+  </div>
+</form>
+```
+That's it. valdr will now automatically validate the fields with the defined constraints and set the $validity of these form items.
+All violated constraints will be added to the *valdrViolations* array on those form items. 
+
+## Constraints JSON
+The JSON object to define the validation rules has the following structure:
+
+```javascript
+  TypeName {
+    FieldName {
+      ValidatorName {
+        <ValidatorArguments>
+        message: 'error message'
+      }
+    }
+  }
+```
+- **TypeName** The type of object (string)
+- **FieldName** The name of the field to validate (string)
+- **ValidatorName** The name of the validator (string) see below in the Built-In Validators section for the default validators
+- **ValidatorArguments** arguments which are passed to the validator, see below for the optional and required arguments for the built-in validators
+- **Message** the message which should be shown if the validation fails (can also be a message key if angular-translate is used)
+
+Example:
+```javascript
+  "Person": {
+    "firstName": {
+      "size": {
+        "min": 2,
+        "max": 20,
+        "message": "First name must be between 2 and 20 characters."
+      }
+    }
+  },
+  "Address": {
+    "email": {
+      "email": {
+        "message": "Must be a valid E-Mail address."
+      }
+    },
+    "zipCode": {
+      "size": {
+        "min": "4",
+        "max": "6",
+        "message": "Zip code must be between 4 and 6 characters."
+      }
+    }
+  }
+```
+
+## Built-In Validators
+
+### size
+Checks the minimal and maximal length of the value.
+
+Arguments:
+- **min** The minimal string length (number, optional, default 0)
+- **max** The maximal string length (number, optional)
+
+### minLength / maxLength
+Checks that the value is a string and not shorter / longer than the specified number of characters.
+
+Arguments:
+- **number** The minimal / maximal string length (number, required)
+
+### min / max
+Checks that the value is a number above/below or equal to the specified number.
+
+Arguments:
+- **value** The minimal / maximal value of the number (number, required)
+
+### required
+Marks the field as required.
+
+### pattern
+Validates the input using the specified regular expression.
+
+Arguments:
+- **value** The regular expression (string/RegExp, required)
+
+### email
+Checks that the field contains a valid e-mail address. It uses the same regular expression as AngularJS is using for e-mail validation.
+
+### digits
+Checks that the value is a number with the specified number of integral/fractional digits.
+
+Arguments:
+- **integer** The integral part of the number (number, required)
+- **fraction** The fractional part of the number (number, required)
+
+### url
+Checks that the value is a valid URL. It uses the same regular expression as AngularJS for the URL validation.
+
+### future / past
+Check that the value is a date in the future/past. *NOTE* These validators require that [Moment.js](http://momentjs.com) is loaded.
 
 ## Adding custom validators
-TODO
+Implementing custom validation logic is easy, all you have to do is implement a validation service/factory and register it in the valdrProvider.
+
+1) Custom validator:
+```javascript
+yourApp.factory('customValidator', function () {
+  return {
+    name: 'customValidator', // this is the validator name that can be referenced from the constraints JSON
+    validate: function (value, arguments) {
+      // value: the value to validate
+      // arguments: the validator arguments
+      return value === arguments.onlyValidValue;
+    }
+  };
+});
+```
+2) Register it:
+```javascript
+yourApp.config(function (valdrProvider) {
+  valdrProvider.addValidator('customValidator');
+}
+```
+
+3) Use it in constraints JSON:
+```javascript
+yourApp.config(function (valdrProvider) {
+  valdrProvider.addConstraints({
+    'Person': {
+      'firstName': {
+        'customValidator': {
+          'onlyValidValue': 'Tom',
+          'message': 'First name has to be Tom!'
+        }
+      }
+    }
+  });
+}
+```
 
 ## Showing validation messages
 TODO
@@ -98,7 +263,7 @@ Open http://localhost:3005/demo in your browser.
 
 ## Credits
 
-Kudos to the gang who brainstormed the name for this project with us over a diner on [mount Rigi](https://maps.google.com/maps?q=Hotel+Rigi+Kaltbad&hl=en&cid=7481422441262508040&gl=US&hq=Hotel+Rigi+Kaltbad&t=m&z=16). Guys we really appreciate your patience!
+Kudos to the gang who brainstormed the name for this project with us over a dinner on [mount Rigi](https://maps.google.com/maps?q=Hotel+Rigi+Kaltbad&hl=en&cid=7481422441262508040&gl=US&hq=Hotel+Rigi+Kaltbad&t=m&z=16). Guys we really appreciate your patience!
 * [Björn Mosler](https://github.com/brelsom)
 * Roland Weiss, father of 'valdr'
 * [Jason Brazile](https://github.com/jbrazile)
