@@ -5,5 +5,6 @@ angular.module('valdr', ['ng'])
   .value('valdrClasses', {
     valid: 'has-success',
     invalid: 'has-error',
-    dirtyBlurred: 'dirty-blurred'
+    dirtyBlurred: 'dirty-blurred',
+    formGroup: 'form-group'
   });

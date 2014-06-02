@@ -12,7 +12,7 @@ var valdrFormItemDirectiveDefinition =
         var valdrTypeController = controllers[0],
           ngModelController = controllers[1],
           fieldName = attrs.name,
-          parentElement = element.parent();
+          formGroupElement;
 
         // Stop right here if this is a form item that's either not inside of a valdr-type block
         // or there is no ng-model bound to it.
@@ -24,9 +24,11 @@ var valdrFormItemDirectiveDefinition =
           throw new Error('form element is not bound to a field name');
         }
 
-        var updateClassOnParentElement = function (valid) {
-          parentElement.toggleClass(valdrClasses.valid, valid);
-          parentElement.toggleClass(valdrClasses.invalid, !valid);
+        formGroupElement = valdrUtil.findWrappingFormGroup(element);
+
+        var updateClassOnFormGroup = function (valid) {
+          formGroupElement.toggleClass(valdrClasses.valid, valid);
+          formGroupElement.toggleClass(valdrClasses.invalid, !valid);
         };
 
         var updateNgModelController = function (validationResult) {
@@ -37,7 +39,7 @@ var valdrFormItemDirectiveDefinition =
         var validate = function (value) {
           var validationResult = valdr.validate(valdrTypeController.getType(), fieldName, value);
           updateNgModelController(validationResult);
-          updateClassOnParentElement(validationResult.valid);
+          updateClassOnFormGroup(validationResult.valid);
           return validationResult.valid ? value : undefined;
         };
 
@@ -50,7 +52,7 @@ var valdrFormItemDirectiveDefinition =
 
         element.bind('blur', function () {
           if (ngModelController.$invalid && ngModelController.$dirty) {
-            parentElement.addClass(valdrClasses.dirtyBlurred);
+            formGroupElement.addClass(valdrClasses.dirtyBlurred);
           }
         });
       }

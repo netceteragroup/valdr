@@ -3,7 +3,7 @@ angular.module('valdr')
 /**
  * Exposes utility functions used in validators and valdr core.
  */
-  .factory('valdrUtil', function () {
+  .factory('valdrUtil', ['valdrClasses', function (valdrClasses) {
     return {
 
       isNaN: function (value) {
@@ -42,7 +42,25 @@ angular.module('valdr')
           return false;
         }
         return !this.notEmpty(value);
+      },
+
+      /**
+       * Finds the parent element with the class defined in valdrClasses.formGroup. Only searches 3 levels above
+       * the given element. If no element is found with this class, returns the parent of the given element.
+       * @param element the element
+       * @returns {*} the wrapping form group
+       */
+      findWrappingFormGroup: function (element) {
+        var parent = element.parent();
+        for (var i = 0; i < 3; i++) {
+          if (parent.hasClass(valdrClasses.formGroup)) {
+            return parent;
+          } else {
+            parent = parent.parent();
+          }
+        }
+        return element.parent();
       }
     };
-  })
+  }])
 ;

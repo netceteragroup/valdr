@@ -88,4 +88,65 @@ describe('valdrUtil', function () {
 
   });
 
+  describe('findWrappingFormGroup()', function () {
+
+    it ('should find the parent element with class form-group', function () {
+      // given
+      var element = angular.element(
+        '<div class="form-group">' +
+          '<div>' +
+            '<section>' +
+              '<p></p>' +
+            '</section>' +
+          '</div>' +
+        '</div>');
+      var child = element.find('p');
+
+      // when
+      var formGroupElement = valdrUtil.findWrappingFormGroup(child);
+
+      // then
+      expect(formGroupElement.hasClass('form-group')).toBe(true);
+    });
+
+    it ('should return parent if no form-group is found', function () {
+      // given
+      var element = angular.element(
+        '<div>' +
+          '<section class="parent">' +
+            '<p></p>' +
+          '</section>' +
+        '</div>');
+      var child = element.find('p');
+
+      // when
+      var parent = valdrUtil.findWrappingFormGroup(child);
+
+      // then
+      expect(parent.hasClass('parent')).toBe(true);
+    });
+
+    it ('should return parent if no form-group is found in next 3 levels', function () {
+      // given
+      var element = angular.element(
+        '<div class="form-group">' +
+          '<div>' +
+            '<div>' +
+              '<div class="parent">' +
+                '<p></p>' +
+              '</div>' +
+            '</div>' +
+          '</div>' +
+        '</div>');
+      var child = element.find('p');
+
+      // when
+      var parent = valdrUtil.findWrappingFormGroup(child);
+
+      // then
+      expect(parent.hasClass('parent')).toBe(true);
+    });
+
+  });
+
 });
