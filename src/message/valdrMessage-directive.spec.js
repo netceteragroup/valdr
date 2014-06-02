@@ -36,6 +36,28 @@ describe('valdrMessage input directive', function () {
       expect(nextElement.attributes['valdr-message'].value).toBe('demoForm.fieldName');
     });
 
+
+  it('should add a the valdr-message directive to the form group if there is one', function () {
+    // given
+    var element = compileTemplate(
+            '<form name="demoForm">' +
+              '<section class="form-group">' +
+                '<div valdr-type="TestClass">' +
+                  '<input type="text" name="fieldName" ng-model="myObject.field">' +
+                '</div>' +
+              '</section>' +
+            '</form>'
+    );
+
+    // when
+    var formGroupChildren = element.find('section').children();
+    var lastInFormGroup = formGroupChildren[formGroupChildren.length - 1];
+
+    //then
+    expect(lastInFormGroup.attributes['valdr-message']).toBeDefined();
+    expect(lastInFormGroup.attributes['valdr-message'].value).toBe('demoForm.fieldName');
+  });
+
   it('should NOT add a the valdr-message after the input if no-valdr-message is set', function () {
     // given
     var element = compileTemplate(

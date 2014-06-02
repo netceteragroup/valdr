@@ -1,10 +1,12 @@
 /**
- * This directive appends a validation message after each input or select element, which is nested in a valdr-type
- * directive and has an ng-model bound to it.
+ * This directive appends a validation message to the parent element of any input, select or textarea element, which
+ * is nested in a valdr-type directive and has an ng-model bound to it.
+ * If the form element is wrapped in an element marked with the class defined in valdrClasses.formGroup,
+ * the messages is appended to this element instead of the direct parent.
  * To prevent adding messages to specific input fields, the attribute 'no-valdr-message' can be added to those input
  * or select fields. The valdr-message directive is used to do the actual rendering of the violation messages.
  */
-var valdrMessageDirectiveDefinition = ['$compile', function ($compile) {
+var valdrMessageDirectiveDefinition = ['$compile', 'valdrUtil', function ($compile, valdrUtil) {
   return  {
     restrict: 'E',
     require: ['?^valdrType', '?^ngModel', '?^form'],
@@ -25,7 +27,8 @@ var valdrMessageDirectiveDefinition = ['$compile', function ($compile) {
       if (angular.isUndefined(attrs.noValdrMessage)) {
         var formField = formController.$name + '.' + fieldName;
         var valdrMessageElement = angular.element('<span valdr-message="' + formField + '"></span>');
-        element.after(valdrMessageElement);
+        var formGroup = valdrUtil.findWrappingFormGroup(element);
+        formGroup.append(valdrMessageElement);
         $compile(valdrMessageElement)(scope);
       }
     }
