@@ -25,8 +25,8 @@ var valdrFormItemDirectiveDefinition =
         }
 
         var updateClassOnParentElement = function (valid) {
-          parentElement.addClass(valid ? valdrClasses.valid : valdrClasses.invalid);
-          parentElement.removeClass(valid ? valdrClasses.invalid : valdrClasses.valid);
+          parentElement.toggleClass(valdrClasses.valid, valid);
+          parentElement.toggleClass(valdrClasses.invalid, !valid);
         };
 
         var updateNgModelController = function (validationResult) {
