@@ -1,18 +1,21 @@
 {
   "author": "Netcetera AG",
   "name": "valdr",
-  "description": "Validate AngularJS models",
-  "version": "0.1.2-SNAPSHOT",
+  "description": "A model centric approach to AngularJS form validation",
+  "version": "0.2.0",
   "homepage": "https://github.com/netceteragroup/valdr",
   "repository": {
     "type": "git",
     "url": "git://github.com/netceteragroup/valdr"
   },
   "devDependencies": {
-    "angular": "~1.2.15",
-    "angular-mocks": "~1.2.15",
+    "angular": "1.2.16",
+    "angular-mocks": "1.2.16",
     "angular-translate": "~2.0.1",
     "jasmine": "1.3.0",
     "momentjs": "2.5.1"
+  },
+  "resolutions": {
+    "angular": "1.2.16"
   }
 }
