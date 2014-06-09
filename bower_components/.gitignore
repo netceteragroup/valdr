@@ -1,0 +1,8 @@
+
+angular/*
+!angular/angular.js
+!angular/angular.min.js
+
+valdr/*
+!valdr/valdr.js
+!valdr/valdr-message.js

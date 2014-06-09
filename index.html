@@ -4,12 +4,14 @@
   <meta charset="utf-8" />
   <title>valdr | AngularJS form validation</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="angular form validation" />
+  <meta name="description" content="A model centric approach to AngularJS form validation." />
   <meta name="author" content="netcetera" />
 
   <!-- libs -->
-  <script type="text/javascript" src="js/highlight.pack.js"></script>
-  <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.15/angular.min.js"></script>
+  <script src="js/highlight.pack.js"></script>
+  <script src="bower_components/angular/angular.min.js"></script>
+  <script src="bower_components/valdr/valdr.js"></script>
+  <script src="bower_components/valdr/valdr-message.js"></script>
   <link href='http://fonts.googleapis.com/css?family=Oxygen:400,700,300' rel='stylesheet' type='text/css'>
   <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
   <link href="http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css" rel="stylesheet">
@@ -23,18 +25,13 @@
 
   <div class="intro">
 
-    <div class="author">
-      <div class="author-img"><a href="https://github.com/netceteragroup"><img src="https://avatars3.githubusercontent.com/u/1321788?s=140"/></a></div>
-      <div class="author-text">Made by <a href="https://github.com/netceteragroup">netcetera</a></div>
-    </div>
-
     <div class="icon"><i class="fa fa-check-square-o"></i></div>
     <h1>valdr</h1>
     <span class="tagline">A model centric approach to AngularJS form validation</span>
 
     <div class="actions">
       <a class="btn btn-outline btn-lg" href="https://github.com/netceteragroup/bower-valdr/archive/master.zip"><i class="fa fa-download"></i> Download Zip</a>
-      <a class="btn btn-outline btn-lg" href="https://github.com/netceteragroup/valdr"><i class="fa fa-github"></i> View on GitHub</a>
+      <a class="btn btn-outline btn-lg" href="https://github.com/netceteragroup/valdr"><i class="fa fa-github"></i> Documentation on GitHub</a>
     </div>
 
     <div class="scroll-down">
@@ -50,114 +47,153 @@
       <div class="feature">
         <i class="fa fa-gears"></i>
        <h2>Model centric</h2>
-       <div>With valdr, there is no need to repeat the validation attributes in your input fields. Define the constraints for your models once and reuse them in all forms of your app.</div>
+       <div>With valdr, you don't have to add the validation rules to the form markup. Instead you define the constraints for the models in JSON and bind the forms (or only parts of them) to your models.</div>
       </div>
 
       <div class="feature">
         <i class="fa fa-refresh"></i>
         <h2>Keep your rules in sync</h2>
-        <div>Keep your validation rules in sync with your back-end. Either by using the <a href="https://github.com/netceteragroup/valdr-bean-validation">Bean Validation</a> plugin for Java back-ends or by writing your own REST service which provides the validation rules.</div>
+        <div>Keep your validation rules in sync with the back-end. Either by using the <a href="https://github.com/netceteragroup/valdr-bean-validation">Bean Validation</a> plugin for Java back-ends or by writing your own REST service, which provides the validation rules.</div>
       </div>
 
       <div class="feature">
         <i class="fa fa-magic"></i>
         <h2>Simple error messages</h2>
-        <div>Define the template used to show error messages once and let valdr take care of the rest. There is no need to repeat yourself for every input field. Need i18n? valdr integrates nicely with <a href="http://angular-translate.github.io">angular-translate</a>!</div>
+        <div>Define the template used to show error messages once and valdr adds them to the violated form fields. There is no need to repeat yourself for every input field. Need i18n? valdr integrates nicely with <a href="http://angular-translate.github.io">angular-translate</a>!</div>
       </div>
 
     </div>
 
     <div class="section">
 
-      <h2>Why valdr?</h2>
-      <p>In your typical AngularJS app, an input field with error messages may look something like this:</p>
-
-<pre><code>&lt;div&gt;
-    &lt;label for=&quot;lastName&quot;&gt;Last Name&lt;/label&gt;
-
-    &lt;input type=&quot;text&quot;
-           id=&quot;lastName&quot;
-           name=&quot;lastName&quot;
-           ng-model=&quot;person.lastName&quot;
-           ng-minlength=&quot;3&quot;
-           ng-maxlength=&quot;20&quot;
-           required&gt;
-
-    &lt;div class=&quot;error&quot; ng-show=&quot;myForm.lastName.$dirty &amp;&amp; myForm.lastName.$invalid&quot;&gt;
-        &lt;small class=&quot;error&quot; ng-show=&quot;myForm.lastName.$error.required&quot;&gt;
-            Last name is required.
-        &lt;/small&gt;
-        &lt;small class=&quot;error&quot; ng-show=&quot;myForm.lastName.$error.minlength&quot;&gt;
-            Last name is required to be at least 3 characters
-        &lt;/small&gt;
-        &lt;small class=&quot;error&quot; ng-show=&quot;myForm.lastName.$error.maxlength&quot;&gt;
-            Last name cannot be longer than 20 characters
-        &lt;/small&gt;
-    &lt;/div&gt;
-&lt;/div&gt;
-</code></pre>
-
-      <p>This may be fine for smaller applications, but once your app grows, you end up managing <strong>hundreds of validation attributes and messages for dozens of input fields.</strong></p>
-
-      <p>Using valdr, you define the constraints and the messages once...<p>
+      <h2>How it works</h2>
+      <p>Instead of having the validation logic in the markup, you define the constraints and the messages in your code (or load them from the back-end): <p>
 
 <pre><code>myApp.config(function(valdrProvider) {
   valdrProvider.addConstraints({
     'Person': {
       'lastName': {
-        'Size': {
+        'size': {
           'min': 3,
           'max': 20,
           'message': 'Last name is required to be between 3 and 20 characters.'
         },
-        'Required': {
+        'required': {
           'message': 'Last name is required.'
         }
       }
   });
 });
 </code></pre>
-    <p>...and use the valdr-type directive to apply the validation rules:</p>
+    <p>Now you can use the <b>valdr-type</b> directive to apply those validation rules to one or multiple form elements:</p>
 
-<pre><code>&lt;div valdr-type=&quot;Person&quot;&gt;
+<pre><code>&lt;form valdr-type=&quot;Person&quot;&gt;
     &lt;label for=&quot;firstName&quot;&gt;First Name&lt;/label&gt;
-
     &lt;input type=&quot;text&quot;
            id=&quot;firstName&quot;
            name=&quot;firstName&quot;
            ng-model=&quot;person.firstName&quot;&gt;
-&lt;/div&gt;
+&lt;/form&gt;
 </code></pre>
+    <p>That's it! valdr now knows that the input field with the name <b>firstName</b> should be validated with the <b>size</b> and the <b>required</b> validator and will set the <b>$validity</b> of this form item accordingly.</p>
     </div>
+    <div class="section" ng-app="demoApp" ng-controller="AppController">
+      <script>
+        var demoApp = angular.module('demoApp', ['valdr']);
+
+          demoApp.config(function(valdrProvider) {
+
+            valdrProvider.addConstraints({
+              'Person': {
+                'name': {
+                  'required': {
+                    'message': 'The name is required.'
+                  },
+                  'size': {
+                    'min': 4,
+                    'max': 10,
+                    'message': 'The name must be between 4 and 10 characters.'
+                  }
+                },
+                'email': {
+                  'email': {
+                    'message': 'Not a valid email address.'
+                  },
+                  'required': {
+                    'message': 'The email is required.'
+                  }
+                }
+              }
+            });
+          });
+
+          demoApp.controller('AppController', function ($scope, valdr) {
+            $scope.getConstraints = valdr.getConstraints;
+            hljs.initHighlightingOnLoad();
+          })
+
+      </script>
+      <style>
+      .valdr-message {
+          display: none;
+      }
+      .has-error.dirty-blurred .valdr-message {
+        display: inline;
+        color: #a94442;
+      }
+      .has-error .form-control, .has-success .form-control {
+        border: 1px solid #ccc;
+      }
+      .has-error.dirty-blurred .form-control {
+        border-color: #a94442;
+      }
+      .has-success.dirty-blurred .form-control {
+        border-color: #2b542c;
+      }
+      </style>
+      <h2>Demo</h2>
+      <p>This is a simple demo which uses CSS to show the validation messages only when the field is blurred. This is possible because valdr sets the class <b>.dirty-blurred</b> on the form group, when it's value has been changed and the input was blurred.</p>
+      <form role="form" name="demoForm" novalidate valdr-type="Person">
+          <div class="form-group">
+            <label for="name">Name</label>
+            <input class="form-control"
+                   type="text"
+                   id="name"
+                   name="name"
+                   ng-model="person.name">
+          </div>
+
+          <div class="form-group">
+            <label for="email">E-Mail</label>
+            <input class="form-control"
+                   type="text"
+                   id="email"
+                   name="email"
+                   ng-model="person.email">
+          </div>
+          <button type="submit" ng-disabled="demoForm.$invalid" class="btn btn-default">Submit</button>
+      </form>
+      <p>The demo uses the following constraints: </p>
+      <pre><code>{{ getConstraints() | json }}</code></pre>
+    </div>
+
     <div class="section">
-      <h2>Installation</h2>
-      <p>TODO</p>
+      <h2>Want to know more?</h2>
+      <p>Have a look at the <a href="https://github.com/netceteragroup/valdr">documentation</a> and <a href="https://github.com/netceteragroup/valdr/tree/master/demo">more demo pages</a> on Github.
     </div>
-    <div class="section">
-      <h2>Usage</h2>
-      <p>TODO</p>
-      <p><a href="https://github.com/netceteragroup/valdr">Advanced usage</a></p>
-    </div>
+
   </div>
 
   <div class="section cta">
     <div class="actions">
       <a class="btn btn-outline btn-lg" href="https://github.com/netceteragroup/bower-valdr/archive/master.zip"><i class="fa fa-download"></i> Download Zip</a>
-      <a class="btn btn-outline btn-lg" href="https://github.com/netceteragroup/valdr"><i class="fa fa-github"></i> View on GitHub</a>
-    </div>
-    <div class="author clearfix">
-      <div class="author-img"><a href="https://github.com/netceteragroup"><img src="https://avatars3.githubusercontent.com/u/1321788?s=140"/></a></div>
-      <div class="author-text">Made by <a href="https://github.com/netceteragroup">netcetera</a></div>
+      <a class="btn btn-outline btn-lg" href="https://github.com/netceteragroup/valdr"><i class="fa fa-github"></i> Documentation on GitHub</a>
     </div>
   </div>
 
   <footer>
     <iframe width="100" height="25" frameborder="0" src="http://ghbtns.com/github-btn.html?user=netceteragroup&amp;repo=valdr&amp;type=watch&amp;count=true&amp;size=medium"></iframe>
   </footer>
-
-  <script type="text/javascript">
-    hljs.initHighlightingOnLoad();
-  </script>
 
 </body>
 </html>
