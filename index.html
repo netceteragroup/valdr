@@ -47,19 +47,25 @@
       <div class="feature">
         <i class="fa fa-gears"></i>
        <h2>Model centric</h2>
-       <div>With valdr, you don't have to add the validation rules to the form markup. Instead you define the constraints for the models in JSON and bind the forms (or only parts of them) to your models.</div>
+       <div>With valdr, you don't add AngularJS validation rules to HTML markup. Instead you define model-based
+         constraints in JSON and bind the forms or parts thereof to your models. Benefits: all in one place,
+         <a href="http://en.wikipedia.org/wiki/Don%27t_repeat_yourself">DRY</a>.</div>
       </div>
 
       <div class="feature">
         <i class="fa fa-refresh"></i>
-        <h2>Keep your rules in sync</h2>
-        <div>Keep your validation rules in sync with the back-end. Either by using the <a href="https://github.com/netceteragroup/valdr-bean-validation">Bean Validation</a> plugin for Java back-ends or by writing your own REST service, which provides the validation rules.</div>
+        <h2>Keep constraints in sync</h2>
+        <div>Keep validation rules in sync with the back-end. For Java back-ends the <a
+                href="https://github.com/netceteragroup/valdr-bean-validation">valdr Bean Validation</a> plugin is
+          the perfect companion.
+          For other platforms it's easy to write your own service which provides validation rules in JSON.</div>
       </div>
 
       <div class="feature">
         <i class="fa fa-magic"></i>
         <h2>Simple error messages</h2>
-        <div>Define the template used to show error messages once and valdr adds them to the violated form fields. There is no need to repeat yourself for every input field. Need i18n? valdr integrates nicely with <a href="http://angular-translate.github.io">angular-translate</a>!</div>
+        <div>Define the template used to show error messages once. Then let valdr add it to the dirty form fields.
+          There is no need to repeat yourself for every input field. Need i18n? valdr integrates nicely with <a href="http://angular-translate.github.io">angular-translate</a>!</div>
       </div>
 
     </div>
@@ -67,7 +73,8 @@
     <div class="section">
 
       <h2>How it works</h2>
-      <p>Instead of having the validation logic in the markup, you define the constraints and the messages in your code (or load them from the back-end): <p>
+      <p>Instead of having constraint definitions scattered throughout input/form markup, valdr offers to define
+        constraints and messages in code (or load them from the back-end): <p>
 
 <pre><code>myApp.config(function(valdrProvider) {
   valdrProvider.addConstraints({
@@ -85,7 +92,7 @@
   });
 });
 </code></pre>
-    <p>Now you can use the <b>valdr-type</b> directive to apply those validation rules to one or multiple form elements:</p>
+    <p>Now use the <strong>valdr-type</strong> directive to apply those constraints to one or multiple form elements:</p>
 
 <pre><code>&lt;form valdr-type=&quot;Person&quot;&gt;
     &lt;label for=&quot;firstName&quot;&gt;First Name&lt;/label&gt;
@@ -95,7 +102,9 @@
            ng-model=&quot;person.firstName&quot;&gt;
 &lt;/form&gt;
 </code></pre>
-    <p>That's it! valdr now knows that the input field with the name <b>firstName</b> should be validated with the <b>size</b> and the <b>required</b> validator and will set the <b>$validity</b> of this form item accordingly.</p>
+    <p>That's it! valdr will validate the <strong>firstName</strong> input field with the
+      <strong>size</strong> and the <strong>required</strong> validator. It will set the <strong>$validity</strong> of this form item
+      accordingly.</p>
     </div>
     <div class="section" ng-app="demoApp" ng-controller="AppController">
       <script>
@@ -152,7 +161,8 @@
       }
       </style>
       <h2>Demo</h2>
-      <p>This is a simple demo which uses CSS to show the validation messages only when the field is blurred. This is possible because valdr sets the class <b>.dirty-blurred</b> on the form group, when it's value has been changed and the input was blurred.</p>
+      <p>This is a simple demo which uses CSS to show the validation messages only when the field is blurred. This is
+        possible because valdr sets the class <strong>.dirty-blurred</strong> on the form group when its value has changed and the input was blurred.</p>
       <form role="form" name="demoForm" novalidate valdr-type="Person">
           <div class="form-group">
             <label for="name">Name</label>
