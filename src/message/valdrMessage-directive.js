@@ -9,24 +9,22 @@
 var valdrMessageDirectiveDefinition = ['$compile', 'valdrUtil', function ($compile, valdrUtil) {
   return  {
     restrict: 'E',
-    require: ['?^valdrType', '?^ngModel', '?^form'],
+    require: ['?^valdrType', '?^ngModel'],
     link: function (scope, element, attrs, controllers) {
 
       var valdrTypeController = controllers[0],
         ngModelController = controllers[1],
-        formController = controllers[2],
         fieldName = attrs.name;
 
       // Stop right here if this is an <input> that's either not inside of a valdr-type block
       // or there is no ng-model bound to it.
-      if (!valdrTypeController || !ngModelController || !formController) {
+      if (!valdrTypeController || !ngModelController) {
         return;
       }
 
       // Add violation message if there is no 'no-valdr-message' attribute on this input field.
       if (angular.isUndefined(attrs.noValdrMessage)) {
-        var formField = formController.$name + '.' + fieldName;
-        var valdrMessageElement = angular.element('<span valdr-message="' + formField + '"></span>');
+        var valdrMessageElement = angular.element('<span valdr-message="' + fieldName + '"></span>');
         var formGroup = valdrUtil.findWrappingFormGroup(element);
         formGroup.append(valdrMessageElement);
         $compile(valdrMessageElement)(scope);
@@ -50,12 +48,13 @@ angular.module('valdr')
         replace: true,
         restrict: 'A',
         scope: {
-          formField: '=valdrMessage'
+          formFieldName: '@valdrMessage'
         },
         templateUrl: function () {
           return valdrMessage.templateUrl;
         },
-        link: function (scope) {
+        require: ['^form'],
+        link: function (scope, element, attrs, formController) {
 
           var updateTranslations = function () {
             if (valdrMessage.translateAvailable && angular.isArray(scope.violations)) {
@@ -67,6 +66,8 @@ angular.module('valdr')
               });
             }
           };
+
+          scope.formField = formController[0][scope.formFieldName];
 
           scope.$watch('formField.valdrViolations', function (valdrViolations) {
             if (valdrViolations && valdrViolations.length) {

@@ -25,7 +25,7 @@ describe('valdrMessage input directive', function () {
           '<div valdr-type="TestClass">' +
           '<input type="text" name="fieldName" ng-model="myObject.field">' +
           '</div>' +
-          '</form>'
+        '</form>'
       );
 
       // when
@@ -33,7 +33,7 @@ describe('valdrMessage input directive', function () {
 
       //then
       expect(nextElement.attributes['valdr-message']).toBeDefined();
-      expect(nextElement.attributes['valdr-message'].value).toBe('demoForm.fieldName');
+      expect(nextElement.attributes['valdr-message'].value).toBe('fieldName');
     });
 
 
@@ -55,7 +55,7 @@ describe('valdrMessage input directive', function () {
 
     //then
     expect(lastInFormGroup.attributes['valdr-message']).toBeDefined();
-    expect(lastInFormGroup.attributes['valdr-message'].value).toBe('demoForm.fieldName');
+    expect(lastInFormGroup.attributes['valdr-message'].value).toBe('fieldName');
   });
 
   it('should NOT add a the valdr-message after the input if no-valdr-message is set', function () {
@@ -65,7 +65,7 @@ describe('valdrMessage input directive', function () {
         '<div valdr-type="TestClass">' +
         '<input type="text" name="fieldName" ng-model="myObject.field" no-valdr-message>' +
         '</div>' +
-        '</form>'
+      '</form>'
     );
 
     // when
@@ -82,7 +82,7 @@ describe('valdrMessage input directive', function () {
         '<div>' +
         '<input type="text" name="fieldName" ng-model="myObject.field">' +
         '</div>' +
-        '</form>'
+      '</form>'
     );
 
     // when
@@ -100,8 +100,20 @@ describe('valdrMessage directive', function () {
 
   beforeEach(module('valdr'));
 
-  var compileTemplate = function (template) {
-    var element = $compile(angular.element(template))($scope);
+  var compileTemplate = function () {
+    var html =
+      '<form name="testForm">' +
+        '<input type="text" name="testField" ng-model="model">' +
+        '<span valdr-message="testField"></span>' +
+      '</form>';
+    var element = $compile(angular.element(html))($scope);
+
+    // manually add some violations for the tests (these are usually added if the field is invalid)
+    $scope.testForm.testField.valdrViolations = [
+        { message: 'message-1' },
+        { message: 'message-2' }
+      ];
+
     $scope.$digest();
     return element;
   };
@@ -110,38 +122,26 @@ describe('valdrMessage directive', function () {
     $compile = _$compile_;
     $scope = $rootScope.$new();
     valdrMessage = _valdrMessage_;
-
-    $scope.testForm = {
-      testField: {
-        valdrViolations: [
-          { message: 'message-1' },
-          { message: 'message-2' }
-        ]
-      }
-    };
   }));
 
   it('should display the first message in the default template', function () {
-    // given
-    var html = '<span valdr-message="testForm.testField"></span>';
-
     // when
-    var element = compileTemplate(html);
+    var element = compileTemplate();
 
     // then
-    expect(element.html()).toBe('message-1');
+    expect(element.find('div').html()).toBe('message-1');
   });
 
   it('should update the messages in the default template', function () {
     // given
-    var element = compileTemplate('<span valdr-message="testForm.testField"></span>');
+    var element = compileTemplate();
 
     // when
     $scope.testForm.testField.valdrViolations[0].message = 'updatedMessage';
     $scope.$digest();
 
     // then
-    expect(element.html()).toBe('updatedMessage');
+    expect(element.find('div').html()).toBe('updatedMessage');
   });
 
   it('should support custom templates', function () {
@@ -149,10 +149,10 @@ describe('valdrMessage directive', function () {
     valdrMessage.setTemplate('<div>Number of violations: {{ violations.length }}</div>');
 
     // when
-    var element = compileTemplate('<span valdr-message="testForm.testField"></span>');
+    var element = compileTemplate();
 
     // then
-    expect(element.html()).toBe('Number of violations: 2');
+    expect(element.find('div').html()).toBe('Number of violations: 2');
   });
 
 });
@@ -181,8 +181,18 @@ describe('valdrMessage directive with angular-translate', function () {
     });
   });
 
-  var compileTemplate = function (template) {
-    var element = $compile(angular.element(template))($scope);
+  var compileTemplate = function () {
+    var html =
+      '<form name="testForm">' +
+        '<input type="text" name="testField" ng-model="model">' +
+        '<span valdr-message="testField"></span>' +
+      '</form>';
+    var element = $compile(angular.element(html))($scope);
+
+    $scope.testForm.testField.valdrViolations = [
+      { message: 'message-1', field: 'testField', type: 'Person', param: '2' },
+      { message: 'message-2', field: 'testField', type: 'Person', param: '3' }
+    ];
     $scope.$digest();
     return element;
   };
@@ -192,15 +202,6 @@ describe('valdrMessage directive with angular-translate', function () {
     $scope = $rootScope.$new();
     $translate = _$translate_;
     valdrMessage = _valdrMessage_;
-
-    $scope.testForm = {
-      testField: {
-        valdrViolations: [
-          { message: 'message-1', field: 'testField', type: 'Person', param: '2' },
-          { message: 'message-2', field: 'testField', type: 'Person', param: '3' }
-        ]
-      }
-    };
   }));
 
   it('should translate the field name', function () {
@@ -208,10 +209,10 @@ describe('valdrMessage directive with angular-translate', function () {
     valdrMessage.setTemplate('<div>{{ violations[0].fieldName }}</div>');
 
     // when
-    var element = compileTemplate('<span valdr-message="testForm.testField"></span>');
+    var element = compileTemplate();
 
     // then
-    expect(element.html()).toBe('Field Name');
+    expect(element.find('div').html()).toBe('Field Name');
   });
 
   it('should translate the field name to german', function () {
@@ -220,40 +221,35 @@ describe('valdrMessage directive with angular-translate', function () {
     valdrMessage.setTemplate('<div>{{ violations[0].fieldName }}</div>');
 
     // when
-    var element = compileTemplate('<span valdr-message="testForm.testField"></span>');
+    var element = compileTemplate();
 
     // then
-    expect(element.html()).toBe('Feldname');
+    expect(element.find('div').html()).toBe('Feldname');
   });
 
   it('should update field names on language switch at runtime', function () {
     // given
     valdrMessage.setTemplate('<div>{{ violations[0].fieldName }}</div>');
-    var element = compileTemplate('<span valdr-message="testForm.testField"></span>');
-    expect(element.html()).toBe('Field Name');
+    var element = compileTemplate();
+    expect(element.find('div').html()).toBe('Field Name');
 
     // when
     $translate.use('de');
     $scope.$digest();
 
     // then
-    expect(element.html()).toBe('Feldname');
+    expect(element.find('div').html()).toBe('Feldname');
   });
 
 
   it('should allow to use parameters in the translated messages', function () {
-    // given
-    $scope.testForm = {
-      testField: {
-        valdrViolations: [
-          // note: message-2 has parameters defined in the translation tables
-          { message: 'message-2', field: 'testField', type: 'Person', param: '3', secondParam: '4' }
-        ]
-      }
-    };
-
-    // when
-    var element = compileTemplate('<span valdr-message="testForm.testField"></span>');
+    // given / when
+    var element = compileTemplate();
+    $scope.testForm.testField.valdrViolations = [
+      // note: message-2 has parameters defined in the translation tables
+      { message: 'message-2', field: 'testField', type: 'Person', param: '3', secondParam: '4' }
+    ];
+    $scope.$digest();
 
     // then
     expect(element.find('span').html()).toBe('field: Field Name param: 3 secondParam: 4');
