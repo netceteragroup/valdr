@@ -1,5 +1,8 @@
 # Changelog
 
+## 1.0.0 - 2014-06-27
+- added support for isolated scopes around valdr-message directive, closes[#32](https://github.com/netceteragroup/valdr/issues/32)
+
 ## 0.2.0 - 2014-05-03
 - add hibernateEmail validator, closes [#26](https://github.com/netceteragroup/valdr/issues/26)
 - add hibernateUrl validator, closes [#27](https://github.com/netceteragroup/valdr/issues/27)
