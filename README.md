@@ -312,8 +312,8 @@ function like this:
 
 ```javascript
 yourApp.config(function(valdrProvider) {
-    valdrProvider.setConstraintUrl('/api/constraints');
-  });
+  valdrProvider.setConstraintUrl('/api/constraints');
+});
 ```
 
 ### Using JSR303 Bean Validation with Java back-ends
