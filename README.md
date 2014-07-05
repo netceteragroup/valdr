@@ -221,19 +221,106 @@ yourApp.config(function (valdrProvider) {
 ```
 
 ## Showing validation messages
-TODO
+valdr sets the AngularJS validation states like ```$valid```, ```$invalid``` and ```$error``` on all validated form 
+elements and forms. Additional information like the violated constraints and the messages configured in the 
+constraints JSON are set as ```valdrViolations``` array on the individual form elements.
+With this information, you can either write your own logic to display the validation messages or use valdr-messages to
+automatically show the messages next to the invalid form items.
+
+To enable this behaviour, include ```valdr-messages.js``` in your page (included in the bower package).
+
+### Message template
+The default message template to be used by valdr-messages can be overridden by configuring the ```valdrMessageProvider```:
+
+```javascript
+valdrMessageProvider.setTemplate('<div class="valdr-message">{{ violation.message }}</div>');
+
+// or
+
+valdrMessageProvider.setTemplateUrl('/partials/valdrMesssageTemplate.html');
+```
+
+The following variables will be available on the scope of the message template:
+- ```violations``` - an array of all violations for the current form field
+- ```violation``` - the first violation, if multiple constraints are violated it will be the one that is first declared in the JSON structure
+- ```formField``` - the invalid form field
+
+### CSS to control visibility
+valdr sets some CSS classes on the form group surrounding valid and invalid form items. These allow you to control when 
+the validation messages should be shown.
+By default the surrounding form group is identified with the class ```form-group```, but like the other classes you can 
+override the default by injecting and changing the ```valdrClasses``` value:
+
+```javascript
+{
+  valid: 'has-success',
+  invalid: 'has-error',
+  dirtyBlurred: 'dirty-blurred',
+  formGroup: 'form-group'
+}
+```
+
+The ```valid```and ```invalid``` classes are self-explanatory, the class configured as ```dirtyBlurred``` will only be
+set on form items if the user has changed the value and blurred the field.
+Using CSS like the following, the messages can be shown only on inputs which the user changed and are invalid: 
+
+```css
+.valdr-message {
+  display: none;
+}
+.has-error.dirty-blurred .valdr-message {
+  display: inline;
+  background: red;
+}
+``` 
 
 ### Integration of angular-translate
-TODO
+To support i18n of the validation messages, valdr has built-in support for [angular-translate](https://github.com/angular-translate/angular-translate).
+
+Instead of adding the message directly to the constraints, use a message key and add the translations to the ```$translateProvider```.
+In the translations, the constraint arguments and the field name can be used with placeholders as in the following
+example:
+
+```javascript
+valdrProvider.addConstraints({
+  'Person': {
+    'lastName': {
+      'size': {
+        'min': 5,
+        'max': 20,
+        'message': 'message.size'
+      }
+    }
+  }
+});
+
+$translateProvider.translations('en', {
+  'message.size': '{{fieldName}} must be between {{min}} and {{max}} characters.',
+  'Person.lastName': 'Last name'
+});
+
+$translateProvider.translations('de', {
+  'message.size': 'Zwischen {{min}} und {{max}} Zeichen sind im Feld {{fieldName}} erlaubt.',
+  'Person.lastName': 'Nachname'
+});
+``` 
 
 ## Wire up your back-end
 
--> TODO: describe configuration via setConstraintsUrl
+To load the validation constraints from your back-end, you can configure the ```valdrProvider``` in a ```config```
+function like this: 
+
+```javascript
+yourApp.config(function(valdrProvider) {
+    valdrProvider.setConstraintUrl('/api/constraints');
+  });
+```
 
 ### Using JSR303 Bean Validation with Java back-ends
 
-Use it in combination with [valdr-bean-validation](https://github.com/netceteragroup/valdr-bean-validation).
-
+If you have a Java back-end and use Bean Validation (JSR 303) annotations, check out the [valdr-bean-validation](https://github.com/netceteragroup/valdr-bean-validation)
+project. It parses Java model classes for Bean Validation constraints and extracts their information into a JSON document 
+to be used by valdr. This allows to apply the exact same validation rules on the server and on the AngularJS client.
 
 ## Develop
 
