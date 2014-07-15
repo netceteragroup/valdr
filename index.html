@@ -79,14 +79,14 @@
 <pre><code>myApp.config(function(valdrProvider) {
   valdrProvider.addConstraints({
     'Person': {
-      'lastName': {
+      'firstName': {
         'size': {
           'min': 3,
           'max': 20,
-          'message': 'Last name is required to be between 3 and 20 characters.'
+          'message': 'First name is required to be between 3 and 20 characters.'
         },
         'required': {
-          'message': 'Last name is required.'
+          'message': 'First name is required.'
         }
       }
   });
