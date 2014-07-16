@@ -155,8 +155,8 @@ module.exports = function (grunt) {
     }
   });
 
-  grunt.registerTask('default', ['jshint:all', 'karma:unit']);
-  grunt.registerTask('test', ['karma:unit']);
+  grunt.registerTask('test', ['jshint:all', 'karma:unit']);
+  grunt.registerTask('default', ['test']);
 
   // Advanced test tasks
   grunt.registerTask('test-chrome', ['karma:chrome-unit']);
