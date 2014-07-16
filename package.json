@@ -1,6 +1,6 @@
 {
   "name": "valdr",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A model centric approach to AngularJS form validation",
   "homepage": "https://github.com/netceteragroup/valdr",
   "repository": {
