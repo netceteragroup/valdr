@@ -129,12 +129,13 @@ describe('valdrFormItem directive', function () {
     it('should handle constraint changed events', function () {
       // given
       spyOn(valdr, 'validate').andCallThrough();
+      ngModelController.$viewValue = 'viewValue';
 
       // when
       $scope.$broadcast(valdrEvents.revalidate);
 
       // then
-      expect(valdr.validate).toHaveBeenCalled();
+      expect(valdr.validate).toHaveBeenCalledWith(jasmine.any(String), 'fieldName', ngModelController.$modelValue);
     });
   }
 
