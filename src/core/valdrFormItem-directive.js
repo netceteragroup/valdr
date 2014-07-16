@@ -47,7 +47,7 @@ var valdrFormItemDirectiveDefinition =
         ngModelController.$formatters.push(validate);
 
         scope.$on(valdrEvents.revalidate, function () {
-          validate(ngModelController.$viewValue);
+          validate(ngModelController.$modelValue);
         });
 
         element.bind('blur', function () {
