@@ -129,10 +129,9 @@ describe('valdrFormItem directive', function () {
     it('should handle constraint changed events', function () {
       // given
       spyOn(valdr, 'validate').andCallThrough();
-	  ngModelController.$viewValue = 'viewValue';
+      ngModelController.$viewValue = 'viewValue';
 
       // when
-	  
       $scope.$broadcast(valdrEvents.revalidate);
 
       // then
