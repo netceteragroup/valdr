@@ -4,7 +4,40 @@ angular.module('valdr')
  * Exposes utility functions used in validators and valdr core.
  */
   .factory('valdrUtil', ['valdrClasses', function (valdrClasses) {
+
+    var substringAfterDot = function (string) {
+      if (string.lastIndexOf('.') === -1) {
+        return string;
+      } else {
+        return string.substring(string.lastIndexOf('.') + 1, string.length);
+      }
+    };
+
+    var SLUG_CASE_REGEXP = /[A-Z]/g;
+    var slugCase = function (string) {
+      return string.replace(SLUG_CASE_REGEXP, function(letter, pos) {
+        return (pos ? '-' : '') + letter.toLowerCase();
+      });
+    };
+
+    /**
+     * Converts the given validator name to a validation token. Uses the last part of the validator name after the
+     * dot (if present) and converts camel case to slug case (fooBar -> foo-bar).
+     * @param validatorName the validator name
+     * @returns {string} the validation token
+     */
+    var validatorNameToToken = function (validatorName) {
+      if (angular.isString(validatorName)) {
+        var name = substringAfterDot(validatorName);
+        name = slugCase(name);
+        return 'valdr-' + name;
+      } else {
+        return validatorName;
+      }
+    };
+
     return {
+      validatorNameToToken: validatorNameToToken,
 
       isNaN: function (value) {
         // `NaN` as a primitive is the only value that is not equal to itself

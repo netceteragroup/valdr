@@ -68,6 +68,16 @@ describe('valdr', function () {
 
   describe('validate()', function () {
 
+    it('should not validate if no constraints are defined', function () {
+      // when
+      var validationResult = valdr.validate('Person', 'firstName', 'Hanueli');
+
+      // then
+      expect(validationResult.valid).toBe(true);
+      expect(validationResult.violations).toBeUndefined();
+      expect(validationResult.validationResults).toBeUndefined();
+    });
+
     it('should validate with correct validator', function () {
       // given
       valdr.addConstraints(personConstraints);
@@ -79,6 +89,7 @@ describe('valdr', function () {
       // then
       expect(validationResult.valid).toBe(true);
       expect(validationResult.violations).toBeUndefined();
+      expect(validationResult.validationResults.length).toBe(1);
       expect(sizeValidator.validate).toHaveBeenCalled();
     });
 
@@ -229,6 +240,7 @@ describe('valdrProvider', function () {
       // then
       expect(validationResult.valid).toBe(true);
       expect(validationResult.violations).toBeUndefined();
+      expect(validationResult.validationResults.length).toBe(1);
       expect(valdrSizeValidator.validate).toHaveBeenCalled();
     });
   });

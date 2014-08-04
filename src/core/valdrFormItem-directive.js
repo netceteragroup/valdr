@@ -32,6 +32,10 @@ var valdrFormItemDirectiveDefinition =
         };
 
         var updateNgModelController = function (validationResult) {
+          angular.forEach(validationResult.validationResults, function (result) {
+            var validatorToken = valdrUtil.validatorNameToToken(result.validator);
+            ngModelController.$setValidity(validatorToken, result.valid);
+          });
           ngModelController.$setValidity('valdr', validationResult.valid);
           ngModelController.valdrViolations = validationResult.violations;
         };

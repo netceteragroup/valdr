@@ -85,6 +85,7 @@ angular.module('valdr')
               if (valdrUtil.has(typeConstraints, fieldName)) {
                 var fieldConstraints = typeConstraints[fieldName],
                   fieldIsValid = true,
+                  validationResults = [],
                   violations = [];
 
                 angular.forEach(fieldConstraints, function (constraint, validatorName) {
@@ -97,22 +98,26 @@ angular.module('valdr')
                   }
 
                   var valid = validator.validate(value, constraint);
+                  var validationResult = {
+                    valid: valid,
+                    value: value,
+                    field: fieldName,
+                    type: typeName,
+                    validator: validatorName
+                  };
+                  angular.extend(validationResult, constraint);
+
+                  validationResults.push(validationResult);
                   if (!valid) {
-                    var violation = {
-                      value: value,
-                      field: fieldName,
-                      type: typeName,
-                      validator: validatorName
-                    };
-                    angular.extend(violation, constraint);
-                    violations.push(violation);
+                    violations.push(validationResult);
                   }
                   fieldIsValid = fieldIsValid && valid;
                 });
 
                 return {
                   valid: fieldIsValid,
-                  violations: violations.length === 0 ? undefined : violations
+                  violations: violations.length === 0 ? undefined : violations,
+                  validationResults: validationResults.length === 0 ? undefined : validationResults
                 };
               } else {
                 return validResult;

@@ -7,6 +7,22 @@ describe('valdrUtil', function () {
     valdrUtil = _valdrUtil_;
   }));
 
+  describe('validatorNameToToken()', function () {
+
+    it('should convert camel case to slug case and prepend with valdr', function () {
+      expect(valdrUtil.validatorNameToToken(undefined)).toBe(undefined);
+      expect(valdrUtil.validatorNameToToken('nocamel')).toBe('valdr-nocamel');
+      expect(valdrUtil.validatorNameToToken('camelCase')).toBe('valdr-camel-case');
+      expect(valdrUtil.validatorNameToToken('CapitalCamelCase')).toBe('valdr-capital-camel-case');
+    });
+
+    it('should convert remove everything before the last dot and convert to slug case', function () {
+      expect(valdrUtil.validatorNameToToken('bla.nocamel')).toBe('valdr-nocamel');
+      expect(valdrUtil.validatorNameToToken('bla.camelCase')).toBe('valdr-camel-case');
+      expect(valdrUtil.validatorNameToToken('bla.CapitalCamelCase')).toBe('valdr-capital-camel-case');
+    });
+
+  });
 
   describe('isNaN()', function () {
 

@@ -3,7 +3,8 @@ describe('valdrFormItem directive', function () {
   // VARIABLES
 
   var $scope, $compile, element, valdr, valdrEvents, valdrClasses, ngModelController,
-    violations = ['violationsArray'];
+    violations = ['violationsArray'],
+    validationResults = [{ validator: 'required', valid: true }];
 
   var inputTemplate =
     '<form name="demoForm">' +
@@ -56,7 +57,8 @@ describe('valdrFormItem directive', function () {
         validate: function (typeName, fieldName, value) {
           return {
             valid: value === 'valid',
-            violations: violations
+            violations: violations,
+            validationResults: validationResults
           };
         }
       });
