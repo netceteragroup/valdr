@@ -227,7 +227,7 @@ constraints JSON are set as ```valdrViolations``` array on the individual form e
 With this information, you can either write your own logic to display the validation messages or use valdr-messages to
 automatically show the messages next to the invalid form items.
 
-To enable this behaviour, include ```valdr-messages.js``` in your page (included in the bower package).
+To enable this behaviour, include ```valdr-message.js``` in your page (included in the bower package).
 
 ### Message template
 The default message template to be used by valdr-messages can be overridden by configuring the ```valdrMessageProvider```:
