@@ -14,11 +14,16 @@ var valdrMessageDirectiveDefinition = ['$compile', 'valdrUtil', function ($compi
 
       var valdrTypeController = controllers[0],
         ngModelController = controllers[1],
+        noValdrValidate = attrs.noValdrValidate,
         fieldName = attrs.name;
 
-      // Stop right here if this is an <input> that's either not inside of a valdr-type block
-      // or there is no ng-model bound to it.
-      if (!valdrTypeController || !ngModelController) {
+      /*
+       Stop right here :
+       - if this is an <input> that's not inside of a valdr-type block
+       - if there is no ng-model bound to input
+       - if there is 'no-valdr-validate' attribute present
+       */
+      if (!valdrTypeController || !ngModelController || angular.isDefined(noValdrValidate)) {
         return;
       }
 
