@@ -1,6 +1,6 @@
 /**
  * This directive adds validation to all input and select fields which are bound to an ngModel and are surrounded
- * by a valdrType directive. To prevent adding validation to specific fields, the attribute 'no-valdr-validate'
+ * by a valdrType directive. To prevent adding validation to specific fields, the attribute 'valdr-no-validate'
  * can be added to those fields.
  */
 var valdrFormItemDirectiveDefinition =
@@ -12,7 +12,7 @@ var valdrFormItemDirectiveDefinition =
 
         var valdrTypeController = controllers[0],
           ngModelController = controllers[1],
-          noValdrValidate = attrs.noValdrValidate,
+          valdrNoValidate = attrs.valdrNoValidate,
           fieldName = attrs.name,
           formGroupElement;
 
@@ -20,9 +20,9 @@ var valdrFormItemDirectiveDefinition =
          Stop right here :
          - if this is an <input> that's not inside of a valdr-type block
          - if there is no ng-model bound to input
-         - if there is 'no-valdr-validate' attribute present
+         - if there is 'valdr-no-validate' attribute present
          */
-        if (!valdrTypeController || !ngModelController || angular.isDefined(noValdrValidate)) {
+        if (!valdrTypeController || !ngModelController || angular.isDefined(valdrNoValidate)) {
           return;
         }
 

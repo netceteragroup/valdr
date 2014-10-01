@@ -92,12 +92,12 @@ describe('valdrMessage input directive', function () {
     expect(nextElement.length).toBe(0);
   });
 
-  it('should NOT add valdr-message after the input if no-valdr-validate is set', function () {
+  it('should NOT add valdr-message after the input if valdr-no-validate is set', function () {
     // given
     var element = compileTemplate(
         '<form name="demoForm">' +
         '<div valdr-type="TestClass">' +
-        '<input type="text" name="fieldName" ng-model="myObject.field" no-valdr-validate>' +
+        '<input type="text" name="fieldName" ng-model="myObject.field" valdr-no-validate>' +
         '</div>' +
         '</form>'
     );

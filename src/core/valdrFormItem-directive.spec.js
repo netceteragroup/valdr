@@ -162,12 +162,12 @@ describe('valdrFormItem directive', function () {
       }).toThrow(new Error('form element is not bound to a field name'));
     });
 
-    it('should NOT use valdr validation if no-valdr-validate is set', function () {
+    it('should NOT use valdr validation if valdr-no-validate is set', function () {
       // given
       var noValdrValidationInput =
         '<form name="demoForm">' +
         '<div valdr-type="TestClass">' +
-        '<input type="text" name="fieldName" ng-model="myObject.field" no-valdr-validate>' +
+        '<input type="text" name="fieldName" ng-model="myObject.field" valdr-no-validate>' +
         '</div>' +
         '</form>';
 
