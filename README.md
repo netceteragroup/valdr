@@ -2,6 +2,38 @@
 
 > A model centric approach to AngularJS form validation
 
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+<!--**Table of Contents**  *generated with [DocToc](http://doctoc.herokuapp.com/)*-->
+
+  - [Why valdr](#why-valdr)
+  - [Install](#install)
+      - [[Bower](http://bower.io)](#bowerhttpbowerio)
+  - [Getting started](#getting-started)
+  - [Constraints JSON](#constraints-json)
+  - [Built-In Validators](#built-in-validators)
+    - [size](#size)
+    - [minLength / maxLength](#minlength--maxlength)
+    - [min / max](#min--max)
+    - [required](#required)
+    - [pattern](#pattern)
+    - [email](#email)
+    - [digits](#digits)
+    - [url](#url)
+    - [future / past](#future--past)
+  - [Adding custom validators](#adding-custom-validators)
+  - [Showing validation messages](#showing-validation-messages)
+    - [Message template](#message-template)
+    - [CSS to control visibility](#css-to-control-visibility)
+    - [Integration of angular-translate](#integration-of-angular-translate)
+  - [Wire up your back-end](#wire-up-your-back-end)
+    - [Using JSR303 Bean Validation with Java back-ends](#using-jsr303-bean-validation-with-java-back-ends)
+  - [Develop](#develop)
+  - [License](#license)
+  - [Credits](#credits)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 ## Why valdr
 Defining the validation rules on every input field with the default AngularJS validators pollutes the markup with your
 business rules and makes them pretty hard to maintain. This is especially true for larger applications, where you may
@@ -87,7 +119,7 @@ The **important** thing is, that the attribute *name* on the input field matches
 </form>
 ```
 That's it. valdr will now automatically validate the fields with the defined constraints and set the $validity of these form items.
-All violated constraints will be added to the *valdrViolations* array on those form items. 
+All violated constraints will be added to the *valdrViolations* array on those form items.
 
 ## Constraints JSON
 The JSON object to define the validation rules has the following structure:
@@ -221,8 +253,8 @@ yourApp.config(function (valdrProvider) {
 ```
 
 ## Showing validation messages
-valdr sets the AngularJS validation states like ```$valid```, ```$invalid``` and ```$error``` on all validated form 
-elements and forms. Additional information like the violated constraints and the messages configured in the 
+valdr sets the AngularJS validation states like ```$valid```, ```$invalid``` and ```$error``` on all validated form
+elements and forms. Additional information like the violated constraints and the messages configured in the
 constraints JSON are set as ```valdrViolations``` array on the individual form elements.
 With this information, you can either write your own logic to display the validation messages or use valdr-messages to
 automatically show the messages next to the invalid form items.
@@ -246,9 +278,9 @@ The following variables will be available on the scope of the message template:
 - ```formField``` - the invalid form field
 
 ### CSS to control visibility
-valdr sets some CSS classes on the form group surrounding valid and invalid form items. These allow you to control when 
+valdr sets some CSS classes on the form group surrounding valid and invalid form items. These allow you to control when
 the validation messages should be shown.
-By default the surrounding form group is identified with the class ```form-group```, but like the other classes you can 
+By default the surrounding form group is identified with the class ```form-group```, but like the other classes you can
 override the default by injecting and changing the ```valdrClasses``` value:
 
 ```javascript
@@ -262,7 +294,7 @@ override the default by injecting and changing the ```valdrClasses``` value:
 
 The ```valid```and ```invalid``` classes are self-explanatory, the class configured as ```dirtyBlurred``` will only be
 set on form items if the user has changed the value and blurred the field.
-Using CSS like the following, the messages can be shown only on inputs which the user changed and are invalid: 
+Using CSS like the following, the messages can be shown only on inputs which the user changed and are invalid:
 
 ```css
 .valdr-message {
@@ -272,7 +304,7 @@ Using CSS like the following, the messages can be shown only on inputs which the
   display: inline;
   background: red;
 }
-``` 
+```
 
 ### Integration of angular-translate
 To support i18n of the validation messages, valdr has built-in support for [angular-translate](https://github.com/angular-translate/angular-translate).
@@ -303,12 +335,12 @@ $translateProvider.translations('de', {
   'message.size': 'Zwischen {{min}} und {{max}} Zeichen sind im Feld {{fieldName}} erlaubt.',
   'Person.lastName': 'Nachname'
 });
-``` 
+```
 
 ## Wire up your back-end
 
 To load the validation constraints from your back-end, you can configure the ```valdrProvider``` in a ```config```
-function like this: 
+function like this:
 
 ```javascript
 yourApp.config(function(valdrProvider) {
@@ -319,7 +351,7 @@ yourApp.config(function(valdrProvider) {
 ### Using JSR303 Bean Validation with Java back-ends
 
 If you have a Java back-end and use Bean Validation (JSR 303) annotations, check out the [valdr-bean-validation](https://github.com/netceteragroup/valdr-bean-validation)
-project. It parses Java model classes for Bean Validation constraints and extracts their information into a JSON document 
+project. It parses Java model classes for Bean Validation constraints and extracts their information into a JSON document
 to be used by valdr. This allows to apply the exact same validation rules on the server and on the AngularJS client.
 
 ## Develop
