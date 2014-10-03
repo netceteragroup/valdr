@@ -161,6 +161,24 @@ describe('valdrFormItem directive', function () {
         $compile(angular.element(invalidInput))($scope);
       }).toThrow(new Error('form element is not bound to a field name'));
     });
+
+    it('should NOT use valdr validation if valdr-no-validate is set', function () {
+      // given
+      var noValdrValidationInput =
+        '<form name="demoForm">' +
+        '<div valdr-type="TestClass">' +
+        '<input type="text" name="fieldName" ng-model="myObject.field" valdr-no-validate>' +
+        '</div>' +
+        '</form>';
+
+      // when
+      compileTemplate(noValdrValidationInput);
+      ngModelController = element.find('input').controller('ngModel');
+
+      // then
+      expect(ngModelController.$parsers.length).toBe(0);
+      expect(ngModelController.$formatters.length).toBe(0);
+    });
   });
 
   describe('on select elements', function () {
