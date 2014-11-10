@@ -30,6 +30,12 @@ var valdrFormItemDirectiveDefinition =
           throw new Error('form element is not bound to a field name');
         }
 
+		// decorate element with constraint names
+        var elementConstraints = valdr.getConstraints()[valdrTypeController.getType()][fieldName];
+        for(var elementConstraint in elementConstraints) {
+          element.addClass('valdr-' + elementConstraint);
+        }
+
         formGroupElement = valdrUtil.findWrappingFormGroup(element);
 
         var updateClassOnFormGroup = function (valid) {
