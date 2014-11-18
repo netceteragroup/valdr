@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.0.2 - 2014-11-18
+- added new option ```valdr-no-validate``` to disable valdr validation on specific form elements, see [#41](https://github.com/netceteragroup/valdr/pull/41)
+- validity is now set for each valdr validator on ngModel controller, see [#37](https://github.com/netceteragroup/valdr/issues/37)
+- NOTE: this will be the last valdr version with support for AngularJS versions below 1.3
+
 ## 1.0.1 - 2014-07-16
 - Revalidate field with $modelValue instead of $viewValue on constraint change event, fixes [#34](https://github.com/netceteragroup/valdr/pull/34)
 
