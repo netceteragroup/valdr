@@ -154,7 +154,8 @@ describe('valdrFormItem directive', function () {
       var invalidInput =
         '<form name="demoForm"><div valdr-type="TestClass">' +
           '<input type="text" ng-model="myObject.field">' +
-          '</div></form>';
+          '</div>' +
+        '</form>';
 
       // when / then
       expect(function () {
@@ -166,9 +167,9 @@ describe('valdrFormItem directive', function () {
       // given
       var noValdrValidationInput =
         '<form name="demoForm">' +
-        '<div valdr-type="TestClass">' +
-        '<input type="text" name="fieldName" ng-model="myObject.field" valdr-no-validate>' +
-        '</div>' +
+          '<div valdr-type="TestClass">' +
+            '<input type="text" name="fieldName" ng-model="myObject.field" valdr-no-validate>' +
+          '</div>' +
         '</form>';
 
       // when
@@ -177,7 +178,8 @@ describe('valdrFormItem directive', function () {
 
       // then
       expect(ngModelController.$parsers.length).toBe(0);
-      expect(ngModelController.$formatters.length).toBe(0);
+      // note: there is one default formatter in Angular 1.3
+      expect(ngModelController.$formatters.length).toBe(1);
     });
   });
 
