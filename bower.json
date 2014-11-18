@@ -2,7 +2,6 @@
   "author": "Netcetera AG",
   "name": "valdr",
   "description": "A model centric approach to AngularJS form validation",
-  "version": "1.0.2-SNAPSHOT",
   "homepage": "https://github.com/netceteragroup/valdr",
   "repository": {
     "type": "git",
