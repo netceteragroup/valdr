@@ -22,6 +22,8 @@ describe('valdrEmailValidator', function () {
     expect(emailValidator.validate('valdr.welds@anything.com')).toBe(true);
     expect(emailValidator.validate('hanueli@asdf')).toBe(true);
     expect(emailValidator.validate('hanueli@192.168.1.1')).toBe(true);
+    expect(emailValidator.validate('a@3b.c')).toBe(true);
+    expect(emailValidator.validate('a@b')).toBe(true);
   });
 
   it('should return false for invalid email addresses', function () {
@@ -34,6 +36,8 @@ describe('valdrEmailValidator', function () {
     expect(emailValidator.validate('...')).toBe(false);
     expect(emailValidator.validate('.@.')).toBe(false);
     expect(emailValidator.validate(' aaa.@. ')).toBe(false);
+    expect(emailValidator.validate('a@-b.c')).toBe(false);
+    expect(emailValidator.validate('a@b-.c')).toBe(false);
   });
 
 });
