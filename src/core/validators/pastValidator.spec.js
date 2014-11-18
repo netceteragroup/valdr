@@ -34,7 +34,7 @@ describe('valdrPastValidator', function () {
     expect(pastValidator.validate('1.1.2900')).toBe(false);
     expect(pastValidator.validate('2030/12/31')).toBe(false);
     expect(pastValidator.validate('2030-12-31')).toBe(false);
-    expect(pastValidator.validate(moment().add('seconds', 10))).toBe(false);
+    expect(pastValidator.validate(moment().add(10, 'seconds'))).toBe(false);
   });
 
   it('should return true for dates in the past', function () {
@@ -50,6 +50,6 @@ describe('valdrPastValidator', function () {
     expect(pastValidator.validate('1900.01.01')).toBe(true);
     expect(pastValidator.validate('2000/12/31')).toBe(true);
     expect(pastValidator.validate('2000-12-31')).toBe(true);
-    expect(pastValidator.validate(moment().subtract('seconds', 10))).toBe(true);
+    expect(pastValidator.validate(moment().subtract(10, 'seconds'))).toBe(true);
   });
 });

@@ -43,13 +43,13 @@ describe('valdrFutureValidator', function () {
     expect(futureValidator.validate('1900.01.01')).toBe(false);
     expect(futureValidator.validate('2000/12/31')).toBe(false);
     expect(futureValidator.validate('2000-12-31')).toBe(false);
-    expect(futureValidator.validate(moment().subtract('seconds', 1))).toBe(false);
+    expect(futureValidator.validate(moment().subtract(1, 'seconds'))).toBe(false);
   });
 
   it('should return true for dates in the future', function () {
     expect(futureValidator.validate('1.1.2900')).toBe(true);
     expect(futureValidator.validate('2030/12/31')).toBe(true);
     expect(futureValidator.validate('2030-12-31')).toBe(true);
-    expect(futureValidator.validate(moment().add('seconds', 10))).toBe(true);
+    expect(futureValidator.validate(moment().add(10, 'seconds'))).toBe(true);
   });
 });
