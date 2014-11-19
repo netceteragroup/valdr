@@ -29,6 +29,7 @@
   - [Wire up your back-end](#wire-up-your-back-end)
     - [Using JSR303 Bean Validation with Java back-ends](#using-jsr303-bean-validation-with-java-back-ends)
   - [Develop](#develop)
+  - [Support](#support)
   - [License](#license)
   - [Credits](#credits)
 
@@ -374,7 +375,11 @@ Then start the dev server
 grunt server
 ```
 
-Open http://localhost:3005/demo in your browser.
+Open [http://localhost:3005/demo](http://localhost:3005/demo) in your browser.
+
+## Support
+
+Open a question on SO and tag it with [`valdr`](http://stackoverflow.com/tags/valdr).
 
 ## License
 
@@ -384,5 +389,5 @@ Open http://localhost:3005/demo in your browser.
 
 Kudos to the gang who brainstormed the name for this project with us over a dinner on [mount Rigi](https://maps.google.com/maps?q=Hotel+Rigi+Kaltbad&hl=en&cid=7481422441262508040&gl=US&hq=Hotel+Rigi+Kaltbad&t=m&z=16). Guys we really appreciate your patience!
 * [Björn Mosler](https://github.com/brelsom)
-* Roland Weiss, father of 'valdr'
+* [Roland Weiss](https://github.com/rolego), father of 'valdr'
 * [Jason Brazile](https://github.com/jbrazile)
