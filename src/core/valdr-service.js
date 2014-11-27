@@ -25,6 +25,18 @@ angular.module('valdr')
 
     this.addConstraints = addConstraints;
 
+    var removeConstraints = function (constraintNames) {
+      if (angular.isArray(constraintNames)) {
+        angular.forEach(constraintNames, function (name) {
+          delete constraints[name];
+        });
+      } else if (angular.isString(constraintNames)) {
+        delete constraints[constraintNames];
+      }
+    };
+
+    this.removeConstraints = removeConstraints;
+
     this.setConstraintUrl = function (url) {
       constraintUrl = url;
     };
@@ -135,6 +147,10 @@ angular.module('valdr')
             },
             addConstraints: function (newConstraints) {
               addConstraints(newConstraints);
+              $rootScope.$broadcast(valdrEvents.revalidate);
+            },
+            removeConstraints: function (constraintNames) {
+              removeConstraints(constraintNames);
               $rootScope.$broadcast(valdrEvents.revalidate);
             },
             getConstraints: function () {

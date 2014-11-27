@@ -66,6 +66,46 @@ describe('valdr', function () {
     });
   });
 
+  describe('removeConstraints()', function () {
+
+    it('should remove single constraint', function () {
+      // given
+      valdr.addConstraints(personConstraints);
+      valdr.addConstraints(addressConstraints);
+
+      // when
+      valdr.removeConstraints('Person');
+
+      // then
+      expect(valdr.getConstraints()).toEqual(addressConstraints);
+    });
+
+    it('should remove multiple constraints', function () {
+      // given
+      valdr.addConstraints(personConstraints);
+      valdr.addConstraints(addressConstraints);
+
+      // when
+      valdr.removeConstraints(['Person', 'Address']);
+
+
+      // then
+      expect(valdr.getConstraints()).toEqual({});
+    });
+
+    it('should broadcast event when constraints change', function () {
+      // given
+      valdr.addConstraints(personConstraints);
+      spyOn($rootScope, '$broadcast');
+
+      // when
+      valdr.removeConstraints('Person');
+
+      // then
+      expect($rootScope.$broadcast).toHaveBeenCalledWith(valdrEvents.revalidate);
+    });
+  });
+
   describe('validate()', function () {
 
     it('should not validate if no constraints are defined', function () {
