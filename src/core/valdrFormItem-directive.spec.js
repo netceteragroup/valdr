@@ -86,6 +86,7 @@ describe('valdrFormItem directive', function () {
       // then
       expect(ngModelController.$valid).toBe(false);
       expect(ngModelController.valdrViolations).toBe(violations);
+      expect(ngModelController.$validators.valdr).toBeDefined();
     });
 
     it('should set the validity to true on ngModelController if validation is ok', function () {
@@ -177,9 +178,7 @@ describe('valdrFormItem directive', function () {
       ngModelController = element.find('input').controller('ngModel');
 
       // then
-      expect(ngModelController.$parsers.length).toBe(0);
-      // note: there is one default formatter in Angular 1.3
-      expect(ngModelController.$formatters.length).toBe(1);
+      expect(ngModelController.$validators.valdr).toBeUndefined();
     });
   });
 

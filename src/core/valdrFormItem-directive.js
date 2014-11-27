@@ -46,15 +46,14 @@ var valdrFormItemDirectiveDefinition =
           ngModelController.valdrViolations = validationResult.violations;
         };
 
-        var validate = function (value) {
-          var validationResult = valdr.validate(valdrTypeController.getType(), fieldName, value);
+        var validate = function (modelValue) {
+          var validationResult = valdr.validate(valdrTypeController.getType(), fieldName, modelValue);
           updateNgModelController(validationResult);
           updateClassOnFormGroup(validationResult.valid);
-          return validationResult.valid ? value : undefined;
+          return validationResult.valid;
         };
 
-        ngModelController.$parsers.push(validate);
-        ngModelController.$formatters.push(validate);
+        ngModelController.$validators.valdr = validate;
 
         scope.$on(valdrEvents.revalidate, function () {
           validate(ngModelController.$modelValue);
