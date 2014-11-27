@@ -224,11 +224,16 @@ describe('valdrProvider', function () {
             'sizeBetween': {
               'min': 0,
               'max': 10
+            },
+            'secondSizeBetween': {
+              'min': 10,
+              'max': 20
             }
           }
         }
       });
       valdrProvider.addConstraintAlias('size', 'sizeBetween');
+      valdrProvider.addConstraintAlias('size', 'secondSizeBetween');
     });
 
 
@@ -238,9 +243,10 @@ describe('valdrProvider', function () {
       var validationResult = valdr.validate('Person', 'firstName', 'Hanueli');
 
       // then
-      expect(validationResult.valid).toBe(true);
-      expect(validationResult.violations).toBeUndefined();
-      expect(validationResult.validationResults.length).toBe(1);
+      expect(validationResult.valid).toBe(false);
+      expect(validationResult.violations).toBeDefined();
+      expect(validationResult.violations.length).toBe(1);
+      expect(validationResult.validationResults.length).toBe(2);
       expect(valdrSizeValidator.validate).toHaveBeenCalled();
     });
   });

@@ -33,8 +33,11 @@ angular.module('valdr')
       validatorNames.push(validatorName);
     };
 
-    this.addConstraintAlias = function (valdrName, customName) {
-      constraintAliases[valdrName] = customName;
+    this.addConstraintAlias = function (valdrName, alias) {
+      if(!angular.isArray(constraintAliases[valdrName])) {
+        constraintAliases[valdrName] = [];
+      }
+      constraintAliases[valdrName].push(alias);
     };
 
     this.$get =
@@ -44,8 +47,15 @@ angular.module('valdr')
           // inject all validators
           angular.forEach(validatorNames, function (validatorName) {
             var validator = $injector.get(validatorName);
-            var constraintName = constraintAliases[validator.name] || validator.name;
-            validators[constraintName] = validator;
+            validators[validator.name] = validator;
+
+            // register validator with aliases
+            if(angular.isArray(constraintAliases[validator.name])) {
+              angular.forEach(constraintAliases[validator.name], function (alias) {
+                validators[alias] = validator;
+              });
+            }
+
           });
 
           // load constraints via $http if constraintUrl is configured
