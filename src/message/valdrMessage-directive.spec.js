@@ -58,12 +58,12 @@ describe('valdrMessage input directive', function () {
     expect(lastInFormGroup.attributes['valdr-message'].value).toBe('fieldName');
   });
 
-  it('should NOT add a the valdr-message after the input if no-valdr-message is set', function () {
+  it('should NOT add a the valdr-message after the input if valdr-no-message is set', function () {
     // given
     var element = compileTemplate(
       '<form name="demoForm">' +
         '<div valdr-type="TestClass">' +
-        '<input type="text" name="fieldName" ng-model="myObject.field" no-valdr-message>' +
+        '<input type="text" name="fieldName" ng-model="myObject.field" valdr-no-message>' +
         '</div>' +
       '</form>'
     );

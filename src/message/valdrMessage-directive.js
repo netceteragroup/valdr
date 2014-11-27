@@ -3,7 +3,7 @@
  * is nested in a valdr-type directive and has an ng-model bound to it.
  * If the form element is wrapped in an element marked with the class defined in valdrClasses.formGroup,
  * the messages is appended to this element instead of the direct parent.
- * To prevent adding messages to specific input fields, the attribute 'no-valdr-message' can be added to those input
+ * To prevent adding messages to specific input fields, the attribute 'valdr-no-message' can be added to those input
  * or select fields. The valdr-message directive is used to do the actual rendering of the violation messages.
  */
 var valdrMessageDirectiveDefinition = ['$compile', 'valdrUtil', function ($compile, valdrUtil) {
@@ -27,8 +27,8 @@ var valdrMessageDirectiveDefinition = ['$compile', 'valdrUtil', function ($compi
         return;
       }
 
-      // Add violation message if there is no 'no-valdr-message' attribute on this input field.
-      if (angular.isUndefined(attrs.noValdrMessage)) {
+      // Add violation message if there is no 'valdr-no-message' attribute on this input field.
+      if (angular.isUndefined(attrs.valdrNoMessage)) {
         var valdrMessageElement = angular.element('<span valdr-message="' + fieldName + '"></span>');
         var formGroup = valdrUtil.findWrappingFormGroup(element);
         formGroup.append(valdrMessageElement);
