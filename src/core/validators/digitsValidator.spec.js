@@ -47,6 +47,12 @@ describe('valdrDigitsValidator', function () {
     expect(digitsValidator.validate('47\'11', constraint)).toBe(false);
   });
 
+  it('should validate correctly with fraction > 4', function() {
+    constraint.fraction = 4;
+    expect(digitsValidator.validate(1000.00001, constraint)).toBe(false);
+    expect(digitsValidator.validate(1000.0001, constraint)).toBe(true)
+  });
+
   it('should not choke on integer:1 conditions', function () {
     constraint.integer = 1;
     expect(digitsValidator.validate('10', constraint)).toBe(false);

@@ -2,12 +2,16 @@ angular.module('valdr')
 
   .factory('valdrDigitsValidator', ['valdrUtil', function (valdrUtil) {
 
-    var decimalSeparator = 1.1.toLocaleString().substring(1, 2); // jshint ignore:line
+    // matches everything except digits and '.' as decimal separator
+    var regexp = new RegExp('[^.\\d]', 'g');
 
-    var removeAnythingButDigitsAndDecimalSeparator = function (value) {
-      var regex = new RegExp('[^' + decimalSeparator + '\\d]', 'g');
-      // at this point 'value' can still be a number or a string or...
-      return value.toLocaleString().replace(regex, '');
+    /**
+     * By converting to number and back to string using toString(), we make sure that '.' is used as decimal separator
+     * and not the locale specific decimal separator.
+     * As we already checked for NaN at this point, we can do this safely.
+     */
+    var toStringWithoutThousandSeparators = function (value) {
+      return Number(value).toString().replace(regexp, '');
     };
 
     var isNotLongerThan = function (valueAsString, maxLengthConstraint) {
@@ -19,8 +23,8 @@ angular.module('valdr')
         fractionConstraint = constraint.fraction,
         cleanValueAsString, integerAndFraction;
 
-      cleanValueAsString = removeAnythingButDigitsAndDecimalSeparator(value);
-      integerAndFraction = cleanValueAsString.split(decimalSeparator);
+      cleanValueAsString = toStringWithoutThousandSeparators(value);
+      integerAndFraction = cleanValueAsString.split('.');
 
       return isNotLongerThan(integerAndFraction[0], integerConstraint) &&
         isNotLongerThan(integerAndFraction[1], fractionConstraint);
