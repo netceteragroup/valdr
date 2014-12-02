@@ -7,7 +7,7 @@ angular.module('valdr')
     var removeAnythingButDigitsAndDecimalSeparator = function (value) {
       var regex = new RegExp('[^' + decimalSeparator + '\\d]', 'g');
       // at this point 'value' can still be a number or a string or...
-      return value.toString().replace(regex, '');
+      return value.toLocaleString().replace(regex, '');
     };
 
     var isNotLongerThan = function (valueAsString, maxLengthConstraint) {
