@@ -26,7 +26,7 @@
     <div valdr-type="Person">
 
       <h4>Person</h4>
-      <div class="form-group">
+      <div valdr-form-group>
         <label for="firstName">First Name</label>
         <input type="text"
                id="firstName"
@@ -38,7 +38,7 @@
 
     <div ng-form="addressForm" valdr-type="Address" ng-repeat="address in person.addresses">
       <h4>Address {{ $index + 1 }} <button ng-click="removeAddress(address)" >remove</button></h4>
-      <div class="form-group">
+      <div valdr-form-group>
         <label for="zipCode">Zip Code</label>
         <input type="text"
                id="zipCode"
@@ -47,7 +47,7 @@
         <span>$valid {{ addressForm.zipCode.$valid }}</span>
       </div>
 
-      <div class="form-group">
+      <div valdr-form-group>
         <label for="email">E-Mail</label>
         <input type="text"
                id="email"

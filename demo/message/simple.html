@@ -5,23 +5,23 @@
 
   <style>
     .valdr-message {
-      display: none;
+        display: none;
     }
-    .has-error.dirty-blurred .valdr-message {
-      display: inline;
+    .valdr-message.ng-invalid.ng-dirty.ng-touched, .form-submitted .valdr-message.ng-invalid {
+        display: inline;
+        background: red;
+    }
+    input.ng-invalid.ng-dirty.ng-touched, .form-submitted input.ng-invalid {
       background: red;
     }
-    .has-error.dirty-blurred input {
-      background: red;
-    }
-    .has-error.dirty-blurred label {
+    .valdr-invalid-dirty-touched-group label, .form-submitted .form-group.ng-invalid label {
       color: red;
     }
   </style>
 </head>
 <body ng-app="demoApp">
 
-<div ng-controller="TestController">
+<div ng-controller="TestController" ng-class="{ 'form-submitted': formSubmitted }">
 
   <h1>Message Demo</h1>
 
@@ -30,7 +30,7 @@
     <div valdr-type="Person">
 
       <h4>Person</h4>
-      <div class="form-group">
+      <div valdr-form-group>
         <label for="lastName">Last Name</label>
         <input type="text"
                id="lastName"
@@ -38,7 +38,7 @@
                ng-model="person.lastName">
       </div>
 
-      <div class="form-group">
+      <div valdr-form-group>
         <label for="firstName">First Name</label>
         <input type="text"
                id="firstName"
@@ -48,16 +48,15 @@
         <span><em>Error message disabled for this field.</em></span>
       </div>
 
-      <div class="form-group">
+      <div valdr-form-group>
         <label for="age">Age</label>
         <input type="number"
                id="age"
                name="age"
                ng-model="person.age">
-
       </div>
 
-      <div class="form-group">
+      <div valdr-form-group>
         <label for="gender">Gender</label>
         <select id="gender"
                 name="gender"
@@ -67,9 +66,28 @@
         </select>
       </div>
 
+      <label for="showZipCity">Show Zip/City </label>
+      <input id="showZipCity" name="showZipCity" ng-model="showZipCity" type="checkbox">
+
+      <div valdr-form-group>
+        <div ng-if="showZipCity">
+            <label for="zip">Zip / City</label>
+            <input type="text"
+               id="zip"
+               name="zip"
+               ng-model="person.zip">
+            <input type="text"
+               id="city"
+               name="city"
+               ng-model="person.city">
+        </div>
+      </div>
+
     </div>
 
   </form>
+
+  <button ng-click="showAllErrors()">Show all errors</button>
 
   <h3>constraints</h3>
   <pre>{{ constraints | json }}</pre>
@@ -77,7 +95,7 @@
 </div>
 
 <script src="/bower_components/angular/angular.js"></script>
-<script src="../js/valdr.min.js"></script>
+<script src="../js/valdr.js"></script>
 <script src="../js/valdr-message.js"></script>
 <script src="http://localhost:35729/livereload.js"></script>
 
@@ -85,11 +103,6 @@
   var demoApp = angular.module('demoApp', ['valdr']);
 
   demoApp.config(function(valdrProvider) {
-
-// TODO PDE: add demo for custom templates and templateUrl
-//    valdrMessageProvider.setTemplate('<span ng-if="violation" class="help-block">FEHLER: {{ violation.message }}</span>');
-//    valdrMessageProvider
-//            .setTemplateUrl('/demo/message/message-template.tpl.html');
 
     valdrProvider.addConstraints({
       'Person': {
@@ -120,6 +133,20 @@
           'required': {
             'message': 'Gender is required.'
           }
+        },
+        'zip': {
+          'size': {
+              'min': 4,
+              'max': 6,
+              'message': 'ZIP must be between 4 and 6 characters.'
+          }
+        },
+        'city': {
+          'size': {
+              'min': 1,
+              'max': 10,
+              'message': 'City must be between 1 and 10 characters.'
+          }
         }
       }
     });
@@ -132,6 +159,10 @@
       { label: 'Female', value: 2 }
     ];
     $scope.constraints = valdr.getConstraints();
+
+    $scope.showAllErrors = function () {
+        $scope.formSubmitted = true;
+    }
   });
 </script>
 </body>
