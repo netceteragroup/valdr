@@ -16,7 +16,7 @@ the next parent element with the ```valdr-form-group```directive (if present). T
 invalid, has been changed and the user blurred out of the form item. Besides that, if ```valdr-messages```
 is used to add validation messages, the ```valdr-form-group``` directive is the element in the DOM which adds and
 removes validation messages for all form items in the group.
-- the attribute ```no-valdr-message``` was renamed to ```no-valdr-message``` to disable message adding for individual
+- the attribute ```no-valdr-message``` was renamed to ```valdr-no-message``` to disable message adding for individual
 form items
 
 ## 1.0.2 - 2014-11-18
