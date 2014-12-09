@@ -40,6 +40,7 @@ module.exports = function (grunt) {
         'src/core/validators/maxLengthValidator.js',
         'src/core/validators/hibernateEmailValidator.js',
         'src/core/valdr-service.js',
+        'src/core/valdrFormGroup-directive.js',
         'src/core/valdrType-directive.js',
         'src/core/valdrFormItem-directive.js'
       ],
