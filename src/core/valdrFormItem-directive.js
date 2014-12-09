@@ -4,44 +4,44 @@
  * can be added to those fields.
  */
 var valdrFormItemDirectiveDefinition =
-  ['valdrEvents', 'valdr', 'valdrUtil', 'valdrClasses', function (valdrEvents, valdr, valdrUtil, valdrClasses) {
+  ['valdrEvents', 'valdr', 'valdrUtil', 'valdrClasses', function (valdrEvents, valdr, valdrUtil) {
     return  {
       restrict: 'E',
-      require: ['?^valdrType', '?^ngModel'],
+      require: ['?^valdrType', '?^ngModel', '?^valdrFormGroup'],
       link: function (scope, element, attrs, controllers) {
 
         var valdrTypeController = controllers[0],
           ngModelController = controllers[1],
+          valdrFormGroupController = controllers[2],
           valdrNoValidate = attrs.valdrNoValidate,
-          fieldName = attrs.name,
-          formGroupElement;
+          fieldName = attrs.name;
 
-        /*
-         Stop right here :
-         - if this is an <input> that's not inside of a valdr-type block
-         - if there is no ng-model bound to input
-         - if there is 'valdr-no-validate' attribute present
+        /**
+         * Don't do anything if
+         * - this is an <input> that's not inside of a valdr-type block
+         * - there is no ng-model bound to input
+         * - there is the 'valdr-no-validate' attribute present
          */
         if (!valdrTypeController || !ngModelController || angular.isDefined(valdrNoValidate)) {
           return;
         }
 
-        if (valdrUtil.isEmpty(fieldName)) {
-          throw new Error('form element is not bound to a field name');
+        if (valdrFormGroupController) {
+          valdrFormGroupController.addFormItem(ngModelController);
         }
 
-        formGroupElement = valdrUtil.findWrappingFormGroup(element);
-
-        var updateClassOnFormGroup = function (valid) {
-          formGroupElement.toggleClass(valdrClasses.valid, valid);
-          formGroupElement.toggleClass(valdrClasses.invalid, !valid);
-        };
+        if (valdrUtil.isEmpty(fieldName)) {
+          throw new Error('Form element with ID "' + attrs.id + '" is not bound to a field name.');
+        }
 
         var updateNgModelController = function (validationResult) {
+          // set validity state for individual validators
           angular.forEach(validationResult.validationResults, function (result) {
             var validatorToken = valdrUtil.validatorNameToToken(result.validator);
             ngModelController.$setValidity(validatorToken, result.valid);
           });
+
+          // set overall validity state of this form item
           ngModelController.$setValidity('valdr', validationResult.valid);
           ngModelController.valdrViolations = validationResult.violations;
         };
@@ -49,7 +49,6 @@ var valdrFormItemDirectiveDefinition =
         var validate = function (modelValue) {
           var validationResult = valdr.validate(valdrTypeController.getType(), fieldName, modelValue);
           updateNgModelController(validationResult);
-          updateClassOnFormGroup(validationResult.valid);
           return validationResult.valid;
         };
 
@@ -59,11 +58,12 @@ var valdrFormItemDirectiveDefinition =
           validate(ngModelController.$modelValue);
         });
 
-        element.bind('blur', function () {
-          if (ngModelController.$invalid && ngModelController.$dirty) {
-            formGroupElement.addClass(valdrClasses.dirtyBlurred);
+        scope.$on('$destroy', function () {
+          if (valdrFormGroupController) {
+            valdrFormGroupController.removeFormItem(ngModelController);
           }
         });
+
       }
     };
   }];

@@ -2,9 +2,16 @@ angular.module('valdr', ['ng'])
   .constant('valdrEvents', {
     'revalidate': 'valdr-revalidate'
   })
+  .value('valdrConfig', {
+    addFormGroupClass: true
+  })
   .value('valdrClasses', {
-    valid: 'has-success',
-    invalid: 'has-error',
-    dirtyBlurred: 'dirty-blurred',
-    formGroup: 'form-group'
+    formGroup: 'form-group',
+    valid: 'ng-valid',
+    invalid: 'ng-invalid',
+    dirty: 'ng-dirty',
+    pristine: 'ng-pristine',
+    touched: 'ng-touched',
+    untouched: 'ng-untouched',
+    invalidDirtyTouchedGroup: 'valdr-invalid-dirty-touched-group'
   });

@@ -22,8 +22,8 @@ describe('valdrMessage input directive', function () {
       // given
       var element = compileTemplate(
         '<form name="demoForm">' +
-          '<div valdr-type="TestClass">' +
-          '<input type="text" name="fieldName" ng-model="myObject.field">' +
+          '<div valdr-type="TestClass" valdr-form-group>' +
+            '<input type="text" name="fieldName" ng-model="myObject.field">' +
           '</div>' +
         '</form>'
       );
@@ -41,7 +41,7 @@ describe('valdrMessage input directive', function () {
     // given
     var element = compileTemplate(
             '<form name="demoForm">' +
-              '<section class="form-group">' +
+              '<section valdr-form-group>' +
                 '<div valdr-type="TestClass">' +
                   '<input type="text" name="fieldName" ng-model="myObject.field">' +
                 '</div>' +
@@ -96,9 +96,9 @@ describe('valdrMessage input directive', function () {
     // given
     var element = compileTemplate(
         '<form name="demoForm">' +
-        '<div valdr-type="TestClass">' +
-        '<input type="text" name="fieldName" ng-model="myObject.field" valdr-no-validate>' +
-        '</div>' +
+          '<div valdr-type="TestClass" valdr-form-group>' +
+            '<input type="text" name="fieldName" ng-model="myObject.field" valdr-no-validate>' +
+          '</div>' +
         '</form>'
     );
     // when

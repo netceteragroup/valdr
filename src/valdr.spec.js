@@ -11,9 +11,9 @@ describe('valdr', function () {
   }));
 
   it('should provide a value for valdrClasses', inject(function (valdrClasses) {
-    expect(valdrClasses.valid).toBe('has-success');
-    expect(valdrClasses.invalid).toBe('has-error');
-    expect(valdrClasses.dirtyBlurred).toBe('dirty-blurred');
+    expect(valdrClasses.valid).toBe('ng-valid');
+    expect(valdrClasses.invalid).toBe('ng-invalid');
+    expect(valdrClasses.invalidDirtyTouchedGroup).toBe('valdr-invalid-dirty-touched-group');
   }));
 
 });

@@ -209,8 +209,8 @@ describe('valdr', function () {
       // given
       spyOn($rootScope, '$broadcast');
       var newClass = 'is-valid';
-      expect(valdrClasses.valid).toBe('has-success');
-      expect(valdrClasses.invalid).toBe('has-error');
+      expect(valdrClasses.valid).toBe('ng-valid');
+      expect(valdrClasses.invalid).toBe('ng-invalid');
 
       // when
       valdr.setClasses({ valid: newClass });
@@ -218,10 +218,10 @@ describe('valdr', function () {
       // then
       expect($rootScope.$broadcast).toHaveBeenCalledWith(valdrEvents.revalidate);
       expect(valdrClasses.valid).toBe(newClass);
-      expect(valdrClasses.invalid).toBe('has-error');
+      expect(valdrClasses.invalid).toBe('ng-invalid');
 
       // cleanup to prevent side-effects
-      valdr.setClasses({ valid: 'has-success' });
+      valdr.setClasses({ valid: 'ng-valid' });
     });
 
   });

@@ -100,23 +100,13 @@ describe('valdrFormItem directive', function () {
       expect(ngModelController.valdrViolations).toBe(violations);
     });
 
-    it('should add class to surrounding element if data is valid', function () {
+    it('should register in valdrFormGroup', function () {
       // given
-      var surroundingElement = element.find('div');
-
-      // when
-      $scope.$apply(function () {
-        $scope.myObject.field = 'valid';
-      });
-
-      // then
-      expect(surroundingElement.hasClass(valdrClasses.valid)).toBe(true);
-      expect(surroundingElement.hasClass(valdrClasses.invalid)).toBe(false);
-    });
-
-    it('should add class to surrounding element if data is invalid', function () {
-      // given
-      var surroundingElement = element.find('div');
+      var formGroupTemplate =
+        '<form name="demoForm" valdr-type="TestClass" valdr-form-group>' +
+            '<input type="text" name="fieldName" ng-model="myObject.field">' +
+        '</form>';
+      compileTemplate(formGroupTemplate);
 
       // when
       $scope.$apply(function () {
@@ -124,10 +114,27 @@ describe('valdrFormItem directive', function () {
       });
 
       // then
-      expect(surroundingElement.hasClass(valdrClasses.invalid)).toBe(true);
-      expect(surroundingElement.hasClass(valdrClasses.valid)).toBe(false);
+      expect(element.hasClass(valdrClasses.invalid)).toBe(true);
     });
 
+    it('should unregister from valdrFormGroup on $destroy', function () {
+      // given
+      var formGroupTemplate =
+        '<form name="demoForm" valdr-type="TestClass" valdr-form-group>' +
+          '<input type="text" name="fieldName" ng-model="myObject.field">' +
+        '</form>';
+      compileTemplate(formGroupTemplate);
+      $scope.$apply(function () {
+        $scope.myObject.field = 'invalid';
+      });
+
+      // when
+      $scope.$broadcast('$destroy');
+      $scope.$digest();
+
+      // then
+      expect(element.hasClass(valdrClasses.invalid)).toBe(false);
+    });
 
     it('should handle constraint changed events', function () {
       // given
@@ -153,15 +160,16 @@ describe('valdrFormItem directive', function () {
     it('should throw error if no field name is provided on the input', function () {
       // given
       var invalidInput =
-        '<form name="demoForm"><div valdr-type="TestClass">' +
-          '<input type="text" ng-model="myObject.field">' +
+        '<form name="demoForm">' +
+          '<div valdr-type="TestClass">' +
+            '<input type="text" ng-model="myObject.field">' +
           '</div>' +
         '</form>';
 
       // when / then
       expect(function () {
         $compile(angular.element(invalidInput))($scope);
-      }).toThrow(new Error('form element is not bound to a field name'));
+      }).toThrow(new Error('Form element with ID "undefined" is not bound to a field name.'));
     });
 
     it('should NOT use valdr validation if valdr-no-validate is set', function () {
@@ -202,56 +210,6 @@ describe('valdrFormItem directive', function () {
     });
 
     runFormItemCommonTests();
-
-  });
-
-  describe('blur behavior', function () {
-    var input, surroundingElement;
-
-    beforeEach(function () {
-      compileInputTemplate();
-      input = element.find('input');
-      surroundingElement = element.find('div');
-    });
-
-    it('should add dirtyBlurred class when the model is dirty, invalid and the input gets blurred', function () {
-      // given
-      ngModelController.$dirty = true;
-      ngModelController.$invalid = true;
-      ngModelController.$valid = false;
-
-      // when
-      input.triggerHandler('blur');
-
-      // then
-      expect(surroundingElement.hasClass(valdrClasses.dirtyBlurred)).toBe(true);
-    });
-
-    it('should add not dirtyBlurred class when the model is pristine, invalid and the input gets blurred', function () {
-      // given
-      ngModelController.$dirty = false;
-      ngModelController.$invalid = true;
-      ngModelController.$valid = false;
-
-      // when
-      input.triggerHandler('blur');
-
-      // then
-      expect(surroundingElement.hasClass(valdrClasses.dirtyBlurred)).toBe(false);
-    });
-
-    it('should add not dirtyBlurred class when the model is dirty, valid and the input gets blurred', function () {
-      // given
-      ngModelController.$dirty = true;
-      ngModelController.$invalid = false;
-      ngModelController.$valid = true;
-
-      // when
-      input.triggerHandler('blur');
-
-      // then
-      expect(surroundingElement.hasClass(valdrClasses.dirtyBlurred)).toBe(false);
-    });
 
   });
 
