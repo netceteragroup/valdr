@@ -387,7 +387,7 @@ Open a question on SO and tag it with [`valdr`](http://stackoverflow.com/tags/va
 
 ## Credits
 
-Kudos to the gang who brainstormed the name for this project with us over a dinner on [mount Rigi](https://maps.google.com/maps?q=Hotel+Rigi+Kaltbad&hl=en&cid=7481422441262508040&gl=US&hq=Hotel+Rigi+Kaltbad&t=m&z=16). Guys we really appreciate your patience!
-* [Björn Mosler](https://github.com/brelsom)
+Kudos to the gang who brainstormed the name for this project over a dinner on [mount Rigi](https://maps.google.com/maps?q=Hotel+Rigi+Kaltbad&hl=en&cid=7481422441262508040&gl=US&hq=Hotel+Rigi+Kaltbad&t=m&z=16) with us. Guys, we really appreciate your patience!
+* [Björn Mosler](https://github.com/bjorm)
 * [Roland Weiss](https://github.com/rolego), father of 'valdr'
 * [Jason Brazile](https://github.com/jbrazile)
