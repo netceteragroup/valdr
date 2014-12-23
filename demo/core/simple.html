@@ -1,20 +1,22 @@
 <!DOCTYPE html>
 <html>
+
 <head>
   <title>Demo</title>
 </head>
+
 <body ng-app="demoApp">
 
 <div ng-controller="TestController">
 
   <h1>Simple Demo</h1>
 
-  <form name="demoForm" novalidate>
+  <form name="demoForm" novalidate valdr-enabled="isValdrEnabled">
 
     <div valdr-type="Person">
 
       <h4>Person</h4>
-      <div valdr-form-group>
+      <div valdr-form-group valdr-enabled="true">
         <label for="lastName">Last Name</label>
         <input type="text"
                id="lastName"
@@ -31,7 +33,6 @@
                ng-model="person.firstName">
         <span>$valid {{ demoForm.firstName.$valid }}</span>
       </div>
-
 
       <div valdr-form-group>
         <label for="age">Age</label>
@@ -96,7 +97,17 @@
 
   </form>
 
+  <h3>Settings</h3>
+
   <button ng-click="addAddressConstraints()">Add address constraints</button>
+
+  <div>
+    <label for="enabled">Enable/Disable valdr (except last name)</label>
+    <input id="enabled" type="checkbox" ng-model="isValdrEnabled">
+  </div>
+
+  <button ng-click="removeConstraints()">Remove all constraints</button>
+
   <pre>demoForm.$valid: {{ demoForm.$valid }}</pre>
 
   <h3>demoForm</h3>
@@ -108,7 +119,7 @@
 </div>
 
 <script src="/bower_components/angular/angular.js"></script>
-<script src="../js/valdr.min.js"></script>
+<script src="../js/valdr.js"></script>
 <script src="http://localhost:35729/livereload.js"></script>
 
 <script>
@@ -165,11 +176,18 @@
 
   demoApp.controller('TestController', function ($scope, valdr) {
     $scope.person = {};
+
     $scope.genders = [
       { label: 'Male', value: 1 },
       { label: 'Female', value: 2 }
     ];
     $scope.constraints = valdr.getConstraints();
+
+    $scope.isValdrEnabled = true;
+
+    $scope.removeConstraints = function () {
+      valdr.removeConstraints('Person');
+    };
 
     $scope.addAddressConstraints = function () {
 
