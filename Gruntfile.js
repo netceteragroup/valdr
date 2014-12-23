@@ -42,7 +42,8 @@ module.exports = function (grunt) {
         'src/core/valdr-service.js',
         'src/core/valdrFormGroup-directive.js',
         'src/core/valdrType-directive.js',
-        'src/core/valdrFormItem-directive.js'
+	'src/core/valdrFormItem-directive.js',
+	'src/core/valdrEnabled-directive.js'
       ],
 
       message: [
