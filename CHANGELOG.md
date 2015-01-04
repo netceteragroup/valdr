@@ -1,4 +1,8 @@
 # Changelog
+## 1.1.1 - 2015-01-04
+- introduce ```valdrEnabled``` directive to conditionally enable/disable validation, see [#54](https://github.com/netceteragroup/valdr/issues/54)
+- fix bug that after removing constraints from valdr with valdr.removeConstraints(), the validity state of previously validated form items was not reset. see [#55](https://github.com/netceteragroup/valdr/issues/55)
+
 ## 1.1.0 - 2014-12-09
 - added new valdrFormGroup directive which sets validity state for a group of form items and is responsible for adding and removing validation messages if valdr-message is loaded, see [#11](https://github.com/netceteragroup/valdr/issues/11), fixes [#44](https://github.com/netceteragroup/valdr/issues/44), fixes [#48](https://github.com/netceteragroup/valdr/issues/48)
 - support multiple aliases for constraint names, see [#30](https://github.com/netceteragroup/valdr/issues/30)
