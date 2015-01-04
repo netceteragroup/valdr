@@ -26,6 +26,7 @@
     - [Message template](#message-template)
     - [CSS to control visibility](#css-to-control-visibility)
     - [Integration of angular-translate](#integration-of-angular-translate)
+  - [Conditionally enable/disable validation](#conditionally-enabledisable-validation)
   - [Wire up your back-end](#wire-up-your-back-end)
     - [Using JSR303 Bean Validation with Java back-ends](#using-jsr303-bean-validation-with-java-back-ends)
   - [Develop](#develop)
@@ -102,21 +103,17 @@ The **important** thing is, that the attribute *name* on the input field matches
 
 ```html
 <form name="yourForm" novalidate valdr-type="Person">
-  <div class="form-group">
     <label for="lastName">Last Name</label>
     <input type="text"
            id="lastName"
            name="lastName"
            ng-model="person.lastName">
-  </div>
 
-  <div class="form-group">
     <label for="firstName">First Name</label>
     <input type="text"
            id="firstName"
            name="firstName"
            ng-model="person.firstName">
-  </div>
 </form>
 ```
 That's it. valdr will now automatically validate the fields with the defined constraints and set the $validity of these form items.
@@ -253,14 +250,17 @@ yourApp.config(function (valdrProvider) {
 }
 ```
 
-## Showing validation messages
+## Showing validation messages with ```valdr-messages```
 valdr sets the AngularJS validation states like ```$valid```, ```$invalid``` and ```$error``` on all validated form
-elements and forms. Additional information like the violated constraints and the messages configured in the
-constraints JSON are set as ```valdrViolations``` array on the individual form elements.
-With this information, you can either write your own logic to display the validation messages or use valdr-messages to
+elements and forms by default. Additional information like the violated constraints and the messages configured in the
+constraints JSON are always set as ```valdrViolations``` array on the individual form items.
+With this information, you can either write your own logic to display the validation messages, or use valdr-messages to
 automatically show the messages next to the invalid form items.
 
-To enable this behaviour, include ```valdr-message.js``` in your page (included in the bower package).
+To enable this behaviour, include ```valdr-message.js``` in your page (which is included in the bower package) and make
+use of the ```valdr-form-group``` directive. This directive marks the element, where the valdr messages will be
+appended. The ```valdr-form-group``` can wrap multiple valdr validated form items. Each form item has to have at least
+one surrounding ```valdr-form-group``` to automatically show validation messages.
 
 ### Message template
 The default message template to be used by valdr-messages can be overridden by configuring the ```valdrMessageProvider```:
@@ -279,29 +279,40 @@ The following variables will be available on the scope of the message template:
 - ```formField``` - the invalid form field
 
 ### CSS to control visibility
-valdr sets some CSS classes on the form group surrounding valid and invalid form items. These allow you to control when
-the validation messages should be shown.
-By default the surrounding form group is identified with the class ```form-group```, but like the other classes you can
-override the default by injecting and changing the ```valdrClasses``` value:
+valdr sets some CSS classes on elements with the ```valdr-form-group``` directive and on the message elements which are
+automatically added by ```valdr-messages```. These classes allow you to control the visibility of the validation
+messages.
+
+To change the CSS class names used by valdr, you can inject ```valdrClasses```and override the following values:
 
 ```javascript
 {
-  valid: 'has-success',
-  invalid: 'has-error',
-  dirtyBlurred: 'dirty-blurred',
-  formGroup: 'form-group'
+  // added on all elements with valdr-form-group directive
+  formGroup: 'form-group',
+  // added on valdr-form-group and on valdr-messages if all of the form items are valid
+  valid: 'ng-valid',
+  // added on valdr-form-group and on valdr-messages if one of the form items is invalid
+  invalid: 'ng-invalid',
+  // added on valdr-messages if the form item this message is associated with is dirty
+  dirty: 'ng-dirty',
+  // added on valdr-messages if the form item this message is associated with is pristine
+  pristine: 'ng-pristine',
+  // added on valdr-messages if the form item this message is associated with has been blurred
+  touched: 'ng-touched',
+  // added on valdr-messages if the form item this message is associated with has not been blurred
+  untouched: 'ng-untouched',
+  // added on valdr-form-group if one of the contained items is currently invalid, dirty and has been blurred
+  invalidDirtyTouchedGroup: 'valdr-invalid-dirty-touched-group'
 }
 ```
 
-The ```valid```and ```invalid``` classes are self-explanatory, the class configured as ```dirtyBlurred``` will only be
-set on form items if the user has changed the value and blurred the field.
-Using CSS like the following, the messages can be shown only on inputs which the user changed and are invalid:
+Using CSS like the following, the messages can be shown only on inputs which the user changed, blurred and are invalid:
 
 ```css
 .valdr-message {
   display: none;
 }
-.has-error.dirty-blurred .valdr-message {
+.valdr-message.ng-invalid.ng-touched.ng-dirty {
   display: inline;
   background: red;
 }
@@ -337,6 +348,18 @@ $translateProvider.translations('de', {
   'Person.lastName': 'Nachname'
 });
 ```
+
+## Conditionally enable/disable validation
+The ```valdrEnabled``` directive allows to dynamically enable and disable the validation with valdr. All form elements
+in a child node of an element with the 'valdr-enabled' directive will be affected by this.
+
+Usage:
+```html
+<div valdr-enabled="isValidationEnabled()">
+  <input type="text" name="name" ng-model="mymodel.field">
+</div>
+```
+If multiple valdr-enabled directives are nested, the one nearest to the validated form element will take precedence.
 
 ## Wire up your back-end
 
