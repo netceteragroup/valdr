@@ -146,25 +146,24 @@
       .valdr-message {
           display: none;
       }
-      .has-error.dirty-blurred .valdr-message {
+      .valdr-message.ng-dirty.ng-invalid.ng-touched {
         display: inline;
         color: #a94442;
       }
-      .has-error .form-control, .has-success .form-control {
+      .form-control {
         border: 1px solid #ccc;
       }
-      .has-error.dirty-blurred .form-control {
+      .form-group .form-control.ng-invalid.ng-dirty.ng-touched {
         border-color: #a94442;
       }
-      .has-success.dirty-blurred .form-control {
+      .form-group .form-control.ng-valid.ng-touched {
         border-color: #2b542c;
       }
       </style>
       <h2>Demo</h2>
-      <p>This is a simple demo which uses CSS to show the validation messages only when the field is blurred. This is
-        possible because valdr sets the class <strong>.dirty-blurred</strong> on the form group when its value has changed and the input was blurred.</p>
+      <p>This is a simple demo which uses CSS to show the validation messages only when the field is blurred and invalid.</p>
       <form role="form" name="demoForm" novalidate valdr-type="Person">
-          <div class="form-group">
+          <div valdr-form-group>
             <label for="name">Name</label>
             <input class="form-control"
                    type="text"
@@ -173,7 +172,7 @@
                    ng-model="person.name">
           </div>
 
-          <div class="form-group">
+          <div valdr-form-group>
             <label for="email">E-Mail</label>
             <input class="form-control"
                    type="text"
