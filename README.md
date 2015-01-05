@@ -98,8 +98,8 @@ yourApp.config(function(valdrProvider) {
 });
 ```
 
-4) Add the *valdr-type* directive in your form on any parent element of the input fields that you want to validate.
-The **important** thing is, that the attribute *name* on the input field matches the field name in the constraints JSON.
+4) Add the ```valdr-type``` directive in your form on any parent element of the input fields that you want to validate.
+The **important** thing is, that the attribute ```name``` on the input field matches the field name in the constraints JSON.
 
 ```html
 <form name="yourForm" novalidate valdr-type="Person">
@@ -116,8 +116,8 @@ The **important** thing is, that the attribute *name* on the input field matches
            ng-model="person.firstName">
 </form>
 ```
-That's it. valdr will now automatically validate the fields with the defined constraints and set the $validity of these form items.
-All violated constraints will be added to the *valdrViolations* array on those form items.
+That's it. valdr will now automatically validate the fields with the defined constraints and set the ```$validity``` of these form items.
+All violated constraints will be added to the ```valdrViolations``` array on those form items.
 
 ## Constraints JSON
 The JSON object to define the validation rules has the following structure:
