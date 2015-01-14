@@ -104,4 +104,23 @@ describe('valdrUtil', function () {
 
   });
 
+  describe('startsWith()', function () {
+
+    it ('should determine if a string starts with the given prefix', function () {
+      expect(valdrUtil.startsWith('myString', 'my')).toBe(true);
+      expect(valdrUtil.startsWith('string', 'string')).toBe(true);
+      expect(valdrUtil.startsWith('', '')).toBe(true);
+      expect(valdrUtil.startsWith('value', '')).toBe(true);
+    });
+
+    it('should return false if a string does not start with the specified prefix', function () {
+      expect(valdrUtil.startsWith('', 'prefix')).toBe(false);
+      expect(valdrUtil.startsWith('someThing', 'something')).toBe(false);
+      expect(valdrUtil.startsWith(undefined, 'prefix')).toBe(false);
+      expect(valdrUtil.startsWith(undefined, undefined)).toBe(false);
+      expect(valdrUtil.startsWith('value', undefined)).toBe(false);
+    });
+
+  });
+
 });

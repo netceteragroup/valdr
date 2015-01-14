@@ -75,6 +75,19 @@ angular.module('valdr')
           return false;
         }
         return !this.notEmpty(value);
+      },
+
+      /**
+       * Checks if a string value starts with a given prefix.
+       *
+       * @param value the value
+       * @param prefix the prefix
+       * @returns {boolean} true if the given value starts with the given prefix.
+       */
+      startsWith: function (value, prefix) {
+        return angular.isString(value)  &&
+          angular.isString(prefix) &&
+          value.lastIndexOf(prefix, 0) === 0;
       }
     };
   }])

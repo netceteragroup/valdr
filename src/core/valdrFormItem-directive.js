@@ -66,13 +66,13 @@ var valdrFormItemDirectiveDefinition =
 
             // remove errors for valdr validators which no longer exist
             angular.forEach(ngModelController.$error, function (value, validatorToken) {
-              if (validatorTokens.indexOf(validatorToken) === -1 && validatorToken.lastIndexOf('valdr', 0) === 0) {
+              if (validatorTokens.indexOf(validatorToken) === -1 && valdrUtil.startsWith(validatorToken, 'valdr')) {
                 ngModelController.$setValidity(validatorToken, true);
               }
             });
           } else {
             angular.forEach(ngModelController.$error, function (value, validatorToken) {
-              if (validatorToken.lastIndexOf('valdr', 0) === 0) {
+              if (valdrUtil.startsWith(validatorToken, 'valdr')) {
                 ngModelController.$setValidity(validatorToken, true);
               }
             });
