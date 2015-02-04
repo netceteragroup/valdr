@@ -76,9 +76,12 @@ angular.module('valdr')
             }
           };
 
-          scope.formField = formController[0][scope.formFieldName];
+          var watchValdrViolations = function () {
+            var formField = formController[0][scope.formFieldName];
+            return formField ? formField.valdrViolations : undefined;
+          };
 
-          scope.$watch('formField.valdrViolations', function (valdrViolations) {
+          scope.$watch(watchValdrViolations, function (valdrViolations) {
             if (valdrViolations && valdrViolations.length) {
               scope.violations = valdrViolations;
               scope.violation = valdrViolations[0];

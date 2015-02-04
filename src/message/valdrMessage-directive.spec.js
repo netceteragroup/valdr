@@ -116,21 +116,29 @@ describe('valdrMessage directive', function () {
 
   beforeEach(module('valdr'));
 
-  var compileTemplate = function () {
-    var html =
+  var compileTemplate = function (template) {
+    var html = template ||
       '<form name="testForm">' +
         '<input type="text" name="testField" ng-model="model">' +
         '<span valdr-message="testField"></span>' +
       '</form>';
     var element = $compile(angular.element(html))($scope);
+    $scope.$digest();
+    return element;
+  };
 
+  var addViolations = function () {
     // manually add some violations for the tests (these are usually added if the field is invalid)
     $scope.testForm.testField.valdrViolations = [
-        { message: 'message-1' },
-        { message: 'message-2' }
-      ];
-
+      { message: 'message-1' },
+      { message: 'message-2' }
+    ];
     $scope.$digest();
+  };
+
+  var compileTemplateAndAddViolations = function (template) {
+    var element = compileTemplate(template);
+    addViolations();
     return element;
   };
 
@@ -142,7 +150,7 @@ describe('valdrMessage directive', function () {
 
   it('should display the first message in the default template', function () {
     // when
-    var element = compileTemplate();
+    var element = compileTemplateAndAddViolations();
 
     // then
     expect(element.find('div').html()).toBe('message-1');
@@ -150,7 +158,7 @@ describe('valdrMessage directive', function () {
 
   it('should update the messages in the default template', function () {
     // given
-    var element = compileTemplate();
+    var element = compileTemplateAndAddViolations();
 
     // when
     $scope.testForm.testField.valdrViolations[0].message = 'updatedMessage';
@@ -165,11 +173,31 @@ describe('valdrMessage directive', function () {
     valdrMessage.setTemplate('<div>Number of violations: {{ violations.length }}</div>');
 
     // when
-    var element = compileTemplate();
+    var element = compileTemplateAndAddViolations();
 
     // then
     expect(element.find('div').html()).toBe('Number of violations: 2');
   });
+
+
+  it('should support dynamically added form items', function () {
+    // given
+    $scope.isVisible = false;
+    var element = compileTemplate(
+      '<form name="testForm">' +
+        '<input type="text" ng-if="isVisible" name="testField" ng-model="model">' +
+        '<span valdr-message="testField"></span>' +
+      '</form>');
+
+    // when
+    $scope.isVisible = true;
+    $scope.$digest();
+    addViolations();
+
+    // then
+    expect(element.find('div').html()).toBe('message-1');
+  });
+
 
 });
 
