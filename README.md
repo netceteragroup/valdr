@@ -62,6 +62,12 @@ valdr gives you the following advantages:
 bower install --save valdr
 ```
 
+#### [NPM](http://www.npmjs.com)
+
+```bash
+npm install valdr
+```
+
 ## Getting started
 
 1) Add valdr.js to your index.html
