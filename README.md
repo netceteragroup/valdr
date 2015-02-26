@@ -355,6 +355,28 @@ $translateProvider.translations('de', {
 });
 ```
 
+### Show messages for AngularJS built-in validators
+To show messages for the AngularJS built-in validators like ```required``` and ```number``` the messages can be registered by validator name in the ```valdrMessageProvider```:
+
+```javascript
+valdrMessage.addMessages({
+  'required': 'This field is required.',
+  'number': 'Not a valid number.'
+});
+```
+
+To register messages for specific fields, the type and the field name can be prepended:
+```javascript
+valdrMessage.addMessages({
+  'Person.lastName.required': 'This last name is required.',
+  'Person.age.number': 'The age has to be a number.'
+});
+```
+
+When ```angular-translate``` is loaded it is also possible to register message keys instead of the messages.
+
+A complete example of mixed valdr and AngularJS validation can be found on the [demo page](demo/message/angular-validation.html).
+
 ## Conditionally enable/disable validation
 The ```valdrEnabled``` directive allows to dynamically enable and disable the validation with valdr. All form elements
 in a child node of an element with the 'valdr-enabled' directive will be affected by this.
