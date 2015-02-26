@@ -26,6 +26,7 @@
     - [Message template](#message-template)
     - [CSS to control visibility](#css-to-control-visibility)
     - [Integration of angular-translate](#integration-of-angular-translate)
+    - [Show messages for AngularJS built-in validators](#show-messages-for-angularjs-built-in-validators)
   - [Conditionally enable/disable validation](#conditionally-enabledisable-validation)
   - [Wire up your back-end](#wire-up-your-back-end)
     - [Using JSR303 Bean Validation with Java back-ends](#using-jsr303-bean-validation-with-java-back-ends)
