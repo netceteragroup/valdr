@@ -135,4 +135,25 @@ describe('valdrMessageProvider', function () {
     });
   });
 
+  it('should allow to add and get messages', function () {
+    // given
+    module('valdr');
+
+    // when
+    module(function (valdrMessageProvider) {
+      valdrMessageProvider.addMessages({
+        'validator': 'validator-global-error-message',
+        'Type.field.validator': 'fully-qualified-error-message'
+      });
+    });
+
+    // then
+    inject(function (valdrMessage) {
+      expect(valdrMessage.getMessage('Type', 'field', 'validator')).toEqual('fully-qualified-error-message');
+      expect(valdrMessage.getMessage(undefined, undefined, 'validator')).toEqual('validator-global-error-message');
+      expect(valdrMessage.getMessage(undefined, undefined, 'unknown')).toEqual('[unknown]');
+    });
+
+  });
+
 });

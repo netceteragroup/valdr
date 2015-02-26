@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Demo</title>
+
+  <style>
+    .valdr-message {
+        display: inline;
+        background: red;
+    }
+
+    input.ng-invalid {
+      background: red;
+    }
+    .form-group.ng-invalid label {
+      color: red;
+    }
+  </style>
+</head>
+<body ng-app="demoApp">
+
+<div ng-controller="TestController" ng-class="{ 'form-submitted': formSubmitted }">
+
+  <h1>AngularJS validation messages</h1>
+
+  <p>This example shows that by using valdrMessage it is possible to register validation messages
+    for both AngularJS built-in and valdr validators.</p>
+
+  <p> The last name field has AngularJS and valdr validators, while the age field is of type number and therefore
+    is automatically validated by the AngularJS number validator.</p>
+
+  <form name="demoForm" novalidate>
+
+    <div valdr-type="Person">
+
+      <h4>Person</h4>
+      <div valdr-form-group>
+        <label for="lastName">Last Name</label>
+        <input type="text"
+               id="lastName"
+               name="lastName"
+               required
+               ng-minlength="2"
+               ng-model="person.lastName">
+      </div>
+
+      <div valdr-form-group>
+        <label for="age">Age</label>
+        <input type="number"
+               id="age"
+               name="age"
+               ng-model="person.age">
+      </div>
+
+    </div>
+
+  </form>
+
+  <pre>demoForm.$valid = {{demoForm.$valid}}</pre>
+
+  <h3>constraints:</h3>
+  <pre>{{ constraints | json }}</pre>
+
+</div>
+
+<script src="/bower_components/angular/angular.js"></script>
+<script src="/bower_components/angular-translate/angular-translate.js"></script>
+<script src="../js/valdr.js"></script>
+<script src="../js/valdr-message.js"></script>
+<script src="http://localhost:35729/livereload.js"></script>
+
+<script>
+  var demoApp = angular.module('demoApp', ['valdr', 'pascalprecht.translate']);
+
+  demoApp.config(function(valdrProvider) {
+
+    valdrProvider.addConstraints({
+      'Person': {
+        'lastName': {
+          'size': {
+            'max': 4,
+            'message': 'Last name max is 4 characters.'
+          }
+        }
+      }
+    });
+  });
+
+  demoApp.config(function (valdrMessageProvider, $translateProvider) {
+    $translateProvider.translations('en', {
+      'message.required': '{{fieldName}} is required.',
+      'message.number': '{{fieldName}} must be a number.',
+      'lastname.specific': '{{fieldName}} min is 2 characters.',
+      'Person.lastName': 'Last name',
+      'Person.age': 'Age'
+    });
+
+    $translateProvider.preferredLanguage('en');
+
+    valdrMessageProvider.addMessages({
+      'required': 'message.required',
+      'number': 'message.number',
+      'Person.lastName.minlength': 'lastname.specific'
+    });
+
+  });
+
+  demoApp.controller('TestController', function ($scope, valdr) {
+
+    $scope.person = {};
+    $scope.genders = [
+      { label: 'Male', value: 1 },
+      { label: 'Female', value: 2 }
+    ];
+    $scope.constraints = valdr.getConstraints();
+
+    $scope.showAllErrors = function () {
+        $scope.formSubmitted = true;
+    }
+  });
+</script>
+</body>
+</html>

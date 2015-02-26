@@ -7,6 +7,7 @@ angular.module('valdr')
   .provider('valdrMessage', function () {
 
     var userDefinedTemplateUrl, userDefinedTemplate,
+      messages = {},
       defaultTemplateUrl = 'valdr/default-message.html',
       defaultTemplate =   '<div class="valdr-message">' +
                             '{{ violation.message }}' +
@@ -24,6 +25,17 @@ angular.module('valdr')
     this.setTemplateUrl = function (templateUrl) {
       userDefinedTemplateUrl = templateUrl;
     };
+
+    this.addMessages = function (newMessages) {
+      angular.extend(messages, newMessages);
+    };
+    var addMessages = this.addMessages;
+
+    this.getMessage = function (typeName, fieldName, validatorName) {
+      var fullMessageKey = typeName + '.' + fieldName + '.' + validatorName;
+      return messages[fullMessageKey] || messages[validatorName] || '[' + validatorName + ']';
+    };
+    var getMessage = this.getMessage;
 
     this.$get = ['$templateCache', '$injector', function ($templateCache, $injector) {
 
@@ -64,7 +76,9 @@ angular.module('valdr')
           updateTemplateCache();
         },
         translateAvailable: translateAvailable,
-        $translate: $translate
+        $translate: $translate,
+        addMessages: addMessages,
+        getMessage: getMessage
       };
     }];
   });

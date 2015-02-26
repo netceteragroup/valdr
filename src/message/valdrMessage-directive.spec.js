@@ -62,7 +62,7 @@ describe('valdrMessage input directive', function () {
     // given
     var element = compileTemplate(
       '<form name="demoForm">' +
-        '<div valdr-type="TestClass">' +
+        '<div valdr-form-group valdr-type="TestClass">' +
         '<input type="text" name="fieldName" ng-model="myObject.field" valdr-no-message>' +
         '</div>' +
       '</form>'
@@ -133,6 +133,8 @@ describe('valdrMessage directive', function () {
       { message: 'message-1' },
       { message: 'message-2' }
     ];
+    $scope.testForm.testField.$error = { valdr: [] };
+    $scope.testForm.testField.$invalid = true;
     $scope.$digest();
   };
 
@@ -199,6 +201,25 @@ describe('valdrMessage directive', function () {
   });
 
 
+  it('should show messages for angular validators', function () {
+    // given
+    valdrMessage.addMessages({
+      'required': 'This field is required'
+    });
+    var template =
+      '<form name="testForm">' +
+        '<input required type="text" name="testField" ng-model="model">' +
+        '<span valdr-message="testField"></span>' +
+      '</form>';
+
+    // when
+    var element = $compile(angular.element(template))($scope);
+    $scope.$digest();
+
+    // then
+    expect(element.find('div').html()).toBe('This field is required');
+  });
+
 });
 
 describe('valdrMessage directive with angular-translate', function () {
@@ -237,6 +258,8 @@ describe('valdrMessage directive with angular-translate', function () {
       { message: 'message-1', field: 'testField', type: 'Person', param: '2' },
       { message: 'message-2', field: 'testField', type: 'Person', param: '3' }
     ];
+    $scope.testForm.testField.$error = { valdr: [] };
+    $scope.testForm.testField.$invalid = true;
     $scope.$digest();
     return element;
   };
