@@ -323,3 +323,113 @@ describe('valdrMessage directive with angular-translate', function () {
   });
 
 });
+
+describe('valdrMessage directive with angular-translate and valdrFieldNameKeyGenerator', function () {
+
+  var $scope, $compile, $translate, valdrMessage;
+
+  var fieldNameKeyGenerator = function(violation) {
+    return violation.type + '.' + violation.field + '.' + violation.validator + 'Name';
+  };
+
+  beforeEach(function () {
+    module('valdr');
+    module('pascalprecht.translate');
+    module(function ($translateProvider, $provide) {
+      $provide.factory('valdrFieldNameKeyGenerator', function() { return fieldNameKeyGenerator; });
+
+      $translateProvider.translations('en', {
+        'message-1': '{{fieldName}} english.',
+        'message-2': 'field: {{fieldName}} param: {{param}} secondParam: {{secondParam}}',
+        'Person.testField': 'Field Name',
+        'Person.testField.requiredName': 'The Field Name'
+      });
+
+      $translateProvider.translations('de', {
+        'message-1': '{{fieldName}} deutsch.',
+        'message-2': 'field: {{fieldName}} param: {{param}} secondParam: {{secondParam}}',
+        'Person.testField': 'Feldname',
+        'Person.testField.requiredName': 'Der Feldname'
+      });
+
+      $translateProvider.preferredLanguage('en');
+    });
+  });
+
+  var compileTemplate = function () {
+    var html =
+      '<form name="testForm">' +
+      '<input type="text" name="testField" ng-model="model">' +
+      '<span valdr-message="testField"></span>' +
+      '</form>';
+    var element = $compile(angular.element(html))($scope);
+
+    $scope.testForm.testField.valdrViolations = [
+      { message: 'message-1', field: 'testField', type: 'Person', param: '2', validator: 'required' },
+      { message: 'message-2', field: 'testField', type: 'Person', param: '3', validator: 'required' }
+    ];
+    $scope.testForm.testField.$error = { valdr: [] };
+    $scope.testForm.testField.$invalid = true;
+    $scope.$digest();
+    return element;
+  };
+
+  beforeEach(inject(function ($rootScope, _$compile_, _valdrMessage_, _$translate_) {
+    $compile = _$compile_;
+    $scope = $rootScope.$new();
+    $translate = _$translate_;
+    valdrMessage = _valdrMessage_;
+  }));
+
+  it('should translate the field name using the fieldNameKeyGenerator', function () {
+    // given
+    valdrMessage.setTemplate('<div>{{ violations[0].fieldName }}</div>');
+
+    // when
+    var element = compileTemplate();
+
+    // then
+    expect(element.find('div').html()).toBe('The Field Name');
+  });
+
+  it('should translate the field name to german using the fieldNameKeyGenerator', function () {
+    // given
+    $translate.use('de');
+    valdrMessage.setTemplate('<div>{{ violations[0].fieldName }}</div>');
+
+    // when
+    var element = compileTemplate();
+
+    // then
+    expect(element.find('div').html()).toBe('Der Feldname');
+  });
+
+  it('should update field names on language switch at runtime', function () {
+    // given
+    valdrMessage.setTemplate('<div>{{ violations[0].fieldName }}</div>');
+    var element = compileTemplate();
+    expect(element.find('div').html()).toBe('The Field Name');
+
+    // when
+    $translate.use('de');
+    $scope.$digest();
+
+    // then
+    expect(element.find('div').html()).toBe('Der Feldname');
+  });
+
+
+  it('should allow to use parameters in the translated messages', function () {
+    // given / when
+    var element = compileTemplate();
+    $scope.testForm.testField.valdrViolations = [
+      // note: message-2 has parameters defined in the translation tables
+      { message: 'message-2', field: 'testField', type: 'Person', param: '3', secondParam: '4', validator: 'required' }
+    ];
+    $scope.$digest();
+
+    // then
+    expect(element.find('span').html()).toBe('field: The Field Name param: 3 secondParam: 4');
+  });
+
+});

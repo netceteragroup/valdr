@@ -358,6 +358,41 @@ $translateProvider.translations('de', {
 });
 ```
 
+#### Custom field name translation keys
+By default the translation key for the field name is put together as ```Type.Fieldname```, but
+sometimes your translations might be a bit more complicated and you need more freedom when
+generating your field names translation key. For example you would like to use an article in
+another language to make it sound more natural.
+
+This can be achieved by defining a `valdrFieldNameKeyGenerator` function like this:
+
+```javascript
+module.factory('valdrFieldNameSuffix', function() {
+  return function(violation) {
+    return violation.type + '.' + violation.field + '.' + violation.validator + 'Name';
+  }
+});
+
+valdrProvider.addConstraints({
+  'Person': {
+    'lastName': {
+      'required': { 'message': 'message.required' }
+    }
+  }
+});
+
+$translateProvider.translations('en', {
+  'message.required': 'Please enter {{fieldName}}.',
+  'Person.lastName.requiredName' : 'the Last name'
+  }
+});
+
+$translateProvider.translations('de', {
+  'message.required': 'Bitte geben sie {{fieldName}} ein.',
+  'Person.lastName.requiredName': 'den Nachnamen'
+});
+```
+
 ### Show messages for AngularJS built-in validators
 To show messages for the AngularJS built-in validators like ```required``` and ```number``` the messages can be registered by validator name in the ```valdrMessageProvider```:
 

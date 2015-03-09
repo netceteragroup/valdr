@@ -47,8 +47,19 @@ angular.module('valdr')
         }
       }
 
+      function getFieldNameKeyGenerator() {
+        try {
+          return $injector.get('valdrFieldNameKeyGenerator');
+        } catch (error) {
+          return function(violation) {
+            return violation.type + '.' + violation.field;
+          };
+        }
+      }
+
       var $translate = getTranslateService(),
-        translateAvailable = angular.isDefined($translate);
+        translateAvailable = angular.isDefined($translate),
+        fieldNameKeyGenerator = getFieldNameKeyGenerator();
 
       function determineTemplate() {
         if (angular.isDefined(userDefinedTemplate)) {
@@ -77,6 +88,7 @@ angular.module('valdr')
         },
         translateAvailable: translateAvailable,
         $translate: $translate,
+        fieldNameKeyGenerator: fieldNameKeyGenerator,
         addMessages: addMessages,
         getMessage: getMessage
       };
