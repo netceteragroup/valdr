@@ -2,7 +2,7 @@
 
 > A model centric approach to AngularJS form validation
 
-> Find out more on the [valdr website](http://netceteragroup.github.io/valdr/)
+> Learn more on the [valdr website](http://netceteragroup.github.io/valdr/)
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
@@ -24,10 +24,11 @@
     - [url](#url)
     - [future / past](#future--past)
   - [Adding custom validators](#adding-custom-validators)
-  - [Showing validation messages](#showing-validation-messages)
+  - [Showing validation messages](#showing-validation-messages-with-valdr-messages)
     - [Message template](#message-template)
     - [CSS to control visibility](#css-to-control-visibility)
     - [Integration of angular-translate](#integration-of-angular-translate)
+      - [Custom field name translation keys](#custom-field-name-translation-keys)
     - [Show messages for AngularJS built-in validators](#show-messages-for-angularjs-built-in-validators)
   - [Conditionally enable/disable validation](#conditionally-enabledisable-validation)
   - [Wire up your back-end](#wire-up-your-back-end)
@@ -475,8 +476,7 @@ Open a question on SO and tag it with [`valdr`](http://stackoverflow.com/tags/va
 [MIT](http://opensource.org/licenses/MIT) © Netcetera AG
 
 ## Credits
-
-Kudos to the gang who brainstormed the name for this project over a dinner on [mount Rigi](https://maps.google.com/maps?q=Hotel+Rigi+Kaltbad&hl=en&cid=7481422441262508040&gl=US&hq=Hotel+Rigi+Kaltbad&t=m&z=16) with us. Guys, we really appreciate your patience!
+Thanks a lot to [all contributors](https://github.com/netceteragroup/valdr/graphs/contributors) and the guys who brainstormed the name for this project over a dinner on [mount Rigi](https://maps.google.com/maps?q=Hotel+Rigi+Kaltbad&hl=en&cid=7481422441262508040&gl=US&hq=Hotel+Rigi+Kaltbad&t=m&z=16) with us.
 * [Björn Mosler](https://github.com/bjorm)
 * [Roland Weiss](https://github.com/rolego), father of 'valdr'
 * [Jason Brazile](https://github.com/jbrazile)
