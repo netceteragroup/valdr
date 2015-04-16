@@ -2,7 +2,9 @@
  * This controller is used if no valdrEnabled parent directive is available.
  */
 var nullValdrEnabledController = {
-  isEnabled: function () { return true; }
+  isEnabled: function () {
+    return true;
+  }
 };
 
 /**
@@ -20,7 +22,7 @@ var nullValdrFormGroupController = {
  */
 var valdrFormItemDirectiveDefinition =
   ['valdrEvents', 'valdr', 'valdrUtil', 'valdrClasses', function (valdrEvents, valdr, valdrUtil) {
-    return  {
+    return {
       restrict: 'E',
       require: ['?^valdrType', '?^ngModel', '?^valdrFormGroup', '?^valdrEnabled'],
       link: function (scope, element, attrs, controllers) {
@@ -81,7 +83,7 @@ var valdrFormItemDirectiveDefinition =
         };
 
         var validate = function (modelValue) {
-          var validationResult = valdr.validate(valdrTypeController.getType(), fieldName, modelValue);
+          var validationResult = valdr.validate(valdrTypeController.getType(), fieldName, modelValue, valdrTypeController.getValues());
           updateNgModelController(validationResult);
           return valdrEnabled.isEnabled() ? validationResult.valid : true;
         };
@@ -89,6 +91,7 @@ var valdrFormItemDirectiveDefinition =
         ngModelController.$validators.valdr = validate;
 
         scope.$on(valdrEvents.revalidate, function () {
+          valdrTypeController.setValue(fieldName, ngModelController.$modelValue);
           validate(ngModelController.$modelValue);
         });
 
