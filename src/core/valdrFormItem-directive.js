@@ -83,6 +83,7 @@ var valdrFormItemDirectiveDefinition =
         };
 
         var validate = function (modelValue) {
+          valdrTypeController.setValue(fieldName, ngModelController.$modelValue);
           var validationResult = valdr.validate(valdrTypeController.getType(), fieldName, modelValue, valdrTypeController.getValues());
           updateNgModelController(validationResult);
           return valdrEnabled.isEnabled() ? validationResult.valid : true;
@@ -91,7 +92,6 @@ var valdrFormItemDirectiveDefinition =
         ngModelController.$validators.valdr = validate;
 
         scope.$on(valdrEvents.revalidate, function () {
-          valdrTypeController.setValue(fieldName, ngModelController.$modelValue);
           validate(ngModelController.$modelValue);
         });
 
