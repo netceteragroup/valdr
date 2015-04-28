@@ -469,7 +469,7 @@ Open [http://localhost:3005/demo](http://localhost:3005/demo) in your browser.
 
 ## Support
 
-Open a question on SO and tag it with [`valdr`](http://stackoverflow.com/tags/valdr).
+[Ask a question on Stack Overflow](http://stackoverflow.com/questions/ask?tags=valdr) and tag it with [`valdr`](http://stackoverflow.com/tags/valdr).
 
 ## License
 
