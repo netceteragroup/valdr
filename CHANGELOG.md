@@ -1,4 +1,9 @@
 # Changelog
+
+## 1.1.2 - 2015-05-03
+- Support dynamically added and removed form items, see [#62](https://github.com/netceteragroup/valdr/issues/62)
+- Support showing validation messages for AngularJS built-in validators, see [#58](https://github.com/netceteragroup/valdr/issues/58)
+
 ## 1.1.1 - 2015-01-04
 - introduce ```valdrEnabled``` directive to conditionally enable/disable validation, see [#54](https://github.com/netceteragroup/valdr/issues/54)
 - fix bug that after removing constraints from valdr with valdr.removeConstraints(), the validity state of previously validated form items was not reset. see [#55](https://github.com/netceteragroup/valdr/issues/55)
