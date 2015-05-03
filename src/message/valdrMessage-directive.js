@@ -101,11 +101,13 @@ angular.module('valdr')
               scope.violations.push(violation);
             });
 
-            angular.forEach(scope.formField.$error, function (isValid, validatorName) {
-              if (!valdrUtil.startsWith(validatorName, 'valdr')) {
-                scope.violations.push(createViolation(validatorName));
-              }
-            });
+            if (valdrMessage.angularMessagesEnabled) {
+              angular.forEach(scope.formField.$error, function (isValid, validatorName) {
+                if (!valdrUtil.startsWith(validatorName, 'valdr')) {
+                  scope.violations.push(createViolation(validatorName));
+                }
+              });
+            }
 
             scope.violation = scope.violations[0];
             updateTranslations();

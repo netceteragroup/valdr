@@ -105,6 +105,10 @@
 
   });
 
+  demoApp.run(function (valdrMessage) {
+    valdrMessage.angularMessagesEnabled = true;
+  });
+
   demoApp.controller('TestController', function ($scope, valdr) {
 
     $scope.person = {};

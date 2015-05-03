@@ -395,7 +395,14 @@ $translateProvider.translations('de', {
 ```
 
 ### Show messages for AngularJS built-in validators
-To show messages for the AngularJS built-in validators like ```required``` and ```number``` the messages can be registered by validator name in the ```valdrMessageProvider```:
+valdr also allows to show messages for the AngularJS built-in validators like ```required``` and ```number```.
+To enable this, set ```valdrMessage.angularMessagesEnabled``` to true in the run phase:
+
+```javascript
+valdrMessage.angularMessagesEnabled = true;
+```
+
+After that, the messages can be registered by validator name in the ```valdrMessageProvider```:
 
 ```javascript
 valdrMessage.addMessages({

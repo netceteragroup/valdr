@@ -39,6 +39,8 @@ angular.module('valdr')
 
     this.$get = ['$templateCache', '$injector', function ($templateCache, $injector) {
 
+      var angularMessagesEnabled = false;
+
       function getTranslateService() {
         try {
           return $injector.get('$translate');
@@ -90,7 +92,8 @@ angular.module('valdr')
         $translate: $translate,
         fieldNameKeyGenerator: fieldNameKeyGenerator,
         addMessages: addMessages,
-        getMessage: getMessage
+        getMessage: getMessage,
+        angularMessagesEnabled: angularMessagesEnabled
       };
     }];
   });

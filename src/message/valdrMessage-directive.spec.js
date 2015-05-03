@@ -203,6 +203,7 @@ describe('valdrMessage directive', function () {
 
   it('should show messages for angular validators', function () {
     // given
+    valdrMessage.angularMessagesEnabled = true;
     valdrMessage.addMessages({
       'required': 'This field is required'
     });
@@ -218,6 +219,25 @@ describe('valdrMessage directive', function () {
 
     // then
     expect(element.find('div').html()).toBe('This field is required');
+  });
+
+  it('should not show messages for angular validators by default', function () {
+    // given
+    valdrMessage.addMessages({
+      'required': 'This field is required'
+    });
+    var template =
+      '<form name="testForm">' +
+        '<input required type="text" name="testField" ng-model="model">' +
+        '<span valdr-message="testField"></span>' +
+      '</form>';
+
+    // when
+    var element = $compile(angular.element(template))($scope);
+    $scope.$digest();
+
+    // then
+    expect(element.find('div').html()).toBe('');
   });
 
 });
