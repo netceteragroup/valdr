@@ -39,8 +39,12 @@ describe('valdrType directive', function () {
 
   it('should set the values of the form', function() {
     // when
-    FormTypeController.setValue('name', 'Oscar');
-    FormTypeController.setValue('surname', 'Wilde');
+    FormTypeController.registerField('name', function() {
+      return 'Oscar';
+    });
+    FormTypeController.registerField('surname', function() {
+      return 'Wilde';
+    });
 
     // then
     expect(FormTypeController.getValue('name')).toBe('Oscar');

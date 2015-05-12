@@ -9,22 +9,26 @@ angular.module('valdr')
       priority: 1,
       controller: ['$attrs', function ($attrs) {
 
-        var values = {};
+        var fields = {};
 
         this.getType = function () {
           return $attrs.valdrType;
         };
 
-        this.setValue = function (fieldName, value) {
-          values[fieldName] = value;
-        };
-
         this.getValue = function (fieldName) {
-          return values[fieldName];
+          return fields[fieldName]();
         };
 
         this.getValues = function () {
-          return angular.copy(values);
+          var result = {};
+          angular.forEach(fields, function(field, name) {
+            result[name] = field();
+          });
+          return result;
+        };
+
+        this.registerField = function(name, field) {
+          fields[name] = field;
         };
 
       }]

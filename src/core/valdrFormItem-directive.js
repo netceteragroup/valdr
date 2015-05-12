@@ -50,6 +50,10 @@ var valdrFormItemDirectiveDefinition =
           throw new Error('Form element with ID "' + attrs.id + '" is not bound to a field name.');
         }
 
+        valdrTypeController.registerField(fieldName, function() {
+          return ngModelController.$modelValue;
+        });
+
         var updateNgModelController = function (validationResult) {
 
           if (valdrEnabled.isEnabled()) {
@@ -83,7 +87,6 @@ var valdrFormItemDirectiveDefinition =
         };
 
         var validate = function (modelValue) {
-          valdrTypeController.setValue(fieldName, ngModelController.$modelValue);
           var validationResult = valdr.validate(valdrTypeController.getType(), fieldName, modelValue, valdrTypeController.getValues());
           updateNgModelController(validationResult);
           return valdrEnabled.isEnabled() ? validationResult.valid : true;
