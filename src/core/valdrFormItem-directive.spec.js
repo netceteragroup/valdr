@@ -136,7 +136,7 @@ describe('valdrFormItem directive', function () {
       expect(element.hasClass(valdrClasses.invalid)).toBe(false);
     });
 
-    it('should handle constraint changed events', function () {
+    it('should handle constraint changed events', function (done) {
       // given
       spyOn(valdr, 'validate').andCallThrough();
       ngModelController.$viewValue = 'viewValue';
@@ -145,7 +145,10 @@ describe('valdrFormItem directive', function () {
       $scope.$broadcast(valdrEvents.revalidate);
 
       // then
-      expect(valdr.validate).toHaveBeenCalledWith(jasmine.any(String), 'fieldName', ngModelController.$modelValue, jasmine.any(Object));
+      setTimeout(0, function() {
+        expect(valdr.validate).toHaveBeenCalledWith(jasmine.any(String), 'fieldName', ngModelController.$modelValue, jasmine.any(Object));
+        done();
+      });
     });
 
     it('should pass the formValues to validate', function () {

@@ -95,7 +95,7 @@ var valdrFormItemDirectiveDefinition =
         ngModelController.$validators.valdr = validate;
 
         scope.$on(valdrEvents.revalidate, function () {
-          validate(ngModelController.$modelValue);
+          ngModelController.$validate();
         });
 
         scope.$on('$destroy', function () {
@@ -104,7 +104,7 @@ var valdrFormItemDirectiveDefinition =
 
         scope.$watch(function () {
           return ngModelController.$modelValue;
-        }, function() {
+        }, function () {
           $rootScope.$broadcast(valdrEvents.revalidate);
         });
 
