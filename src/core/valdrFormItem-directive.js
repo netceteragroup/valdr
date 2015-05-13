@@ -21,7 +21,7 @@ var nullValdrFormGroupController = {
  * can be added to those fields.
  */
 var valdrFormItemDirectiveDefinition =
-  ['valdrEvents', 'valdr', 'valdrUtil', 'valdrClasses', function (valdrEvents, valdr, valdrUtil) {
+  ['valdrEvents', 'valdr', 'valdrUtil', 'valdrClasses', '$rootScope', function (valdrEvents, valdr, valdrUtil, valdrClasses, $rootScope) {
     return {
       restrict: 'E',
       require: ['?^valdrType', '?^ngModel', '?^valdrFormGroup', '?^valdrEnabled'],
@@ -50,7 +50,7 @@ var valdrFormItemDirectiveDefinition =
           throw new Error('Form element with ID "' + attrs.id + '" is not bound to a field name.');
         }
 
-        valdrTypeController.registerField(fieldName, function() {
+        valdrTypeController.registerField(fieldName, function () {
           return ngModelController.$modelValue;
         });
 
@@ -100,6 +100,12 @@ var valdrFormItemDirectiveDefinition =
 
         scope.$on('$destroy', function () {
           valdrFormGroupController.removeFormItem(ngModelController);
+        });
+
+        scope.$watch(function () {
+          return ngModelController.$modelValue;
+        }, function() {
+          $rootScope.$broadcast(valdrEvents.revalidate);
         });
 
       }
