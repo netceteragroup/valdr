@@ -2,7 +2,9 @@
  * This controller is used if no valdrEnabled parent directive is available.
  */
 var nullValdrEnabledController = {
-  isEnabled: function () { return true; }
+  isEnabled: function () {
+    return true;
+  }
 };
 
 /**
@@ -19,8 +21,8 @@ var nullValdrFormGroupController = {
  * can be added to those fields.
  */
 var valdrFormItemDirectiveDefinition =
-  ['valdrEvents', 'valdr', 'valdrUtil', 'valdrClasses', function (valdrEvents, valdr, valdrUtil) {
-    return  {
+  ['valdrEvents', 'valdr', 'valdrUtil', 'valdrClasses', '$rootScope', function (valdrEvents, valdr, valdrUtil, valdrClasses, $rootScope) {
+    return {
       restrict: 'E',
       require: ['?^valdrType', '?^ngModel', '?^valdrFormGroup', '?^valdrEnabled'],
       link: function (scope, element, attrs, controllers) {
@@ -47,6 +49,10 @@ var valdrFormItemDirectiveDefinition =
         if (valdrUtil.isEmpty(fieldName)) {
           throw new Error('Form element with ID "' + attrs.id + '" is not bound to a field name.');
         }
+
+        valdrTypeController.registerField(fieldName, function () {
+          return ngModelController.$modelValue;
+        });
 
         var updateNgModelController = function (validationResult) {
 
@@ -81,7 +87,7 @@ var valdrFormItemDirectiveDefinition =
         };
 
         var validate = function (modelValue) {
-          var validationResult = valdr.validate(valdrTypeController.getType(), fieldName, modelValue);
+          var validationResult = valdr.validate(valdrTypeController.getType(), fieldName, modelValue, valdrTypeController.getValues());
           updateNgModelController(validationResult);
           return valdrEnabled.isEnabled() ? validationResult.valid : true;
         };
@@ -89,11 +95,17 @@ var valdrFormItemDirectiveDefinition =
         ngModelController.$validators.valdr = validate;
 
         scope.$on(valdrEvents.revalidate, function () {
-          validate(ngModelController.$modelValue);
+          ngModelController.$validate();
         });
 
         scope.$on('$destroy', function () {
           valdrFormGroupController.removeFormItem(ngModelController);
+        });
+
+        scope.$watch(function () {
+          return ngModelController.$modelValue;
+        }, function () {
+          $rootScope.$broadcast(valdrEvents.revalidate);
         });
 
       }

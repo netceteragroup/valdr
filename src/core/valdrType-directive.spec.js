@@ -37,4 +37,19 @@ describe('valdrType directive', function () {
     expect(nestedController.getType()).toBe('NestedClass');
   });
 
+  it('should set the values of the form', function() {
+    // when
+    FormTypeController.registerField('name', function() {
+      return 'Oscar';
+    });
+    FormTypeController.registerField('surname', function() {
+      return 'Wilde';
+    });
+
+    // then
+    expect(FormTypeController.getValue('name')).toBe('Oscar');
+    expect(FormTypeController.getValue('surname')).toBe('Wilde');
+    expect(FormTypeController.getValues()).toEqual({'name': 'Oscar', 'surname': 'Wilde'});
+  });
+
 });

@@ -97,9 +97,10 @@ angular.module('valdr')
              * @param typeName the type name
              * @param fieldName the field name
              * @param value the value to validate
+             * @param formValues the whole form
              * @returns {*}
              */
-            validate: function (typeName, fieldName, value) {
+            validate: function (typeName, fieldName, value, formValues) {
 
               var validResult = { valid: true },
                 typeConstraints = constraintsForType(typeName);
@@ -119,7 +120,7 @@ angular.module('valdr')
                     return validResult;
                   }
 
-                  var valid = validator.validate(value, constraint);
+                  var valid = validator.validate(value, constraint, formValues);
                   var validationResult = {
                     valid: valid,
                     value: value,

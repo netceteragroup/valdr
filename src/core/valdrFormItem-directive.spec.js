@@ -4,33 +4,33 @@ describe('valdrFormItem directive', function () {
 
   var $scope, $compile, element, valdr, valdrEvents, valdrClasses, ngModelController,
     violations = ['violationsArray'],
-    validationResults = [{ validator: 'required', valid: true }];
+    validationResults = [{validator: 'required', valid: true}];
 
   var inputTemplate =
     '<form name="demoForm">' +
-      '<div valdr-type="TestClass">' +
-        '<input type="text" name="fieldName" ng-model="myObject.field">' +
-      '</div>' +
+    '<div valdr-type="TestClass">' +
+    '<input type="text" name="fieldName" ng-model="myObject.field">' +
+    '</div>' +
     '</form>';
 
   var selectTemplate =
     '<form name="demoForm">' +
-      '<div valdr-type="TestClass">' +
-        '<select name="fieldName" ng-model="myObject.field">' +
-          '<option value></option>' +
-          '<option value="1">First</option>' +
-          '<option value="2">Second</option>' +
-        '</select>' +
-      '</div>' +
+    '<div valdr-type="TestClass">' +
+    '<select name="fieldName" ng-model="myObject.field">' +
+    '<option value></option>' +
+    '<option value="1">First</option>' +
+    '<option value="2">Second</option>' +
+    '</select>' +
+    '</div>' +
     '</form>';
 
   var textareaTemplate =
-      '<form name="demoForm">' +
-        '<div valdr-type="TestClass">' +
-          '<textarea name="fieldName" ng-model="myObject.field">' +
-          '</textarea>' +
-        '</div>' +
-      '</form>';
+    '<form name="demoForm">' +
+    '<div valdr-type="TestClass">' +
+    '<textarea name="fieldName" ng-model="myObject.field">' +
+    '</textarea>' +
+    '</div>' +
+    '</form>';
 
   // TEST UTILITIES
 
@@ -68,7 +68,7 @@ describe('valdrFormItem directive', function () {
   beforeEach(inject(function ($rootScope, _$compile_, _valdr_, _valdrEvents_, _valdrClasses_) {
     $compile = _$compile_;
     $scope = $rootScope.$new();
-    $scope.myObject = { field: 'fieldValue' };
+    $scope.myObject = {field: 'fieldValue'};
     valdr = _valdr_;
     valdrEvents = _valdrEvents_;
     valdrClasses = _valdrClasses_;
@@ -104,7 +104,7 @@ describe('valdrFormItem directive', function () {
       // given
       var formGroupTemplate =
         '<form name="demoForm" valdr-type="TestClass" valdr-form-group>' +
-            '<input type="text" name="fieldName" ng-model="myObject.field">' +
+        '<input type="text" name="fieldName" ng-model="myObject.field">' +
         '</form>';
       compileTemplate(formGroupTemplate);
 
@@ -121,7 +121,7 @@ describe('valdrFormItem directive', function () {
       // given
       var formGroupTemplate =
         '<form name="demoForm" valdr-type="TestClass" valdr-form-group>' +
-          '<input type="text" name="fieldName" ng-model="myObject.field">' +
+        '<input type="text" name="fieldName" ng-model="myObject.field">' +
         '</form>';
       compileTemplate(formGroupTemplate);
       $scope.$apply(function () {
@@ -136,7 +136,7 @@ describe('valdrFormItem directive', function () {
       expect(element.hasClass(valdrClasses.invalid)).toBe(false);
     });
 
-    it('should handle constraint changed events', function () {
+    it('should handle constraint changed events', function (done) {
       // given
       spyOn(valdr, 'validate').andCallThrough();
       ngModelController.$viewValue = 'viewValue';
@@ -145,7 +145,25 @@ describe('valdrFormItem directive', function () {
       $scope.$broadcast(valdrEvents.revalidate);
 
       // then
-      expect(valdr.validate).toHaveBeenCalledWith(jasmine.any(String), 'fieldName', ngModelController.$modelValue);
+      setTimeout(0, function() {
+        expect(valdr.validate).toHaveBeenCalledWith(jasmine.any(String), 'fieldName', ngModelController.$modelValue, jasmine.any(Object));
+        done();
+      });
+    });
+
+    it('should pass the formValues to validate', function () {
+      // given
+      spyOn(valdr, 'validate').andCallThrough();
+      ngModelController.$viewValue = 'viewValue';
+
+      // when
+      $scope.$apply(function () {
+        $scope.myObject.field = 'valid';
+      });
+      $scope.$broadcast(valdrEvents.revalidate);
+
+      // then
+      expect(valdr.validate.calls[1].args[3]).toEqual({'fieldName': 'valid'});
     });
   }
 
@@ -161,9 +179,9 @@ describe('valdrFormItem directive', function () {
       // given
       var invalidInput =
         '<form name="demoForm">' +
-          '<div valdr-type="TestClass">' +
-            '<input type="text" ng-model="myObject.field">' +
-          '</div>' +
+        '<div valdr-type="TestClass">' +
+        '<input type="text" ng-model="myObject.field">' +
+        '</div>' +
         '</form>';
 
       // when / then
@@ -176,9 +194,9 @@ describe('valdrFormItem directive', function () {
       // given
       var noValdrValidationInput =
         '<form name="demoForm">' +
-          '<div valdr-type="TestClass">' +
-            '<input type="text" name="fieldName" ng-model="myObject.field" valdr-no-validate>' +
-          '</div>' +
+        '<div valdr-type="TestClass">' +
+        '<input type="text" name="fieldName" ng-model="myObject.field" valdr-no-validate>' +
+        '</div>' +
         '</form>';
 
       // when

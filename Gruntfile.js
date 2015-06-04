@@ -30,6 +30,7 @@ module.exports = function (grunt) {
         'src/core/validators/maxValidator.js',
         'src/core/validators/sizeValidator.js',
         'src/core/validators/emailValidator.js',
+        'src/core/validators/equalsFieldValidator.js',
         'src/core/validators/urlValidator.js',
         'src/core/validators/digitsValidator.js',
         'src/core/validators/futureAndPastSharedValidator.js',
