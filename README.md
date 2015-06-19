@@ -24,6 +24,7 @@
     - [url](#url)
     - [future / past](#future--past)
   - [Adding custom validators](#adding-custom-validators)
+  - [Applying validation to custom input widgets](#applying-validation-to-custom-input-widgets)
   - [Showing validation messages](#showing-validation-messages-with-valdr-messages)
     - [Message template](#message-template)
     - [CSS to control visibility](#css-to-control-visibility)
