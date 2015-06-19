@@ -260,6 +260,29 @@ yourApp.config(function (valdrProvider) {
 }
 ```
 
+## Applying validation to custom input widgets
+valdr applies validation to ```<input>```, ```<textarea>``` and ```<select>``` HTML elements automatically if those
+elements are within a ```valdr-type``` block and there is ```ng-model``` bound to them. If you implemented your own
+input widget or used one provided by a library (e.g. ui-select), you can still benefit from valdr validation applied to
+that input widget. All you need is to decorate it with the ```enableValdrValidation``` directive. In addition to this,
+if you would like to make use of [validation messages](#showing-validation-messages-with-valdr-messages), add the
+```enableValdrMessage``` directive to the input widget:
+```html
+<form name="yourForm" novalidate valdr-type="Person">
+    <div valdr-form-group>
+        <label for="bestFriend">Best Friend</label>
+        <my-select
+            id="bestFriend"
+            name="bestFriend"
+            ng-model="person.bestFriend"
+            enable-valdr-validation
+            enable-valdr-message>
+           <!-- other my-select elements -->
+        </my-select>
+    </div>
+</form>
+```
+
 ## Showing validation messages with ```valdr-messages```
 valdr sets the AngularJS validation states like ```$valid```, ```$invalid``` and ```$error``` on all validated form
 elements and forms by default. Additional information like the violated constraints and the messages configured in the
