@@ -32,6 +32,14 @@ describe('valdrFormItem directive', function () {
         '</div>' +
       '</form>';
 
+  var inputWidgetTemplate =
+    '<form name="demoForm">' +
+      '<div valdr-type="TestClass">' +
+        '<section name="fieldName" ng-model="myObject.field" enable-valdr-validation>' +
+        '</section>' +
+      '</div>' +
+    '</form>';
+
   // TEST UTILITIES
 
   function compileTemplate(template) {
@@ -207,6 +215,17 @@ describe('valdrFormItem directive', function () {
     beforeEach(function () {
       compileTemplate(textareaTemplate);
       ngModelController = element.find('textarea').controller('ngModel');
+    });
+
+    runFormItemCommonTests();
+
+  });
+
+  describe('on explicitly enabled elements', function () {
+
+    beforeEach(function () {
+      compileTemplate(inputWidgetTemplate);
+      ngModelController = element.find('section').controller('ngModel');
     });
 
     runFormItemCommonTests();
