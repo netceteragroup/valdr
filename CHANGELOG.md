@@ -1,7 +1,7 @@
 # Changelog
 
 ## 1.1.3 - 2015-06-22
-- Support to validate non-input/-select/-textarea widgets [#83](https://github.com/netceteragroup/valdr/issues/83)
+- Support to validate non-input/-select/-textarea widgets [#83](https://github.com/netceteragroup/valdr/issues/83) [documentation](https://github.com/netceteragroup/valdr#applying-validation-to-custom-input-widgets)
 
 ## 1.1.2 - 2015-05-03
 - Support dynamically added and removed form items, see [#62](https://github.com/netceteragroup/valdr/issues/62)
