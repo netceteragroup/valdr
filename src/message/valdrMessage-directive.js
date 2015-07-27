@@ -127,7 +127,7 @@ angular.module('valdr')
           if (scope.formField) {
             return {
               valdr: scope.formField.valdrViolations,
-              $error: scope.formField.$error
+              error: scope.formField.$error
             };
           }
         };
