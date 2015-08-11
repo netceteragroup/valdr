@@ -1,4 +1,6 @@
 # Changelog
+## 1.1.4 - 2015-08-11
+- Fix: valdrMessage does not add messages of angular validation directives [#90](https://github.com/netceteragroup/valdr/issues/90)
 
 ## 1.1.3 - 2015-06-22
 - Support to validate non-input/-select/-textarea widgets [#83](https://github.com/netceteragroup/valdr/issues/83) [documentation](https://github.com/netceteragroup/valdr#applying-validation-to-custom-input-widgets)
