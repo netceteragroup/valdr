@@ -1,4 +1,7 @@
 # Changelog
+## 1.1.5 - 2015-09-22
+- Don't throw exception if an input has no name and valdr is disabled [#92](https://github.com/netceteragroup/valdr/pull/92)
+
 ## 1.1.4 - 2015-08-11
 - Fix: valdrMessage does not add messages of angular validation directives [#90](https://github.com/netceteragroup/valdr/issues/90)
 
