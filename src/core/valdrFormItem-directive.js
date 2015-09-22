@@ -46,8 +46,8 @@ var valdrFormItemDirectiveDefinitionFactory = function (restrict) {
 
           valdrFormGroupController.addFormItem(ngModelController);
 
-          if (valdrUtil.isEmpty(fieldName)) {
-            throw new Error('Form element with ID "' + attrs.id + '" is not bound to a field name.');
+          if (valdrUtil.isEmpty(fieldName) && valdrEnabled.isEnabled()) {
+            console.warn('Form element with ID "' + attrs.id + '" is not bound to a field name.');
           }
 
           var updateNgModelController = function (validationResult) {
