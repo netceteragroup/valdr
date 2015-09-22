@@ -165,8 +165,9 @@ describe('valdrFormItem directive', function () {
 
     runFormItemCommonTests();
 
-    it('should throw error if no field name is provided on the input', function () {
+    it('should log warning if no field name is provided on the input', function () {
       // given
+      spyOn(console, 'warn');
       var invalidInput =
         '<form name="demoForm">' +
           '<div valdr-type="TestClass">' +
@@ -174,10 +175,28 @@ describe('valdrFormItem directive', function () {
           '</div>' +
         '</form>';
 
-      // when / then
-      expect(function () {
-        $compile(angular.element(invalidInput))($scope);
-      }).toThrow(new Error('Form element with ID "undefined" is not bound to a field name.'));
+      // when
+      $compile(angular.element(invalidInput))($scope);
+
+      // then
+      expect(console.warn).toHaveBeenCalledWith('Form element with ID "undefined" is not bound to a field name.');
+    });
+
+    it('should NOT log warning if no field name is provided on the input but valdr is disabled', function () {
+      // given
+      spyOn(console, 'warn');
+      var invalidInput =
+        '<form name="demoForm" valdr-enabled="false">' +
+        '  <div valdr-type="TestClass">' +
+        '    <input type="text" ng-model="myObject.field">' +
+        '  </div>' +
+        '</form>';
+
+      // when
+      compileTemplate(invalidInput);
+
+      // then
+      expect(console.warn).not.toHaveBeenCalled();
     });
 
     it('should NOT use valdr validation if valdr-no-validate is set', function () {
