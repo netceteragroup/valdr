@@ -19,7 +19,7 @@ angular.module('valdr')
        * @returns {boolean} true if valid
        */
       validate: function (value) {
-        if (valdrUtil.isEmpty(value)) {
+        if (valdrUtil.isEmpty(value) || valdrUtil.isNaN(value)) {
           return true;
         }
 
