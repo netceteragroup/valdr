@@ -34,6 +34,7 @@
   - [Conditionally enable/disable validation](#conditionally-enabledisable-validation)
   - [Wire up your back-end](#wire-up-your-back-end)
     - [Using JSR303 Bean Validation with Java back-ends](#using-jsr303-bean-validation-with-java-back-ends)
+    - [Using DataAnnotation with C# back-ends](#using-dataannotation-with-c-back-ends)
   - [Develop](#develop)
   - [Support](#support)
   - [License](#license)
@@ -474,6 +475,12 @@ yourApp.config(function(valdrProvider) {
 
 If you have a Java back-end and use Bean Validation (JSR 303) annotations, check out the [valdr-bean-validation](https://github.com/netceteragroup/valdr-bean-validation)
 project. It parses Java model classes for Bean Validation constraints and extracts their information into a JSON document
+to be used by valdr. This allows to apply the exact same validation rules on the server and on the AngularJS client.
+
+### Using DataAnnotation with C# back-ends
+
+If you have a c# back-end and use DataAnnotation, check out the [valdr-dotnet](https://github.com/netceteragroup/valdr-dotnet)
+project. It parses C# classes for DataAnnotation attributes and extracts their information into into a JSON document
 to be used by valdr. This allows to apply the exact same validation rules on the server and on the AngularJS client.
 
 ## Develop
