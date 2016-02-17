@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Demo</title>
+</head>
+<body ng-app="demoApp">
+
+<div ng-controller="TestController">
+
+  <h1>Custom Validator Demo</h1>
+
+  <form name="demoForm" novalidate valdr-type="Person">
+      <div valdr-form-group>
+        <label for="lastName">Last Name</label>
+        <input type="text"
+               id="lastName"
+               name="lastName"
+               ng-model="person.lastName">
+        <span>$valid {{ demoForm.lastName.$valid }}</span>
+      </div>
+
+      <div valdr-form-group>
+        <label for="firstName">First Name</label>
+        <input type="text"
+               id="firstName"
+               name="firstName"
+               ng-model="person.firstName">
+        <span>$valid {{ demoForm.firstName.$valid }}</span>
+      </div>
+
+  </form>
+
+  <pre>demoForm.$valid: {{ demoForm.$valid }}</pre>
+
+  <h3>demoForm</h3>
+  <pre>{{ demoForm | json }}</pre>
+
+  <h3>constraints</h3>
+  <pre>{{ constraints | json }}</pre>
+
+</div>
+
+<script src="/bower_components/angular/angular.js"></script>
+<script src="../js/valdr.js"></script>
+<script src="http://localhost:35729/livereload.js"></script>
+
+<script>
+  var demoApp = angular.module('demoApp', ['valdr']);
+
+  demoApp.factory('customValidator', function () {
+    return {
+      name: 'customValidator',
+      validate: function (value, constraints, otherModels) {
+        if(!otherModels.lastName || otherModels.lastName.length < constraints.someIntegerProperty){
+          return false
+        }
+        return value === 'Bessa';
+      }
+    };
+  });
+
+  demoApp.config(function (valdrProvider) {
+
+    valdrProvider.addValidator('customValidator');
+
+    valdrProvider.addConstraints({
+      'Person': {
+        'lastName': {
+          'required': {
+            'message': 'This field is required.'
+          }
+        },
+        'firstName': {
+          'customValidator': {
+            'someIntegerProperty': 5,
+            'requireModels': ['lastName'],
+            'message': 'First name must be Hanueli.'
+          }
+        }
+      }
+    });
+
+  });
+
+  demoApp.controller('TestController', function ($scope, valdr) {
+    $scope.person = {};
+
+    $scope.$watch(valdr.getConstraints, function (newConstraints) {
+      $scope.constraints = newConstraints;
+    });
+  });
+</script>
+</body>
+</html>

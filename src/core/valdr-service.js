@@ -17,10 +17,31 @@ angular.module('valdr')
         'valdrPastValidator',
         'valdrPatternValidator',
         'valdrHibernateEmailValidator'
-      ];
+      ],
+      dependencies = {};
+
+    var initDependencies = function(){
+      angular.forEach(constraints, function(typeFields, typeName){
+        dependencies[typeName] = {};
+        angular.forEach(typeFields, function(fieldConstraints, fieldName){
+          angular.forEach(fieldConstraints, function (constraint) {
+            if(constraint.hasOwnProperty('requireModels')){
+              angular.forEach(constraint.requireModels, function(modelName){
+                if(dependencies[typeName].hasOwnProperty(modelName) && dependencies[typeName][modelName].length !== undefined){
+                  dependencies[typeName][modelName].push(fieldName);
+                } else {
+                  dependencies[typeName][modelName] = [fieldName];
+                }
+              });
+            }
+          });
+        });
+      });
+    };
 
     var addConstraints = function (newConstraints) {
       angular.extend(constraints, newConstraints);
+      initDependencies();
     };
 
     this.addConstraints = addConstraints;
@@ -29,6 +50,7 @@ angular.module('valdr')
       if (angular.isArray(constraintNames)) {
         angular.forEach(constraintNames, function (name) {
           delete constraints[name];
+          delete dependencies[name];
         });
       } else if (angular.isString(constraintNames)) {
         delete constraints[constraintNames];
@@ -53,8 +75,8 @@ angular.module('valdr')
     };
 
     this.$get =
-      ['$log', '$injector', '$rootScope', '$http', 'valdrEvents', 'valdrUtil', 'valdrClasses',
-        function ($log, $injector, $rootScope, $http, valdrEvents, valdrUtil, valdrClasses) {
+      ['$log', '$injector', '$rootScope', '$http', '$timeout', 'valdrEvents', 'valdrUtil', 'valdrClasses',
+        function ($log, $injector, $rootScope, $http, $timeout, valdrEvents, valdrUtil, valdrClasses) {
 
           // inject all validators
           angular.forEach(validatorNames, function (validatorName) {
@@ -99,7 +121,7 @@ angular.module('valdr')
              * @param value the value to validate
              * @returns {*}
              */
-            validate: function (typeName, fieldName, value) {
+            validate: function (typeName, fieldName, value, getOtherModelsDataOnForm) {
 
               var validResult = { valid: true },
                 typeConstraints = constraintsForType(typeName);
@@ -119,7 +141,56 @@ angular.module('valdr')
                     return validResult;
                   }
 
-                  var valid = validator.validate(value, constraint);
+                  var getRequiredModelsValues = function(constraint){
+                    var criteria = function(key){
+                      var found = false;
+                      angular.forEach(constraint.requireModels, function(modelName){
+                        if (key === modelName){
+                          found = true;
+                          return false;
+                        }
+                      });
+                      return found;
+                    };
+
+                    var requireModels = {};
+                    angular.forEach(getOtherModelsDataOnForm(criteria), function(modelData, key){
+                      requireModels[key] = modelData.$modelValue;
+                    });
+                    return requireModels;
+                  };
+
+                  var getOtherModelsValues = function(fieldName){
+                    
+                    if(getOtherModelsDataOnForm !== undefined){
+                      var criteria = function(key){
+                        return fieldName !== key;
+                      };
+                      return getOtherModelsDataOnForm(criteria);
+                    } else {
+                      return {};
+                    }
+                    
+                  };
+
+                  var propagateDependentFieldsValidation = function(fieldName, typeName){
+                    angular.forEach(getOtherModelsValues(fieldName), function(modelData, key){
+                      if(dependencies[typeName][fieldName] !== undefined && dependencies[typeName][fieldName].indexOf(key) >= 0){
+                        $timeout(function(){
+                          modelData.$validate();
+                        });
+                      }
+                    });
+                  };
+
+                  var valid;
+                  if(constraint.hasOwnProperty('requireModels')){
+                    valid = validator.validate(value, constraint, getRequiredModelsValues(constraint));
+                    propagateDependentFieldsValidation(fieldName, typeName);
+                  } else {
+                    valid = validator.validate(value, constraint);
+                    propagateDependentFieldsValidation(fieldName, typeName);
+                  } 
                   var validationResult = {
                     valid: valid,
                     value: value,

@@ -15,6 +15,21 @@ var nullValdrFormGroupController = {
   removeFormItem: angular.noop
 };
 
+function extractModelValuesFromFormController(FormController){
+  console.log('form');
+  return function(criteria){
+    var otherModelValuesOnForm = {};
+    if(FormController !== undefined){
+      angular.forEach(FormController, function(value, key){
+        if(key[0] !== '$' && criteria(key)){
+          otherModelValuesOnForm[key] = value;
+        }
+      });
+    }
+    return otherModelValuesOnForm;
+  };
+}
+
 /**
  * This directive adds validation to all input and select fields as well as to explicitly enabled elements which are
  * bound to an ngModel and are surrounded by a valdrType directive. To prevent adding validation to specific fields,
@@ -24,13 +39,14 @@ var valdrFormItemDirectiveDefinitionFactory = function (restrict) {
     return ['valdrEvents', 'valdr', 'valdrUtil', function (valdrEvents, valdr, valdrUtil) {
       return {
         restrict: restrict,
-        require: ['?^valdrType', '?^ngModel', '?^valdrFormGroup', '?^valdrEnabled'],
+        require: ['?^valdrType', '?^ngModel', '?^valdrFormGroup', '?^valdrEnabled', '?^form'],
         link: function (scope, element, attrs, controllers) {
 
           var valdrTypeController = controllers[0],
             ngModelController = controllers[1],
             valdrFormGroupController = controllers[2] || nullValdrFormGroupController,
             valdrEnabled = controllers[3] || nullValdrEnabledController,
+            FormController = controllers[4],
             valdrNoValidate = attrs.valdrNoValidate,
             fieldName = attrs.name;
 
@@ -82,8 +98,9 @@ var valdrFormItemDirectiveDefinitionFactory = function (restrict) {
             }
           };
 
-          var validate = function (modelValue) {
-            var validationResult = valdr.validate(valdrTypeController.getType(), fieldName, modelValue);
+          var validate = function(modelValue){
+            var getOtherModelValuesOnForm = extractModelValuesFromFormController(FormController);
+            var validationResult = valdr.validate(valdrTypeController.getType(), fieldName, modelValue, getOtherModelValuesOnForm);
             updateNgModelController(validationResult);
             return valdrEnabled.isEnabled() ? validationResult.valid : true;
           };
