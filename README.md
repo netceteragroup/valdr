@@ -243,7 +243,7 @@ yourApp.factory('customValidator', function () {
 ```javascript
 yourApp.config(function (valdrProvider) {
   valdrProvider.addValidator('customValidator');
-}
+});
 ```
 
 3) Use it in constraints JSON:
@@ -259,8 +259,44 @@ yourApp.config(function (valdrProvider) {
       }
     }
   });
-}
+});
 ```
+
+### Validate one input against another
+
+If one or more fields in your form depends on other fields values in the same form you can define a ```requireModels``` contraint with a list o fieldnames. Then your custom validator receives a third argument, that is an object with the fieldnames as keys and it's respective values as values.
+eg.:
+```javascript
+yourApp.factory('customValidator', function () {
+  return {
+    name: 'customValidator', // this is the validator name that can be referenced from the constraints JSON
+    validate: function (value, arguments, requiredModels) {
+      // value: the value to validate
+      // arguments: the validator arguments
+      return value === arguments.onlyValidValue && (!requiredModels[lastName] || requiredModels[lastName] === 'Bombadil');
+    }
+  };
+});
+
+yourApp.config(function (valdrProvider) {
+  valdrProvider.addConstraints({
+    'Person': {
+      'firstName': {
+        'customValidator': {
+          'onlyValidValue': 'Tom',
+          'requireModels': ['lastName'],
+          'message': 'First name has to be Tom and your last name must be \'Bombadil\'!'
+        }
+      },
+      'lastName': {
+        'minLength': 8,
+        'message': 'Last name must have at least 8 characters.'
+      }
+    }
+  });
+});
+```
+
 
 ## Applying validation to custom input widgets
 valdr applies validation to ```<input>```, ```<textarea>``` and ```<select>``` HTML elements automatically if those
