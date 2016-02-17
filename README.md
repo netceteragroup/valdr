@@ -243,7 +243,7 @@ yourApp.factory('customValidator', function () {
 ```javascript
 yourApp.config(function (valdrProvider) {
   valdrProvider.addValidator('customValidator');
-});
+}
 ```
 
 3) Use it in constraints JSON:
@@ -273,7 +273,8 @@ yourApp.factory('customValidator', function () {
     validate: function (value, arguments, requiredModels) {
       // value: the value to validate
       // arguments: the validator arguments
-      return value === arguments.onlyValidValue && (!requiredModels[lastName] || requiredModels[lastName] === 'Bombadil');
+      // requireModels: an object which has the required models values
+      return value === requiredModels.password;
     }
   };
 });
@@ -281,17 +282,16 @@ yourApp.factory('customValidator', function () {
 yourApp.config(function (valdrProvider) {
   valdrProvider.addConstraints({
     'Person': {
-      'firstName': {
+      'password': {
+        'minLength': 8,
+        'message': 'Password must have at least 8 characters.'
+      },
+      'password_confirm': {
         'customValidator': {
-          'onlyValidValue': 'Tom',
-          'requireModels': ['lastName'],
-          'message': 'First name has to be Tom and your last name must be \'Bombadil\'!'
+          'requireModels': ['password'],
+          'message': 'Password onfirmation must be equals to Password'
         }
       },
-      'lastName': {
-        'minLength': 8,
-        'message': 'Last name must have at least 8 characters.'
-      }
     }
   });
 });
