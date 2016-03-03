@@ -102,6 +102,13 @@ describe('valdrUtil', function () {
       expect(valdrUtil.isEmpty('')).toBe(true);
     });
 
+    it('should validate arrays', function () {
+      expect(valdrUtil.notEmpty(['Apple', 'Banana'])).toBe(true);
+      expect(valdrUtil.isEmpty(['Apple', 'Banana'])).toBe(false);
+      expect(valdrUtil.isEmpty([])).toBe(true);
+      expect(valdrUtil.notEmpty([])).toBe(false);
+    });
+
   });
 
   describe('startsWith()', function () {

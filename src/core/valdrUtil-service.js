@@ -63,6 +63,9 @@ angular.module('valdr')
         if (this.isNaN(value)) {
           return false;
         }
+        if (angular.isArray(value) && value.length === 0){
+          return false;
+        }
         return angular.isDefined(value) && value !== '' && value !== null;
       },
 
