@@ -342,6 +342,21 @@ describe('valdrMessage directive with angular-translate', function () {
     expect(element.find('span').html()).toBe('field: Field Name param: 3 secondParam: 4');
   });
 
+  it('should unregister translate change handler on destroy to avoid potential memory leaks', function () {
+    // given
+    var element = compileTemplate();
+    spyOn(valdrMessage, '$translate').andReturn({ then: function () {} });
+    $scope.$destroy();
+    element.remove();
+
+    // when
+    $translate.use('de');
+    $scope.$digest();
+
+    // then
+    expect(valdrMessage.$translate).not.toHaveBeenCalled();
+  });
+
 });
 
 describe('valdrMessage directive with angular-translate and valdrFieldNameKeyGenerator', function () {
