@@ -60,4 +60,15 @@ describe('valdrSizeValidator', function () {
     expect(valid).toBe(false);
   });
 
+  it('should be valid if input is a number', function () {
+    // given
+    constraint.min = 1;
+
+    // when
+    var valid = sizeValidator.validate(123, constraint);
+
+    // then
+    expect(valid).toBe(true);
+  });
+
 });

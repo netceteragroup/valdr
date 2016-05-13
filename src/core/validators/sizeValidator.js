@@ -16,8 +16,9 @@ angular.module('valdr')
           maxLength = constraint.max;
 
         value = value || '';
-        return value.length >= minLength &&
-          (maxLength === undefined || value.length <= maxLength);
+        var stringValue = value.toString();
+        return stringValue.length >= minLength &&
+          (maxLength === undefined || stringValue.length <= maxLength);
       }
     };
   });
