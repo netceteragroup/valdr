@@ -49,7 +49,7 @@ describe('valdrSizeValidator', function () {
     expect(valid).toBe(true);
   });
 
-  it('should be invalid if min is 1 and value undefined', function () {
+  it('should be valid if min is 1 and value undefined', function () {
     // given
     constraint.min = 1;
 
@@ -57,7 +57,7 @@ describe('valdrSizeValidator', function () {
     var valid = sizeValidator.validate(undefined, constraint);
 
     // then
-    expect(valid).toBe(false);
+    expect(valid).toBe(true);
   });
 
 });

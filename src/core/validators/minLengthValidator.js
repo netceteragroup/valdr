@@ -15,7 +15,7 @@ angular.module('valdr')
         var minLength = constraint.number;
 
         if (valdrUtil.isEmpty(value)) {
-          return minLength === 0;
+          return true;
         }
 
         if (typeof value === 'string') {
