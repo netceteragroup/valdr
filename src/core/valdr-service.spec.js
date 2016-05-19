@@ -195,10 +195,7 @@ describe('valdr', function () {
       expect(sizeValidator.validate).toHaveBeenCalled();
       expect(requiredValidator.validate).toHaveBeenCalled();
       expect(validationResult.valid).toBe(false);
-      expect(validationResult.violations[0].field).toBe('firstName');
-      expect(validationResult.violations[0].value).toBeUndefined();
-      expect(validationResult.violations[0].message).toBe('size');
-      expect(validationResult.violations[1].message).toBe('required');
+      expect(validationResult.violations[0].message).toBe('required');
     });
 
   });

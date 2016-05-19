@@ -1,6 +1,6 @@
 angular.module('valdr')
 
-  .factory('valdrSizeValidator', function () {
+  .factory('valdrSizeValidator', ['valdrUtil', function (valdrUtil) {
     return {
       name: 'size',
 
@@ -16,8 +16,13 @@ angular.module('valdr')
           maxLength = constraint.max;
 
         value = value || '';
+
+        if (valdrUtil.isEmpty(value)) {
+          return true;
+        }
+
         return value.length >= minLength &&
           (maxLength === undefined || value.length <= maxLength);
       }
     };
-  });
+  }]);

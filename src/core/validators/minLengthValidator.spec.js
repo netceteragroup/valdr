@@ -70,7 +70,7 @@ describe('valdrMinLengthValidator', function () {
     expect(valid).toBe(true);
   });
 
-  it('should be invalid if minLength is 1 and value undefined', function () {
+  it('should be valid if minLength is 1 and value undefined', function () {
     // given
     constraint.number = 1;
 
@@ -78,10 +78,10 @@ describe('valdrMinLengthValidator', function () {
     var valid = minLengthValidator.validate(undefined, constraint);
 
     // then
-    expect(valid).toBe(false);
+    expect(valid).toBe(true);
   });
 
-  it('should be invalid if minLength is 1 and value null', function () {
+  it('should be valid if minLength is 1 and value null', function () {
     // given
     constraint.number = 1;
 
@@ -89,7 +89,7 @@ describe('valdrMinLengthValidator', function () {
     var valid = minLengthValidator.validate(null, constraint);
 
     // then
-    expect(valid).toBe(false);
+    expect(valid).toBe(true);
   });
 
 });
