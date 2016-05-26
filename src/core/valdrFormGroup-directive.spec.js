@@ -81,9 +81,15 @@ describe('valdrFormGroup directive', function () {
 
     });
 
-    it('should not set valid and invalidDirtyTouchedGroup classes if all items are valid', function () {
+    it('should not set valid, untouched, pristine and invalidDirtyTouchedGroup classes if all items are valid', function () {
       expect(element.hasClass(valdrClasses.valid)).toBe(true);
       expect(element.hasClass(valdrClasses.invalid)).toBe(false);
+      expect(element.hasClass(valdrClasses.untouched)).toBe(true);
+      expect(element.hasClass(valdrClasses.touched)).toBe(false);
+      expect(element.hasClass(valdrClasses.pristine)).toBe(true);
+      expect(element.hasClass(valdrClasses.dirty)).toBe(false);
+
+
       expect(element.hasClass(valdrClasses.invalidDirtyTouchedGroup)).toBe(false);
     });
 
@@ -97,6 +103,10 @@ describe('valdrFormGroup directive', function () {
       // then
       expect(element.hasClass(valdrClasses.invalid)).toBe(true);
       expect(element.hasClass(valdrClasses.valid)).toBe(false);
+      expect(element.hasClass(valdrClasses.untouched)).toBe(true);
+      expect(element.hasClass(valdrClasses.touched)).toBe(false);
+      expect(element.hasClass(valdrClasses.pristine)).toBe(true);
+      expect(element.hasClass(valdrClasses.dirty)).toBe(false);
       expect(element.hasClass(valdrClasses.invalidDirtyTouchedGroup)).toBe(false);
     });
 
@@ -113,7 +123,49 @@ describe('valdrFormGroup directive', function () {
       // then
       expect(element.hasClass(valdrClasses.invalid)).toBe(true);
       expect(element.hasClass(valdrClasses.valid)).toBe(false);
+      expect(element.hasClass(valdrClasses.untouched)).toBe(false);
+      expect(element.hasClass(valdrClasses.touched)).toBe(true);
+      expect(element.hasClass(valdrClasses.pristine)).toBe(false);
+      expect(element.hasClass(valdrClasses.dirty)).toBe(true);
       expect(element.hasClass(valdrClasses.invalidDirtyTouchedGroup)).toBe(true);
+    });
+
+    it('should add dirty, untouched and invalid class and not add pristine, touched and valid class if an input is dirty, untouched and invalid', function () {
+      // given
+      $scope.person.firstName = 'This name is too long for the constraints.';
+      ngModelController.$invalid = true;
+      ngModelController.$dirty = true;
+      ngModelController.$touched = false;
+
+      // when
+      $scope.$digest();
+
+      // then
+      expect(element.hasClass(valdrClasses.invalid)).toBe(true);
+      expect(element.hasClass(valdrClasses.valid)).toBe(false);
+      expect(element.hasClass(valdrClasses.untouched)).toBe(true);
+      expect(element.hasClass(valdrClasses.touched)).toBe(false);
+      expect(element.hasClass(valdrClasses.pristine)).toBe(false);
+      expect(element.hasClass(valdrClasses.dirty)).toBe(true);
+      expect(element.hasClass(valdrClasses.invalidDirtyTouchedGroup)).toBe(false);
+    });
+
+    it('should add dirty, untouched and valid class and not add pristine, touched and invalid class if an input is dirty, untouched and valid', function () {
+      // given
+      ngModelController.$dirty = true;
+      ngModelController.$touched = false;
+
+      // when
+      $scope.$digest();
+
+      // then
+      expect(element.hasClass(valdrClasses.invalid)).toBe(false);
+      expect(element.hasClass(valdrClasses.valid)).toBe(true);
+      expect(element.hasClass(valdrClasses.untouched)).toBe(true);
+      expect(element.hasClass(valdrClasses.touched)).toBe(false);
+      expect(element.hasClass(valdrClasses.pristine)).toBe(false);
+      expect(element.hasClass(valdrClasses.dirty)).toBe(true);
+      expect(element.hasClass(valdrClasses.invalidDirtyTouchedGroup)).toBe(false);
     });
 
     it('should be valid if no form items are registered', function () {
@@ -126,6 +178,10 @@ describe('valdrFormGroup directive', function () {
       // then
       expect(element.hasClass(valdrClasses.valid)).toBe(true);
       expect(element.hasClass(valdrClasses.invalid)).toBe(false);
+      expect(element.hasClass(valdrClasses.untouched)).toBe(true);
+      expect(element.hasClass(valdrClasses.touched)).toBe(false);
+      expect(element.hasClass(valdrClasses.pristine)).toBe(true);
+      expect(element.hasClass(valdrClasses.dirty)).toBe(false);
       expect(element.hasClass(valdrClasses.invalidDirtyTouchedGroup)).toBe(false);
     });
   });
