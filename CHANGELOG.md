@@ -1,4 +1,9 @@
 # Changelog
+## 1.1.6 - 2016-09-14
+- Fix: min length validator and size validator validate only length [#107](https://github.com/netceteragroup/valdr/pull/107)
+- Fix: Fixed memory leak in valdrMessage-directive [#105](https://github.com/netceteragroup/valdr/pull/105)
+- Fix: Unable to validate multiselect dropdowns [#101](https://github.com/netceteragroup/valdr/issues/101)
+
 ## 1.1.5 - 2015-09-22
 - Don't throw exception if an input has no name and valdr is disabled [#92](https://github.com/netceteragroup/valdr/pull/92)
 
