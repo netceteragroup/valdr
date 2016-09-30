@@ -153,7 +153,7 @@ describe('valdrFormItem directive', function () {
       $scope.$broadcast(valdrEvents.revalidate);
 
       // then
-      expect(valdr.validate).toHaveBeenCalledWith(jasmine.any(String), 'fieldName', ngModelController.$modelValue);
+      expect(valdr.validate).toHaveBeenCalledWith(jasmine.any(String), 'fieldName', ngModelController.$modelValue, undefined);
     });
   }
 
@@ -214,6 +214,25 @@ describe('valdrFormItem directive', function () {
 
       // then
       expect(ngModelController.$validators.valdr).toBeUndefined();
+    });
+
+    it('should call validate with the specified groups', function () {
+      // given
+      spyOn(valdr, 'validate').andCallThrough();
+      var withGroup =
+          '<form name="demoForm" valdr-type="TestClass" valdr-validation-groups="[\'TestGroup\', \'AnotherGroup\']">' +
+          '<div>' +
+          '<input type="text" ng-model="myObject.field" name="fieldName">' +
+          '</div>' +
+          '</form>';
+
+      // when
+      compileTemplate(withGroup);
+      ngModelController = element.find('input').controller('ngModel');
+      $scope.$broadcast(valdrEvents.revalidate);
+
+      // then
+      expect(valdr.validate).toHaveBeenCalledWith(jasmine.any(String), 'fieldName', ngModelController.$modelValue, ['TestGroup', 'AnotherGroup']);
     });
   });
 

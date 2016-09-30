@@ -9,7 +9,23 @@ describe('valdr', function () {
             'max': 10,
             'message': 'size'
           }
-        }
+        },
+          'lastName': {
+            'size': {
+              'min': 0,
+              'max': 11,
+              'message': 'size',
+              'groups': ['TestGroup', 'AnotherGroup']
+            }
+          },
+          'initials': {
+            'size': {
+              'min': 0,
+              'max': 12,
+              'message': 'size',
+              'groups': []
+            }
+          }
       }
     },
     addressConstraints = {
@@ -116,6 +132,54 @@ describe('valdr', function () {
       expect(validationResult.valid).toBe(true);
       expect(validationResult.violations).toBeUndefined();
       expect(validationResult.validationResults).toBeUndefined();
+    });
+
+    it('should not validate if groups given but does not match those of the constraint', function () {
+      // given
+      valdr.addConstraints(personConstraints);
+      spyOn(sizeValidator, 'validate').andCallThrough();
+
+      // when
+      valdr.validate('Person', 'lastName', 'Hanueli', ['WrongGroup']);
+
+      // then
+      expect(sizeValidator.validate).not.toHaveBeenCalled();
+    });
+
+    it('should validate if groups given and one of them matches those of the constraint', function () {
+      // given
+      valdr.addConstraints(personConstraints);
+      spyOn(sizeValidator, 'validate').andCallThrough();
+
+      // when
+      valdr.validate('Person', 'lastName', 'Hanueli', ['TestGroup', 'WrongGroup']);
+
+      // then
+      expect(sizeValidator.validate).toHaveBeenCalled();
+    });
+
+    it('should not validate if groups given and constraint has empty groups array', function () {
+      // given
+      valdr.addConstraints(personConstraints);
+      spyOn(sizeValidator, 'validate').andCallThrough();
+
+      // when
+      valdr.validate('Person', 'initials', 'Hanueli', ['AnyGroup']);
+
+      // then
+      expect(sizeValidator.validate).not.toHaveBeenCalled();
+    });
+
+    it('should validate if group given and constraint does not have groups', function () {
+      // given
+      valdr.addConstraints(personConstraints);
+      spyOn(sizeValidator, 'validate').andCallThrough();
+
+      // when
+      valdr.validate('Person', 'firstName', 'Hanueli', ['AnyGroup']);
+
+      // then
+      expect(sizeValidator.validate).toHaveBeenCalled();
     });
 
     it('should validate with correct validator', function () {

@@ -70,6 +70,20 @@ angular.module('valdr')
       },
 
       /**
+       * @param a and b things to check
+       * @returns {boolean} true if both things are arrays and their intersection is non-empty.
+       */
+      arraysIntersect: function(a, b) {
+        if (!angular.isArray(a) || !angular.isArray(b)) {
+          return false;
+        }
+        var intersection = a.filter(function(n) {
+          return b.indexOf(n) !== -1;
+        });
+        return intersection.length > 0;
+      },
+
+      /**
        * @param value the value to validate
        * @returns {boolean} true if the given value is null, undefined, an empty string, NaN returns false
        */
