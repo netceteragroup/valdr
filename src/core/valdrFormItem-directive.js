@@ -18,7 +18,7 @@ var nullValdrFormGroupController = {
 /**
  * This controller is used if no valdrValidationGroup parent directive is available.
  */
-var nullValdrValidationGroupController = {
+var nullValdrValidationGroupsController = {
   getValidationGroups: function () {
     return undefined;
   }
@@ -40,7 +40,7 @@ var valdrFormItemDirectiveDefinitionFactory = function (restrict) {
             ngModelController = controllers[1],
             valdrFormGroupController = controllers[2] || nullValdrFormGroupController,
             valdrEnabled = controllers[3] || nullValdrEnabledController,
-            valdrValidationGroupController = controllers[4] || nullValdrValidationGroupController,
+            valdrValidationGroupsController = controllers[4] || nullValdrValidationGroupsController,
             valdrNoValidate = attrs.valdrNoValidate,
             fieldName = attrs.name;
 
@@ -93,7 +93,7 @@ var valdrFormItemDirectiveDefinitionFactory = function (restrict) {
           };
 
           var validate = function (modelValue) {
-            var validationResult = valdr.validate(valdrTypeController.getType(), fieldName, modelValue, valdrValidationGroupController.getValidationGroups());
+            var validationResult = valdr.validate(valdrTypeController.getType(), fieldName, modelValue, valdrValidationGroupsController.getValidationGroups());
             updateNgModelController(validationResult);
             return valdrEnabled.isEnabled() ? validationResult.valid : true;
           };
