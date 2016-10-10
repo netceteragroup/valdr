@@ -139,6 +139,7 @@ The JSON object to define the validation rules has the following structure:
     FieldName {
       ValidatorName {
         <ValidatorArguments>
+        <ValidationGroups>
         message: 'error message'
       }
     }
@@ -148,6 +149,7 @@ The JSON object to define the validation rules has the following structure:
 - **FieldName** The name of the field to validate (string)
 - **ValidatorName** The name of the validator (string) see below in the Built-In Validators section for the default validators
 - **ValidatorArguments** arguments which are passed to the validator, see below for the optional and required arguments for the built-in validators
+- **ValidationGroups** an optional list of validation groups the validator belongs to
 - **Message** the message which should be shown if the validation fails (can also be a message key if angular-translate is used)
 
 Example:
@@ -157,21 +159,24 @@ Example:
       "size": {
         "min": 2,
         "max": 20,
-        "message": "First name must be between 2 and 20 characters."
+        "message": "First name must be between 2 and 20 characters.",
+        "groups": ["Default"]
       }
     }
   },
   "Address": {
     "email": {
       "email": {
-        "message": "Must be a valid E-Mail address."
+        "message": "Must be a valid E-Mail address.",
+        "groups": ["Default"]
       }
     },
     "zipCode": {
       "size": {
         "min": "4",
         "max": "6",
-        "message": "Zip code must be between 4 and 6 characters."
+        "message": "Zip code must be between 4 and 6 characters.",
+        "groups": ["Default"]
       }
     }
   }
@@ -482,6 +487,24 @@ to be used by valdr. This allows to apply the exact same validation rules on the
 If you have a c# back-end and use DataAnnotation, check out the [valdr-dotnet](https://github.com/netceteragroup/valdr-dotnet)
 project. It parses C# classes for DataAnnotation attributes and extracts their information into into a JSON document
 to be used by valdr. This allows to apply the exact same validation rules on the server and on the AngularJS client.
+
+## Using validation groups to control which constraints to enforce
+
+Validation groups allow you to enforce a different set of validation constraints in different situations.
+
+To restrict constraint validation to constraints belonging to certain groups
+*  Make sure your constraints JSON includes validation group information. The [valdr-bean-validation](https://github.com/netceteragroup/valdr-bean-validation)
+project supports producing validation group information from validation annotations.
+*  Specify the active validation groups by adding the ```valdr-validation-groups``` directive in your form on any parent element of the input fields to indicate
+you want to restrict validation to constraints belonging to those groups
+
+ '''html
+<form name="yourForm" novalidate valdr-type="Person" valdr-validation-groups="['Draft']">
+ '''
+
+If active validation groups are specified, a constraint will be validated only if
+* at least one of the validation groups of the constraint matches one of the active validation groups
+* the constraint does not have an array of groups specified
 
 ## Develop
 
