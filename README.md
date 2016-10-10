@@ -499,9 +499,9 @@ project supports producing validation group information from validation annotati
 *  Specify the active validation groups by adding the ```valdr-validation-groups``` directive in your form on any parent element of the input fields to indicate
 you want to restrict validation to constraints belonging to those groups
 
- '''html
+```html
 <form name="yourForm" novalidate valdr-type="Person" valdr-validation-groups="['Draft']">
- '''
+```
 
 If active validation groups are specified, a constraint will be validated only if
 * at least one of the validation groups of the constraint matches one of the active validation groups
