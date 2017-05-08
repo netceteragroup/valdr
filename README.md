@@ -9,7 +9,6 @@ A model centric approach to AngularJS form validation. Learn more on the [valdr 
 
   - [Why valdr](#why-valdr)
   - [Install](#install)
-      - [[Bower](http://bower.io)](#bowerhttpbowerio)
   - [Getting started](#getting-started)
   - [Constraints JSON](#constraints-json)
   - [Built-In Validators](#built-in-validators)
@@ -28,7 +27,6 @@ A model centric approach to AngularJS form validation. Learn more on the [valdr 
     - [Message template](#message-template)
     - [CSS to control visibility](#css-to-control-visibility)
     - [Integration of angular-translate](#integration-of-angular-translate)
-      - [Custom field name translation keys](#custom-field-name-translation-keys)
     - [Show messages for AngularJS built-in validators](#show-messages-for-angularjs-built-in-validators)
   - [Conditionally enable/disable validation](#conditionally-enabledisable-validation)
   - [Wire up your back-end](#wire-up-your-back-end)
