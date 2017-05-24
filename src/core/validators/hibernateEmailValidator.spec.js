@@ -15,6 +15,7 @@ describe('valdrEmailValidator', function () {
   it('should return true for empty values', function () {
     expect(hibernateEmailValidator.validate('')).toBe(true);
     expect(hibernateEmailValidator.validate(undefined)).toBe(true);
+    expect(hibernateEmailValidator.validate(Number.NaN)).toBe(true);
   });
 
   it('should return true for valid email addresses', function () {
