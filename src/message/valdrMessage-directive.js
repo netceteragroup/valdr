@@ -80,9 +80,11 @@ angular.module('valdr')
         var updateTranslations = function () {
           if (valdrMessage.translateAvailable && angular.isArray(scope.violations)) {
             angular.forEach(scope.violations, function (violation) {
-              valdrMessage.$translate(valdrMessage.fieldNameKeyGenerator(violation)).then(function (translation) {
-                violation.fieldName = translation;
-              });
+              valdrMessage.$translate(valdrMessage.fieldNameKeyGenerator(violation))
+                .then(function (translation) {
+                  violation.fieldName = translation;
+                })
+                .catch(angular.noop);
             });
           }
         };
