@@ -90,6 +90,21 @@ angular.module('valdr')
             }
           };
 
+          /**
+           * Returns true if
+           *  one of the groupNames is in the groups array of the constraint OR
+           *  groupNames is not specified OR
+           *  constraint does not have groups.
+           */
+          var groupMatches = function (fieldConstraint, groupNames) {
+            if (groupNames && !fieldConstraint.groups) {
+              $log.warn('valdr-validation-group specified but constraint does not have groups  - will validate constraint');
+              return true;
+            }
+
+            return !groupNames || !fieldConstraint.groups || valdrUtil.arraysIntersect(fieldConstraint.groups, groupNames);
+          };
+
           return {
             /**
              * Validates the value of the given type with the constraints for the given field name.
@@ -99,7 +114,7 @@ angular.module('valdr')
              * @param value the value to validate
              * @returns {*}
              */
-            validate: function (typeName, fieldName, value) {
+            validate: function (typeName, fieldName, value, groupNames) {
 
               var validResult = { valid: true },
                 typeConstraints = constraintsForType(typeName);
@@ -119,21 +134,24 @@ angular.module('valdr')
                     return validResult;
                   }
 
-                  var valid = validator.validate(value, constraint);
-                  var validationResult = {
-                    valid: valid,
-                    value: value,
-                    field: fieldName,
-                    type: typeName,
-                    validator: validatorName
-                  };
-                  angular.extend(validationResult, constraint);
+                  if (groupMatches(constraint, groupNames) ) {
 
-                  validationResults.push(validationResult);
-                  if (!valid) {
-                    violations.push(validationResult);
+                    var valid = validator.validate(value, constraint);
+                    var validationResult = {
+                      valid: valid,
+                      value: value,
+                      field: fieldName,
+                      type: typeName,
+                      validator: validatorName
+                    };
+                    angular.extend(validationResult, constraint);
+
+                    validationResults.push(validationResult);
+                    if (!valid) {
+                      violations.push(validationResult);
+                    }
+                    fieldIsValid = fieldIsValid && valid;
                   }
-                  fieldIsValid = fieldIsValid && valid;
                 });
 
                 return {

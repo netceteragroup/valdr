@@ -16,6 +16,15 @@ var nullValdrFormGroupController = {
 };
 
 /**
+ * This controller is used if no valdrValidationGroup parent directive is available.
+ */
+var nullValdrValidationGroupsController = {
+  getValidationGroups: function () {
+    return undefined;
+  }
+};
+
+/**
  * This directive adds validation to all input and select fields as well as to explicitly enabled elements which are
  * bound to an ngModel and are surrounded by a valdrType directive. To prevent adding validation to specific fields,
  * the attribute 'valdr-no-validate' can be added to those fields.
@@ -24,13 +33,14 @@ var valdrFormItemDirectiveDefinitionFactory = function (restrict) {
     return ['valdrEvents', 'valdr', 'valdrUtil', function (valdrEvents, valdr, valdrUtil) {
       return {
         restrict: restrict,
-        require: ['?^valdrType', '?^ngModel', '?^valdrFormGroup', '?^valdrEnabled'],
+        require: ['?^valdrType', '?^ngModel', '?^valdrFormGroup', '?^valdrEnabled', '?^valdrValidationGroups'],
         link: function (scope, element, attrs, controllers) {
 
           var valdrTypeController = controllers[0],
             ngModelController = controllers[1],
             valdrFormGroupController = controllers[2] || nullValdrFormGroupController,
             valdrEnabled = controllers[3] || nullValdrEnabledController,
+            valdrValidationGroupsController = controllers[4] || nullValdrValidationGroupsController,
             valdrNoValidate = attrs.valdrNoValidate,
             fieldName = attrs.name;
 
@@ -83,7 +93,7 @@ var valdrFormItemDirectiveDefinitionFactory = function (restrict) {
           };
 
           var validate = function (modelValue) {
-            var validationResult = valdr.validate(valdrTypeController.getType(), fieldName, modelValue);
+            var validationResult = valdr.validate(valdrTypeController.getType(), fieldName, modelValue, valdrValidationGroupsController.getValidationGroups());
             updateNgModelController(validationResult);
             return valdrEnabled.isEnabled() ? validationResult.valid : true;
           };
