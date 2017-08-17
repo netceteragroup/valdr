@@ -28,6 +28,10 @@ var valdrFormGroupDirectiveDefinition =
             invalidDirtyTouchedGroup: false,
             // true if all form items in this group are currently valid
             valid: true,
+            // true if all form items in this group are currently pristine
+            pristine: true,
+            // true if all form items in this group are currently untouched
+            untouched: true,
             // contains the validity states of all form items in this group
             itemStates: []
           };
@@ -35,6 +39,14 @@ var valdrFormGroupDirectiveDefinition =
           angular.forEach(formItems, function (formItem) {
             if (formItem.$touched && formItem.$dirty && formItem.$invalid) {
               formGroupState.invalidDirtyTouchedGroup = true;
+            }
+
+            if (formItem.$dirty) {
+              formGroupState.pristine = false;
+            }
+
+            if (formItem.$touched) {
+              formGroupState.untouched = false;
             }
 
             if (formItem.$invalid) {
@@ -62,6 +74,10 @@ var valdrFormGroupDirectiveDefinition =
         var updateClasses = function (formGroupState) {
           // form group state
           $element.toggleClass(valdrClasses.invalidDirtyTouchedGroup, formGroupState.invalidDirtyTouchedGroup);
+          $element.toggleClass(valdrClasses.pristine, formGroupState.pristine);
+          $element.toggleClass(valdrClasses.dirty, !formGroupState.pristine);
+          $element.toggleClass(valdrClasses.untouched, formGroupState.untouched);
+          $element.toggleClass(valdrClasses.touched, !formGroupState.untouched);
           $element.toggleClass(valdrClasses.valid, formGroupState.valid);
           $element.toggleClass(valdrClasses.invalid, !formGroupState.valid);
 
